@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI.DataVisualization.Charting;
 
 
 namespace WorldGen
 {
-    class Mapa
+    public class Mapa
     {
 
         private double InitialHeight = 0.2; //Altura inicial del mapa
@@ -14,6 +15,7 @@ namespace WorldGen
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
+        private double M = -.02;            // altitud inicial
 
 
         private int Depth = 11; //Número de subdivisiones que hará el tetraedro
@@ -64,7 +66,7 @@ namespace WorldGen
 
 
 
-        public Mapa(int W, int H, int S)
+        public Mapa(int W, int H, double S)
         {
             _Width = W;
             _Height = H;
@@ -96,6 +98,7 @@ namespace WorldGen
             double slo = Math.Sin(Longitude);
 
             double x, y, z, x1, y1, z1;
+            Point3D punto;
             for(int j=0; j<Height; j++)
                 for (int i = 0; i < Width; i++)
                 {
@@ -111,20 +114,23 @@ namespace WorldGen
                         y1 = (cla * y) - (sla * z);
                         z1 = (-slo * x) + (clo * sla * y) + (clo * cla * z);
                         //Calculamos la altura del punto i,j
-                        Heightmap[i,j] = 10000000 * MakeHeight(x1, y1, z1);
+                        punto = new Point3D((float)x1, (float)y1, (float)z1);
+                        Heightmap[i,j] = 10000000 * MakeHeight(punto);
                     }
                 }
         }
 
-        private int MakeHeight(double x, double y, double z)
+        private int MakeHeight(Point3D P)
         {
             double abx, aby, abz, acx, acy, acz, adx, ady, adz, apx, apy, apz;
             double bax, bay, baz, bcx, bcy, bcz, bdx, bdy, bdz, bpx, bpy, bpz;
 
+            Tetraedro tetra = new Tetraedro();
+
             abx = ssbx - ssax; aby = ssby - ssay; abz = ssbz - ssaz;
             acx = sscx - ssax; acy = sscy - ssay; acz = sscz - ssaz;
             adx = ssdx - ssax; ady = ssdy - ssay; adz = ssdz - ssaz;
-            apx = x - ssax; apy = y - ssay; apz = z - ssaz;
+            apx = P.X - ssax; apy = P.Y - ssay; apz = P.Z - ssaz;
             if ((adx * aby * acz + ady * abz * acx + adz * abx * acy
                  - adz * aby * acx - ady * abx * acz - adx * abz * acy) *
                 (apx * aby * acz + apy * abz * acx + apz * abx * acy
@@ -146,7 +152,7 @@ namespace WorldGen
                         bax = -abx; bay = -aby; baz = -abz;
                         bcx = sscx - ssbx; bcy = sscy - ssby; bcz = sscz - ssbz;
                         bdx = ssdx - ssbx; bdy = ssdy - ssby; bdz = ssdz - ssbz;
-                        bpx = x - ssbx; bpy = y - ssby; bpz = z - ssbz;
+                        bpx = P.X - ssbx; bpy = P.Y - ssby; bpz = P.Z - ssbz;
                         if ((bax * bcy * bdz + bay * bcz * bdx + baz * bcx * bdy
                              - baz * bcy * bdx - bay * bcx * bdz - bax * bcz * bdy) *
                             (bpx * bcy * bdz + bpy * bcz * bdx + bpz * bcx * bdy
@@ -154,28 +160,66 @@ namespace WorldGen
                         {
                             /* p is on same side of bcd as a */
                             /* Hence, p is inside tetrahedron */
-                            return (MakePoint(ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
-                                  ssax, ssay, ssaz, ssbx, ssby, ssbz,
-                                  sscx, sscy, sscz, ssdx, ssdy, ssdz,
-                                  x, y, z, 11));
+                            tetra.A = new Point3D((float)ssax, (float)ssay, (float)ssaz);
+                            tetra.B = new Point3D((float)ssbx, (float)ssby, (float)ssbz);
+                            tetra.C = new Point3D((float)sscx, (float)sscy, (float)sscz);
+                            tetra.D = new Point3D((float)ssdx, (float)ssdy, (float)ssdz);
+
+                            tetra.AHeight = ssa;
+                            tetra.BHeight = ssb;
+                            tetra.CHeight = ssc;
+                            tetra.DHeight = ssd;
+
+                            tetra.ASeed = ssas;
+                            tetra.BSeed = ssbs;
+                            tetra.CSeed = sscs;
+                            tetra.DSeed = ssds;
+
+                            return (MakePoint(tetra, P, 11));
                         }
                     }
                 }
             } /* otherwise */
-            return (MakePoint(double.MaxValue, double.MaxValue, double.MaxValue, double.MaxValue,
-                /* initial altitude is M on all corners of tetrahedron */
-                  r1, r2, r3, r4,
-                /* same seed set is used in every call */
 
-                  -Math.Sqrt(3.0) - 0.20, -Math.Sqrt(3.0) - 0.22, -Math.Sqrt(3.0) - 0.23,
-                  -Math.Sqrt(3.0) - 0.19, Math.Sqrt(3.0) + 0.18, Math.Sqrt(3.0) + 0.17,
-                   Math.Sqrt(3.0) + 0.21, -Math.Sqrt(3.0) - 0.24, Math.Sqrt(3.0) + 0.15,
-                   Math.Sqrt(3.0) + 0.24, Math.Sqrt(3.0) + 0.22, -Math.Sqrt(3.0) - 0.25,
-                /* coordinates of vertices of tetrahedron*/
-                  x, y, z,
-                /* coordinates of point we want colour of */
-                  Depth));
-            /* subdivision depth */
+            tetra.A = new Point3D((float)(-Math.Sqrt(3.0) - 0.20), (float)(-Math.Sqrt(3.0) - 0.22), (float)(-Math.Sqrt(3.0) - 0.23));
+            tetra.B = new Point3D((float)(-Math.Sqrt(3.0) - 0.19), (float)(Math.Sqrt(3.0) + 0.18), (float)(Math.Sqrt(3.0) + 0.17));
+            tetra.C = new Point3D((float)(Math.Sqrt(3.0) + 0.21), (float)(-Math.Sqrt(3.0) - 0.24), (float)(Math.Sqrt(3.0) + 0.15));
+            tetra.D = new Point3D((float)(Math.Sqrt(3.0) + 0.24), (float)(Math.Sqrt(3.0) + 0.22), (float)(-Math.Sqrt(3.0) - 0.25));
+
+            tetra.AHeight = M;
+            tetra.BHeight = M;
+            tetra.CHeight = M;
+            tetra.DHeight = M;
+
+            tetra.ASeed = r1;
+            tetra.BSeed = r2;
+            tetra.CSeed = r3;
+            tetra.DSeed = r4;
+
+            return (MakePoint(tetra, P, Depth));
+        }
+
+        private int MakePoint(Tetraedro T, Point3D P, int Depth)
+        {
+            if (Depth > 0)
+            {
+                if (Depth == 11)
+                {
+                    ssa = T.AHeight; ssb = T.BHeight; ssc = T.CHeight; ssd = T.DHeight;
+                    ssas = T.ASeed; ssbs = T.BSeed; sscs = T.CSeed; ssds = T.DSeed;
+                    ssax = T.A.X; ssay = T.A.Y; ssaz = T.A.Z;
+                    ssbx = T.B.X; ssby = T.B.Y; ssbz = T.B.Z;
+                    sscx = T.C.X; sscy = T.C.Y; sscz = T.C.Z;
+                    ssdx = T.D.X; ssdy = T.D.Y; ssdz = T.D.Z;
+                }
+                T.Reordenar();
+                T.Cortar(P);
+                return MakePoint(T, P, --Depth);
+            }
+            else
+            {
+                return Convert.ToInt32(((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4));
+            }
         }
 
         private int MakePoint(double a, double b, double c, double d, double ar, double br, double cr, double dr, double ax, double ay, double az, double bx, double by, double bz, double cx, double cy, double cz, double dx, double dy, double dz, double x, double y, double z, int Depth)
@@ -260,10 +304,11 @@ namespace WorldGen
                                         lab = Math.Pow(lab,0.5);
 	                                /* decrease contribution for very long distances */
 
-                                    /* new altitude is: */
-	                                e = 0.5*(a+b) /* average of end points */
-		                                + es*dd1*fabs(a-b) /* plus contribution for altitude diff */
+                                    /* new altitude is: 
+	                                e = 0.5*(a+b) /* average of end points 
+		                                + es*dd1*fabs(a-b) /* plus contribution for altitude diff 
                                         + es1*dd2*Math.Pow(lab,POW); /* plus contribution for distance */
+                                    e = 0;
 	                                eax = ax-ex; eay = ay-ey; eaz = az-ez;
 	                                epx =  x-ex; epy =  y-ey; epz =  z-ez;
 	                                ecx = cx-ex; ecy = cy-ey; ecz = cz-ez;
@@ -350,6 +395,8 @@ namespace WorldGen
             return int.Parse(((a+b+c+d)/4).ToString());
           }
         }
+
+
 
 
         private double Makerand(double A, double B)

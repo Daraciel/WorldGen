@@ -206,10 +206,13 @@ namespace WorldGen
         public void Cortar(Point3D P, ref Random R)
         {/*
             double ESeed = Makerand(ASeed,BSeed);
+            System.Threading.Thread.Sleep(1);
             double ESeed1 = Makerand(ESeed, ESeed);
+            System.Threading.Thread.Sleep(1);
             double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
-            double ESeed3 = 1.0 - ESeed2;*/
-
+            System.Threading.Thread.Sleep(1);
+            double ESeed3 = 1.0 - ESeed2;
+*/
 
             double ESeed = R.NextDouble();
             double ESeed1 = R.NextDouble();
@@ -245,9 +248,9 @@ namespace WorldGen
             double distanceAB = (float)Math.Sqrt(Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2));
 
             if (distanceAB > 1.0)
-                Math.Pow(distanceAB, 0.5);
+                distanceAB = Math.Pow(distanceAB, 0.5);
 
-            double EHeight = 0.5*(AHeight + BHeight)                    // media de las dos alturas
+            double EHeight = 0.5 * (AHeight + BHeight)                    // media de las dos alturas
                             + ESeed * dd1 * Math.Abs(AHeight-BHeight)   // + contribucion por la diferencia de altitudes
                             + ESeed * dd2 * Math.Pow(distanceAB, POW);  // + contribucion por la distancia
 

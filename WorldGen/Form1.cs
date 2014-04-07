@@ -20,10 +20,11 @@ namespace WorldGen
         private void button1_Click(object sender, EventArgs e)
         {
             map = new Mapa(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), double.Parse(tbS.Text));
+            map.Mercador();
+            map.SaveColMap();
             map.MakeHeightMap();
             map.Save();
-
-            int i = 3;
+            //int i = 3;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.UI.DataVisualization.Charting;
@@ -51,6 +52,7 @@ namespace WorldGen
             }
         }
 
+        public Random rnd;
 
 
         private int _Width;             //Ancho del mapa (px)
@@ -87,6 +89,13 @@ namespace WorldGen
             r2 = Makerand(r1, r1);
             r3 = Makerand(r1, r2);
             r4 = Makerand(r2, r3);
+
+            rnd = new Random(Convert.ToInt32(1000000 * _Seed));
+            r1 = rnd.NextDouble();
+            r2 = rnd.NextDouble();
+            r3 = rnd.NextDouble();
+            r4 = rnd.NextDouble();
+
         }
 
 
@@ -120,7 +129,7 @@ namespace WorldGen
                 }
         }
 
-        private int MakeHeight(Point3D P)
+        private double MakeHeight(Point3D P)
         {
             double abx, aby, abz, acx, acy, acz, adx, ady, adz, apx, apy, apz;
             double bax, bay, baz, bcx, bcy, bcz, bdx, bdy, bdz, bpx, bpy, bpz;
@@ -199,7 +208,7 @@ namespace WorldGen
             return (MakePoint(tetra, P, Depth));
         }
 
-        private int MakePoint(Tetraedro T, Point3D P, int Depth)
+        private double MakePoint(Tetraedro T, Point3D P, int Depth)
         {
             if (Depth > 0)
             {
@@ -213,12 +222,13 @@ namespace WorldGen
                     ssdx = T.D.X; ssdy = T.D.Y; ssdz = T.D.Z;
                 }
                 T.Reordenar();
-                T.Cortar(P);
+                T.Cortar(P,ref rnd);
                 return MakePoint(T, P, --Depth);
             }
             else
             {
-                return Convert.ToInt32(((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4));
+                double blaa = ((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4.0);
+                return blaa;
             }
         }
 
@@ -404,6 +414,26 @@ namespace WorldGen
           double r;
           r = (A+PI)*(B+PI);
           return(2.0*(r-(int)r)-1.0);
+        }
+
+        public void Save()
+        {
+            string fileName = _Seed+".txt";
+            FileStream stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(stream);
+
+            writer.WriteLine(_Seed);
+            writer.WriteLine(_Width);
+            writer.WriteLine(_Height);
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    writer.Write(Heightmap[i, j] + " ");
+                }
+                writer.Write("\n");
+            }
+            writer.Close();
         }
 
     }

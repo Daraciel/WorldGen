@@ -21,6 +21,7 @@ namespace WorldGen
         {
             map = new Mapa(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), double.Parse(tbS.Text));
             map.MakeHeightMap();
+            map.Save();
 
             int i = 3;
         }

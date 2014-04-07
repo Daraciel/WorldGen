@@ -203,12 +203,19 @@ namespace WorldGen
 
         }
 
-        public void Cortar(Point3D P)
-        {
+        public void Cortar(Point3D P, ref Random R)
+        {/*
             double ESeed = Makerand(ASeed,BSeed);
             double ESeed1 = Makerand(ESeed, ESeed);
             double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
+            double ESeed3 = 1.0 - ESeed2;*/
+
+
+            double ESeed = R.NextDouble();
+            double ESeed1 = R.NextDouble();
+            double ESeed2 = 0.5 + 0.1 * R.NextDouble();
             double ESeed3 = 1.0 - ESeed2;
+
             Point3D E = new Point3D();
             
             if (A.X < B.X)

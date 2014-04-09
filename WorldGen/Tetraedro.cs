@@ -162,10 +162,10 @@ namespace WorldGen
                         B = A; BSeed = ASeed; BHeight = AHeight;
                         A = PointAux; ASeed = SeedAux; AHeight = HeightAux;
 
-                        /*Intercambiamos C con D*/
+                        /*Intercambiamos C con D*//*
                         PointAux = D; SeedAux = DSeed; HeightAux = DHeight;
                         D = C; DSeed = CSeed; DHeight = CHeight;
-                        C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
+                        C = PointAux; CSeed = SeedAux; CHeight = HeightAux;*/
 
                         /*Intercambiamos B con C*/
                         PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
@@ -176,23 +176,49 @@ namespace WorldGen
                     }
                     else
                     {
-                        double deltaXCD = C.X - D.X;
-                        double deltaYCD = C.Y - D.Y;
-                        double deltaZCD = C.Z - D.Z;
+                        double deltaXBD = B.X - D.X;
+                        double deltaYBD = B.Y - D.Y;
+                        double deltaZBD = B.Z - D.Z;
 
-                        double distanceCD = (float)Math.Sqrt(Math.Pow(deltaXCD, 2) + Math.Pow(deltaYCD, 2) + Math.Pow(deltaZCD, 2));
-                        if (distanceAB < distanceCD)
+                        double distanceBD = (float)Math.Sqrt(Math.Pow(deltaXBD, 2) + Math.Pow(deltaYBD, 2) + Math.Pow(deltaZBD, 2));
+                        if (distanceAB < distanceBD)
                         {
-                            /*Intercambiamos A con C*/
-                            PointAux = A; SeedAux = ASeed; HeightAux = AHeight;
-                            A = C; ASeed = CSeed; AHeight = CHeight;
+                            /*Intercambiamos A con B*/
+                            PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
+                            B = A; BSeed = ASeed; BHeight = AHeight;
+                            A = PointAux; ASeed = SeedAux; AHeight = HeightAux;
+
+                            /*Intercambiamos C con D*/
+                            PointAux = D; SeedAux = DSeed; HeightAux = DHeight;
+                            D = C; DSeed = CSeed; DHeight = CHeight;
                             C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
 
-                            /*Intercambiamos B con D*/
+                            /*Intercambiamos B con C*/
                             PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
-                            B = D; BSeed = DSeed; BHeight = DHeight;
-                            D = PointAux; DSeed = SeedAux; DHeight = HeightAux;
+                            B = C; BSeed = CSeed; BHeight = CHeight;
+                            C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
                             Reordenar();
+                        }
+                        else
+                        {
+                            double deltaXCD = C.X - D.X;
+                            double deltaYCD = C.Y - D.Y;
+                            double deltaZCD = C.Z - D.Z;
+
+                            double distanceCD = (float)Math.Sqrt(Math.Pow(deltaXCD, 2) + Math.Pow(deltaYCD, 2) + Math.Pow(deltaZCD, 2));
+                            if (distanceAB < distanceCD)
+                            {
+                                /*Intercambiamos A con C*/
+                                PointAux = A; SeedAux = ASeed; HeightAux = AHeight;
+                                A = C; ASeed = CSeed; AHeight = CHeight;
+                                C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
+
+                                /*Intercambiamos B con D*/
+                                PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
+                                B = D; BSeed = DSeed; BHeight = DHeight;
+                                D = PointAux; DSeed = SeedAux; DHeight = HeightAux;
+                                Reordenar();
+                            }
                         }
 
                     }
@@ -203,6 +229,19 @@ namespace WorldGen
 
         }
 
+
+        private double GetRND(ref Random R)
+        {
+            double res;
+            int mod = R.Next(-1, 2);
+            while (mod == 0)
+                mod = R.Next(-1, 2);
+
+            res = mod * R.NextDouble();
+
+            return res;
+        }
+
         public void Cortar(Point3D P, ref Random R)
         {/*
             double ESeed = Makerand(ASeed,BSeed);
@@ -211,12 +250,17 @@ namespace WorldGen
             System.Threading.Thread.Sleep(1);
             double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
             System.Threading.Thread.Sleep(1);
-            double ESeed3 = 1.0 - ESeed2;
 */
+            /*
+            double ESeed = GetRND(ref R);
+            double ESeed1 = GetRND(ref R);
+            double ESeed2 = 0.5 + 0.1 * GetRND(ref R);
+            double ESeed3 = 1.0 - ESeed2;*/
 
-            double ESeed = R.NextDouble();
-            double ESeed1 = R.NextDouble();
-            double ESeed2 = 0.5 + 0.1 * R.NextDouble();
+
+            double ESeed = Makerand(ASeed, BSeed);
+            double ESeed1 = Makerand(ESeed, ESeed);
+            double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
             double ESeed3 = 1.0 - ESeed2;
 
             Point3D E = new Point3D();

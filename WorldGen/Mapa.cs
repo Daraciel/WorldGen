@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace WorldGen
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
-        private double M = -.02;            // altitud inicial
+        private double M = -0.02;            // altitud inicial
 
 
         private int Depth = 11; //Número de subdivisiones que hará el tetraedro
@@ -79,7 +80,7 @@ namespace WorldGen
 
         private double r1, r2, r3, r4;
 
-        private List<Color> Schema;
+        private SortedList<int,Color> Schema;
 
 
 
@@ -97,7 +98,9 @@ namespace WorldGen
                     ColorMap[i, j] = 0;
                 }
 
-
+            Schema = new SortedList<int, Color>();
+            SetDefaultSchema();
+            //Depth = 3 * ((int)(Math.Log(Scale * Height,2))) + 6;
             if (Longitude > 180)
                 Longitude -= 360;
             Longitude = (Longitude * PI)/180.0;
@@ -110,11 +113,11 @@ namespace WorldGen
             r4 = Makerand(r2, r3);
 
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
-            rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
+            rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));/*
             r1 = rnd.NextDouble();
             r2 = rnd.NextDouble();
             r3 = rnd.NextDouble();
-            r4 = rnd.NextDouble();
+            r4 = rnd.NextDouble();*/
 
 
 
@@ -122,7 +125,7 @@ namespace WorldGen
             ssa = rnd2.Next(-1, 1) * rnd2.NextDouble();
             ssb = rnd2.Next(-1, 1) * rnd2.NextDouble();
             ssc = rnd2.Next(-1, 1) * rnd2.NextDouble();
-            ssd = rnd2.Next(-1, 1) * rnd2.NextDouble();*/
+            ssd = rnd2.Next(-1, 1) * rnd2.NextDouble();
             ssa = GetRND();
             ssb = GetRND();
             ssc = GetRND();
@@ -130,16 +133,16 @@ namespace WorldGen
             r1 = ssa;
             r2 = ssb;
             r3 = ssc;
-            r4 = ssd;
+            r4 = ssd;*/
 
         }
 
         private double GetRND()
         {
             double res;
-            int mod = rnd2.Next(-1, 1);
+            int mod = rnd2.Next(-1, 2);
             while (mod == 0)
-                mod = rnd2.Next(-1, 1);
+                mod = rnd2.Next(-1, 2);
 
             res = mod * rnd2.NextDouble();
 
@@ -318,6 +321,11 @@ namespace WorldGen
                 }
             }
 
+            if (colour < LAND)
+                ColorMap[i, j] = 0;
+            else
+                ColorMap[i, j] = 1;
+
             ColorMap[i, j] = colour;
 
             return colour;
@@ -345,7 +353,7 @@ namespace WorldGen
                 y = (y-1.0)/(y+1.0);
                 scale1 = Scale*Width/Height/Math.Sqrt(1.0-y*y)/PI;
                 cos2 = Math.Sqrt(1.0 - y * y);
-                Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
+                //Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
                 for (i = 0; i < Width ; i++) 
 	            {
 
@@ -357,20 +365,66 @@ namespace WorldGen
   
         }
 
+        private void AddColor(int indice, Color c)
+        {
+            int r, g, b, pos, oldIndex;
+            oldIndex = 0;
+            if (Schema.Count > 0)
+                oldIndex = Schema.Last().Key;
+            if (indice < oldIndex)
+                indice = oldIndex;
+            if (indice > 65535)
+                indice = 65535;
+            Schema.Add(indice, c);
+            for (int i = oldIndex + 1; i < indice; i++)
+            {
+                pos = Schema.IndexOfKey(oldIndex);
+                r = (Schema[oldIndex].R * (indice - i) + Schema[indice].R * (i - oldIndex)) / (indice - oldIndex + 1);
+                g = (Schema[oldIndex].G * (indice - i) + Schema[indice].G * (i - oldIndex)) / (indice - oldIndex + 1);
+                b = (Schema[oldIndex].B * (indice - i) + Schema[indice].B * (i - oldIndex)) / (indice - oldIndex + 1);
+                Schema.Add(i, Color.FromArgb(r, g, b));
+            }
+
+        }
+
         private void SetDefaultSchema()
         {
-            Schema.Add(new Color(0, 0, 0, 0));
-            Schema.Add(new Color(1, 255, 255, 255));
-            Schema.Add(new Color(2, 255, 255, 255));
-            Schema.Add(new Color(3, 0, 0, 0));
-            Schema.Add(new Color(4, 0, 0, 0));
-            Schema.Add(new Color(5, 255, 0, 0));
-            Schema.Add(new Color(6, 0, 0, 255));
-            Schema.Add(new Color(130, 0, 128, 255));
-            Schema.Add(new Color(131, 0, 255, 0));
-            Schema.Add(new Color(200, 64, 192, 16));
-            Schema.Add(new Color(250, 128, 128, 32));
-            Schema.Add(new Color(255, 255, 255, 255));
+
+            AddColor(0, Color.FromArgb(0, 0, 0));
+            AddColor(1, Color.FromArgb(255, 255, 255));
+            AddColor(2, Color.FromArgb(255, 255, 255));
+            AddColor(3, Color.FromArgb(0, 0, 0));
+            AddColor(4, Color.FromArgb(0, 0, 0));
+            AddColor(5, Color.FromArgb(255, 0, 0));
+            AddColor(6, Color.FromArgb(0, 0, 255));
+            AddColor(130, Color.FromArgb(0, 128, 255));
+            AddColor(131, Color.FromArgb(0, 255, 0));
+            AddColor(200, Color.FromArgb(64, 192, 16));
+            AddColor(250, Color.FromArgb(128, 128, 32));
+            AddColor(255, Color.FromArgb(255, 255, 255));
+
+            int cNum = 255;
+
+            int nocols = cNum + 1;
+            if (nocols < 10) nocols = 10;
+            LOWEST = 6;
+            HIGHEST = nocols - 1;
+            SEA = (HIGHEST + LOWEST) / 2;
+            LAND = SEA + 1;
+
+        }
+
+        public void printBMP()
+        {
+            Bitmap img = new Bitmap(Width, Height);
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                }
+            }
+            img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp); 
         }
 
         private double Makerand(double A, double B)

@@ -110,14 +110,14 @@ namespace WorldGen
             double deltaYAB = A.Y - B.Y;
             double deltaZAB = A.Z - B.Z;
 
-            double distanceAB = (float)Math.Sqrt(Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2));
+            double distanceAB = Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2);
 
 
             double deltaXAC = A.X - C.X;
             double deltaYAC = A.Y - C.Y;
             double deltaZAC = A.Z - C.Z;
 
-            double distanceAC = (float)Math.Sqrt(Math.Pow(deltaXAC, 2) + Math.Pow(deltaYAC, 2) + Math.Pow(deltaZAC, 2));
+            double distanceAC = Math.Pow(deltaXAC, 2) + Math.Pow(deltaYAC, 2) + Math.Pow(deltaZAC, 2);
 
             if (distanceAB < distanceAC)
             {
@@ -126,6 +126,7 @@ namespace WorldGen
                 B = C; BSeed = CSeed; BHeight = CHeight;
                 C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
                 Reordenar();
+                return;
             }
             else
             {
@@ -133,7 +134,7 @@ namespace WorldGen
                 double deltaYAD = A.Y - D.Y;
                 double deltaZAD = A.Z - D.Z;
 
-                double distanceAD = (float)Math.Sqrt(Math.Pow(deltaXAD, 2) + Math.Pow(deltaYAD, 2) + Math.Pow(deltaZAD, 2));
+                double distanceAD = Math.Pow(deltaXAD, 2) + Math.Pow(deltaYAD, 2) + Math.Pow(deltaZAD, 2);
                 if (distanceAB < distanceAD)
                 {
                     /*Intercambiamos B con C*/
@@ -146,6 +147,7 @@ namespace WorldGen
                     B = D; BSeed = DSeed; BHeight = DHeight;
                     D = PointAux; DSeed = SeedAux; DHeight = HeightAux;
                     Reordenar();
+                    return;
                 }
                 else
                 {
@@ -154,7 +156,7 @@ namespace WorldGen
                     double deltaYBC = B.Y - C.Y;
                     double deltaZBC = B.Z - C.Z;
 
-                    double distanceBC = (float)Math.Sqrt(Math.Pow(deltaXBC, 2) + Math.Pow(deltaYBC, 2) + Math.Pow(deltaZBC, 2));
+                    double distanceBC = Math.Pow(deltaXBC, 2) + Math.Pow(deltaYBC, 2) + Math.Pow(deltaZBC, 2);
                     if (distanceAB < distanceBC)
                     {
                         /*Intercambiamos A con B*/
@@ -172,6 +174,7 @@ namespace WorldGen
                         B = C; BSeed = CSeed; BHeight = CHeight;
                         C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
                         Reordenar();
+                        return;
 
                     }
                     else
@@ -180,7 +183,7 @@ namespace WorldGen
                         double deltaYBD = B.Y - D.Y;
                         double deltaZBD = B.Z - D.Z;
 
-                        double distanceBD = (float)Math.Sqrt(Math.Pow(deltaXBD, 2) + Math.Pow(deltaYBD, 2) + Math.Pow(deltaZBD, 2));
+                        double distanceBD = Math.Pow(deltaXBD, 2) + Math.Pow(deltaYBD, 2) + Math.Pow(deltaZBD, 2);
                         if (distanceAB < distanceBD)
                         {
                             /*Intercambiamos A con B*/
@@ -198,6 +201,7 @@ namespace WorldGen
                             B = C; BSeed = CSeed; BHeight = CHeight;
                             C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
                             Reordenar();
+                            return;
                         }
                         else
                         {
@@ -205,7 +209,7 @@ namespace WorldGen
                             double deltaYCD = C.Y - D.Y;
                             double deltaZCD = C.Z - D.Z;
 
-                            double distanceCD = (float)Math.Sqrt(Math.Pow(deltaXCD, 2) + Math.Pow(deltaYCD, 2) + Math.Pow(deltaZCD, 2));
+                            double distanceCD = Math.Pow(deltaXCD, 2) + Math.Pow(deltaYCD, 2) + Math.Pow(deltaZCD, 2);
                             if (distanceAB < distanceCD)
                             {
                                 /*Intercambiamos A con C*/
@@ -218,6 +222,7 @@ namespace WorldGen
                                 B = D; BSeed = DSeed; BHeight = DHeight;
                                 D = PointAux; DSeed = SeedAux; DHeight = HeightAux;
                                 Reordenar();
+                                return;
                             }
                         }
 
@@ -289,14 +294,14 @@ namespace WorldGen
             double deltaYAB = A.Y - B.Y;
             double deltaZAB = A.Z - B.Z;
 
-            double distanceAB = (float)Math.Sqrt(Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2));
+            double distanceAB = Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2);
 
             if (distanceAB > 1.0)
                 distanceAB = Math.Pow(distanceAB, 0.5);
 
             double EHeight = 0.5 * (AHeight + BHeight)                    // media de las dos alturas
                             + ESeed * dd1 * Math.Abs(AHeight-BHeight)   // + contribucion por la diferencia de altitudes
-                            + ESeed * dd2 * Math.Pow(distanceAB, POW);  // + contribucion por la distancia
+                            + ESeed1 * dd2 * Math.Pow(distanceAB, POW);  // + contribucion por la distancia
 
             Point3D EA = new Point3D(A.X - E.X, A.Y - E.Y, A.Z - E.Z);
             Point3D EP = new Point3D(P.X - E.X, P.Y - E.Y, P.Z - E.Z);
@@ -306,7 +311,7 @@ namespace WorldGen
             double SeedAux;
             double HeightAux;
             if ((EA.X * EC.Y * ED.Z + EA.Y * EC.Z * ED.X + EA.Z * EC.X * ED.Y - EA.Z * EC.Y * ED.X - EA.Y * EC.X * ED.Z - EA.X * EC.Z * ED.Y) *
-                (EA.X * EC.Y * ED.Z + EA.Y * EC.Z * ED.X + EA.Z * EC.X * ED.Y - EA.Z * EC.Y * ED.X - EA.Y * EC.X * ED.Z - EA.X * EC.Z * ED.Y) > 0.0)
+                (EP.X * EC.Y * ED.Z + EP.Y * EC.Z * ED.X + EP.Z * EC.X * ED.Y - EP.Z * EC.Y * ED.X - EP.Y * EC.X * ED.Z - EP.X * EC.Z * ED.Y) > 0.0)
             {
                 /*Intercambiamos A con C*/
                 PointAux = A; SeedAux = ASeed; HeightAux = AHeight;
@@ -321,20 +326,22 @@ namespace WorldGen
             }
             else
             {
-                /*Intercambiamos A con C*/
-                PointAux = A; SeedAux = ASeed; HeightAux = AHeight;
-                A = C; ASeed = CSeed; AHeight = CHeight;
+
+                /*Intercambiamos B con C*/
+                PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
+                B = C; BSeed = CSeed; BHeight = CHeight;
                 C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
 
-                /*Intercambiamos B con D*/
+                /*Intercambiamos A con B*/
+                PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
+                B = A; BSeed = ASeed; BHeight = AHeight;
+                A = PointAux; ASeed = SeedAux; AHeight = HeightAux;
+
+                /*Intercambiamos B con D y ustituimos B por E*/
                 PointAux = E; SeedAux = ESeed; HeightAux = EHeight;
                 B = D; BSeed = DSeed; BHeight = DHeight;
                 D = PointAux; DSeed = SeedAux; DHeight = HeightAux;
 
-                /*Intercambiamos C con D*/
-                PointAux = D; SeedAux = DSeed; HeightAux = DHeight;
-                D = E; DSeed = ESeed; DHeight = EHeight;
-                C = PointAux; CSeed = SeedAux; CHeight = HeightAux;
             }
 
 
@@ -343,7 +350,7 @@ namespace WorldGen
         private double Makerand(double A, double B)
         {
             double r;
-            r = (A + Math.PI) * (B + Math.PI);
+            r = (A + 3.14159265) * (B + 3.14159265);
             return (2.0 * (r - (int)r) - 1.0);
         }
 

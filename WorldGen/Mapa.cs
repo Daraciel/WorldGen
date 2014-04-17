@@ -100,7 +100,7 @@ namespace WorldGen
 
             Schema = new SortedList<int, Color>();
             SetDefaultSchema();
-            //Depth = 3 * ((int)(Math.Log(Scale * Height,2))) + 6;
+            Depth = 3 * ((int)(Math.Log(Scale * Height,2))) + 6;
             if (Longitude > 180)
                 Longitude -= 360;
             Longitude = (Longitude * PI)/180.0;
@@ -262,11 +262,11 @@ namespace WorldGen
         }
 
         /*Planet*/
-        private double MakePoint(Tetraedro T, Point3D P, int Depth)
+        private double MakePoint(Tetraedro T, Point3D P, int D)
         {
-            if (Depth > 0)
+            if (D > 0)
             {
-                if (Depth == 11)
+                if (D == 11)
                 {
                     ssa = T.AHeight; ssb = T.BHeight; ssc = T.CHeight; ssd = T.DHeight;
                     ssas = T.ASeed; ssbs = T.BSeed; sscs = T.CSeed; ssds = T.DSeed;
@@ -277,13 +277,13 @@ namespace WorldGen
                 }
                 T.Reordenar();
                 T.Cortar(P,ref rnd);
-                return MakePoint(T, P, --Depth);
+                return MakePoint(T, P, --D);
             }
             else
             {
-                double blaa = ((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4.0);
-                return blaa;
             }
+            double blaa = ((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4.0);
+            return blaa;
         }
 
         private int MakeColour(Point3D P, int i, int j)
@@ -320,11 +320,11 @@ namespace WorldGen
                         colour = HIGHEST;
                 }
             }
-
+            /*
             if (colour < LAND)
                 ColorMap[i, j] = 0;
             else
-                ColorMap[i, j] = 1;
+                ColorMap[i, j] = 1;*/
 
             ColorMap[i, j] = colour;
 
@@ -349,11 +349,11 @@ namespace WorldGen
 		            fprintf (stderr, "%c", view); fflush(stderr);
 	            }*/
                 y = PI*(2.0*(j-k)-Height)/Width/Scale;
-                y = Math.Pow(2.0,y);
+                y = Math.Exp(2.0*y);
                 y = (y-1.0)/(y+1.0);
                 scale1 = Scale*Width/Height/Math.Sqrt(1.0-y*y)/PI;
                 cos2 = Math.Sqrt(1.0 - y * y);
-                //Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
+                Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
                 for (i = 0; i < Width ; i++) 
 	            {
 
@@ -427,10 +427,10 @@ namespace WorldGen
             img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp); 
         }
 
-        private double Makerand(double A, double B)
+        public double Makerand(double A, double B)
         {
           double r;
-          r = (A+PI)*(B+PI);
+          r = (A + 3.14159265) * (B + 3.14159265);
           return(2.0*(r-(int)r)-1.0);
         }
 

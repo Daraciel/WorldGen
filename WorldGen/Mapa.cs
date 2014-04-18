@@ -11,6 +11,13 @@ namespace WorldGen
 {
     public class Mapa
     {
+        private string _Semilla;
+
+        public string Semilla
+        {
+            get { return _Semilla; }
+            set { _Semilla = value; }
+        }
 
         private int BLACK = 0;
         private int WHITE = 1;
@@ -25,7 +32,13 @@ namespace WorldGen
         private int latic = 0;
 
         private double InitialHeight = 0.2; //Altura inicial del mapa
-        private double Scale = 1.0;         //Escala del mapa (futura feature)
+        private double _Scale = 1.0;         //Escala del mapa (futura feature)
+
+        public double Scale
+        {
+            get { return _Scale; }
+            set { _Scale = value; }
+        }
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
@@ -70,8 +83,20 @@ namespace WorldGen
 
         private int _Width;             //Ancho del mapa (px)
         private int _Height;            //Alto del mapa (px)
-        private double Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
-        private double Longitude = 0.0; //Longitud del centro del mapa (futura feature)
+        private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
+
+        public double Latitude
+        {
+            get { return _Latitude; }
+            set { _Latitude = value; }
+        }
+        private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
+
+        public double Longitude
+        {
+            get { return _Longitude; }
+            set { _Longitude = value; }
+        }
 
 
         private double _Seed;           //Semilla del mapa
@@ -83,7 +108,12 @@ namespace WorldGen
         private SortedList<int,Color> Schema;
 
 
-
+        /// <summary>
+        /// Constructor de la clase mapa
+        /// </summary>
+        /// <param name="W">Valor entero que representa la anchura del mapa</param>
+        /// <param name="H">Valor entero que representa la altura del mapa</param>
+        /// <param name="S">Valor decimal que representa la semilla del mapa</param>
         public Mapa(int W, int H, double S)
         {
             _Width = W;
@@ -100,11 +130,11 @@ namespace WorldGen
 
             Schema = new SortedList<int, Color>();
             SetDefaultSchema();
-            Depth = 3 * ((int)(Math.Log(Scale * Height,2))) + 6;
-            if (Longitude > 180)
-                Longitude -= 360;
-            Longitude = (Longitude * PI)/180.0;
-            Latitude = (Latitude * PI)/180.0;
+            Depth = 3 * ((int)(Math.Log(_Scale * Height,2))) + 6;
+            if (_Longitude > 180)
+                _Longitude -= 360;
+            _Longitude = (_Longitude * PI)/180.0;
+            _Latitude = (_Latitude * PI)/180.0;
 
             r1 = _Seed;
             r1 = Makerand(r1, r1);
@@ -137,51 +167,19 @@ namespace WorldGen
 
         }
 
-        private double GetRND()
-        {
-            double res;
-            int mod = rnd2.Next(-1, 2);
-            while (mod == 0)
-                mod = rnd2.Next(-1, 2);
-
-            res = mod * rnd2.NextDouble();
-
-            return res;
-        }
 
 
-        public void MakeHeightMap()
-        {
-            double cla = Math.Cos(Latitude);
-            double sla = Math.Sin(Latitude);
-            double clo = Math.Cos(Longitude);
-            double slo = Math.Sin(Longitude);
 
-            double x, y, z, x1, y1, z1;
-            Point3D punto;
-            for(int j=0; j<Height; j++)
-                for (int i = 0; i < Width; i++)
-                {
-                    x = (2.0 * i - Width) / Height / Scale;
-                    y = (2.0 * j - Height) / Height / Scale;
-                    if (Math.Pow(x, 2) + Math.Pow(y, 2) > 1.0)//ponemos los bordes a 0
-                        Heightmap[i, j] = 0;
-                    else
-                    {
-                        //Recalculamos los puntos del mapa para la posicion i,j
-                        z = Math.Sqrt(1.0 - Math.Pow(x, 2) - Math.Pow(y, 2));
-                        x1 = (clo * x) + (slo * sla * y) + (slo * cla * z);
-                        y1 = (cla * y) - (sla * z);
-                        z1 = (-slo * x) + (clo * sla * y) + (clo * cla * z);
-                        //Calculamos la altura del punto i,j
-                        punto = new Point3D((float)x1, (float)y1, (float)z1);
-                        //Heightmap[i, j] = 10000000 * MakeHeight(punto);
-                        Heightmap[i, j] = 10000000 * MakeHeight(punto);
-                    }
-                }
-        }
+        //////////////////////////////////////////////////////
+        //              FUNCIONES NECESARIAS                //
+        //////////////////////////////////////////////////////
 
         /*Planet1*/
+        /// <summary>
+        /// Función para calcular la altura de un punto P
+        /// </summary>
+        /// <param name="P">Punto cartesiano</param>
+        /// <returns>double que representa la aaltura del punto en el mapa</returns>
         private double MakeHeight(Point3D P)
         {
             double abx, aby, abz, acx, acy, acz, adx, ady, adz, apx, apy, apz;
@@ -276,7 +274,7 @@ namespace WorldGen
                     ssdx = T.D.X; ssdy = T.D.Y; ssdz = T.D.Z;
                 }
                 T.Reordenar();
-                T.Cortar(P,ref rnd);
+                T.Cortar(P, ref rnd);
                 return MakePoint(T, P, --D);
             }
             else
@@ -286,9 +284,11 @@ namespace WorldGen
             return blaa;
         }
 
+
+        /*Planet0*/
         private int MakeColour(Point3D P, int i, int j)
         {
-            
+
             double alt, y2;
             int colour;
 
@@ -316,7 +316,7 @@ namespace WorldGen
                 else
                 {
                     colour = LAND + (int)((HIGHEST - LAND + 1) * (10 * alt));
-                    if (colour > HIGHEST) 
+                    if (colour > HIGHEST)
                         colour = HIGHEST;
                 }
             }
@@ -331,39 +331,11 @@ namespace WorldGen
             return colour;
         }
 
-        public void Mercador()
-        {
-            double y,scale1,cos2,theta1;
-            //log_2();
-            int i, j, k;
-            //planet0();
-            y = Math.Sin(Latitude);
-            y = (1.0 + y) / (1.0 - y);
-            y = 0.5 * Math.Log10(y);
-            k = (int)(0.5 * y * Width * Scale / PI);
-            
-            for (j = 0; j < Height; j++) 
-            {/*
-                if (debug && ((j % (Height/25)) == 0)) 
-	            {
-		            fprintf (stderr, "%c", view); fflush(stderr);
-	            }*/
-                y = PI*(2.0*(j-k)-Height)/Width/Scale;
-                y = Math.Exp(2.0*y);
-                y = (y-1.0)/(y+1.0);
-                scale1 = Scale*Width/Height/Math.Sqrt(1.0-y*y)/PI;
-                cos2 = Math.Sqrt(1.0 - y * y);
-                Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
-                for (i = 0; i < Width ; i++) 
-	            {
 
-                    theta1 = Longitude - 0.5 * PI + PI * (2.0 * i - Width) / Width / Scale;
-                    MakeColour(new Point3D((float)(Math.Cos(theta1) * cos2), (float)y, (float)(-Math.Sin(theta1) * cos2)), i, j);
-                    //planet0(Math.Cos(theta1) * cos2, y, -Math.Sin(theta1) * cos2, i, j);
-                }
-            }
-  
-        }
+        //////////////////////////////////////////////////////
+        //              FUNCIONES AUXILIARES                //
+        //////////////////////////////////////////////////////
+
 
         private void AddColor(int indice, Color c)
         {
@@ -424,19 +396,19 @@ namespace WorldGen
                     img.SetPixel(i, j, Schema[ColorMap[i, j]]);
                 }
             }
-            img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp); 
+            img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
         }
 
         public double Makerand(double A, double B)
         {
-          double r;
-          r = (A + 3.14159265) * (B + 3.14159265);
-          return(2.0*(r-(int)r)-1.0);
+            double r;
+            r = (A + 3.14159265) * (B + 3.14159265);
+            return (2.0 * (r - (int)r) - 1.0);
         }
 
         public void Save()
         {
-            string fileName = _Seed+".txt";
+            string fileName = _Seed + ".txt";
             FileStream stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
             StreamWriter writer = new StreamWriter(stream);
 
@@ -474,5 +446,203 @@ namespace WorldGen
             writer.Close();
         }
 
+
+        public Bitmap printBMP2()
+        {
+            Bitmap img = new Bitmap(Width, Height);
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                }
+            }
+            return img;
+        }
+
+
+        public void LoadColorFile(string p)
+        {
+            string archivo = p;
+            string linea = "";
+            string[] tokens;
+            char[] delimiters = new char[2];
+            int indice = 0, r, g, b;
+            Color C;
+            Schema.Clear();
+            delimiters[0] = ' ';
+            delimiters[1] = (char)ConsoleKey.Tab;
+            FileStream stream = new FileStream(archivo, FileMode.Open, FileAccess.Read);
+
+            StreamReader SR = new StreamReader(stream);
+            while (!SR.EndOfStream)
+            {
+                linea = SR.ReadLine();
+                tokens = linea.Split(delimiters);
+                if (tokens.Length == 4)
+                {
+                    indice = int.Parse(tokens[0]);
+                    r = int.Parse(tokens[1]);
+                    g = int.Parse(tokens[2]);
+                    b = int.Parse(tokens[3]);
+                    C = Color.FromArgb(r, g, b);
+                    AddColor(indice, C);
+                }
+            }
+
+            int cNum = indice;
+
+            int nocols = cNum + 1;
+            if (nocols < 10) nocols = 10;
+            LOWEST = 6;
+            HIGHEST = nocols - 1;
+            SEA = (HIGHEST + LOWEST) / 2;
+            LAND = SEA + 1;
+
+        }
+
+
+        /// <summary>
+        /// Función para generar números aleatorios
+        /// </summary>
+        /// <returns>devuelve un número aleatorio entre -1 y 1 (ambos inclusive)</returns>
+        private double GetRND()
+        {
+            double res;
+            int mod = rnd2.Next(-1, 2);
+            while (mod == 0)
+                mod = rnd2.Next(-1, 2);
+
+            res = mod * rnd2.NextDouble();
+
+            return res;
+        }
+
+        //////////////////////////////////////////////////////
+        //                  PROYECCIONES                    //
+        //////////////////////////////////////////////////////
+
+        public void MakeHeightMap()
+        {
+            double cla = Math.Cos(Latitude);
+            double sla = Math.Sin(Latitude);
+            double clo = Math.Cos(Longitude);
+            double slo = Math.Sin(Longitude);
+
+            double x, y, z, x1, y1, z1;
+            Point3D punto;
+            for (int j = 0; j < Height; j++)
+                for (int i = 0; i < Width; i++)
+                {
+                    x = (2.0 * i - Width) / Height / Scale;
+                    y = (2.0 * j - Height) / Height / Scale;
+                    if (x * x + y * y > 1.0)//ponemos los bordes a 0
+                        Heightmap[i, j] = 0;
+                    else
+                    {
+                        //Recalculamos los puntos del mapa para la posicion i,j
+                        z = Math.Sqrt(1.0 - x * x - y * y);
+                        x1 = (clo * x) + (slo * sla * y) + (slo * cla * z);
+                        y1 = (cla * y) - (sla * z);
+                        z1 = (-slo * x) + (clo * sla * y) + (clo * cla * z);
+                        //Calculamos la altura del punto i,j
+                        punto = new Point3D((float)x1, (float)y1, (float)z1);
+                        //Heightmap[i, j] = 10000000 * MakeHeight(punto);
+                        Heightmap[i, j] = 10000000 * MakeHeight(punto);
+                    }
+                }
+        }
+
+        public void Mercador()
+        {
+            double y,scale1,cos2,theta1;
+            //log_2();
+            int i, j, k;
+            //planet0();
+            y = Math.Sin(Latitude);
+            y = (1.0 + y) / (1.0 - y);
+            y = 0.5 * Math.Log10(y);
+            k = (int)(0.5 * y * Width * Scale / PI);
+            
+            for (j = 0; j < Height; j++) 
+            {/*
+                if (debug && ((j % (Height/25)) == 0)) 
+	            {
+		            fprintf (stderr, "%c", view); fflush(stderr);
+	            }*/
+                y = PI*(2.0*(j-k)-Height)/Width/Scale;
+                y = Math.Exp(2.0*y);
+                y = (y-1.0)/(y+1.0);
+                scale1 = Scale*Width/Height/Math.Sqrt(1.0-y*y)/PI;
+                cos2 = Math.Sqrt(1.0 - y * y);
+                Depth = 3*((int)(Math.Log(scale1*Height,2)))+3;
+                for (i = 0; i < Width ; i++) 
+	            {
+
+                    theta1 = Longitude - 0.5 * PI + PI * (2.0 * i - Width) / Width / Scale;
+                    MakeColour(new Point3D((float)(Math.Cos(theta1) * cos2), (float)y, (float)(-Math.Sin(theta1) * cos2)), i, j);
+                    //planet0(Math.Cos(theta1) * cos2, y, -Math.Sin(theta1) * cos2, i, j);
+                }
+            }
+  
+        }
+
+        public void Mollweide()
+        {
+
+            double cla = Math.Cos(Latitude);
+            double sla = Math.Sin(Latitude);
+            double clo = Math.Cos(Longitude);
+            double slo = Math.Sin(Longitude);
+            double y,y1,zz,scale1,cos2,theta1,theta2;
+            
+            int i,j,i1=1,k;
+
+            for (j = 0; j < Height; j++) 
+            {
+                y1 = 2*(2.0*j-_Height)/_Width/_Scale;
+                if (Math.Abs(y1)>=1.0) 
+                    for (i = 0; i < Width ; i++) 
+                    {
+                        ColorMap[i,j] = BLACK;/*
+                        if (doshade>0) 
+                            shades[i][j] = 255;*/
+                    } 
+                else 
+                {
+                    zz = Math.Sqrt(1.0-y1*y1);
+                    y = 2.0/PI*(y1*zz+Math.Asin(y1));
+                    cos2 = Math.Sqrt(1.0 - y * y);
+                    if (cos2>0.0) 
+                    {
+	                    scale1 = _Scale*Width/Height/cos2/PI;
+	                    Depth = 3*((int)(Math.Log((scale1*Height),2)))+3;
+	                    for (i = 0; i < Width ; i++) 
+                        {
+	                        theta1 = PI/zz*(2.0*i-Width)/Width/_Scale;
+                            if (Math.Abs(theta1) > PI) 
+                            {
+                                ColorMap[i,j] = BLACK;/*
+	                            if (doshade>0) 
+                                    shades[i][j] = 255;*/
+	                        } 
+                            else 
+                            {
+	                            double x2,y2,z2, x3,y3,z3;
+	                            theta1 += -0.5*PI;
+	                            x2 = Math.Cos(theta1)*cos2;
+	                            y2 = y;
+	                            z2 = -Math.Sin(theta1)*cos2;
+	                            x3 = clo*x2+slo*sla*y2+slo*cla*z2;
+	                            y3 = cla*y2-sla*z2;
+	                            z3 = -slo*x2+clo*sla*y2+clo*cla*z2;
+
+                                MakeColour(new Point3D((float)x3, (float)y3, (float)z3), i, j);
+	                        }
+	                    }
+                    }
+                }
+            }
+        }
     }
 }

@@ -110,14 +110,14 @@ namespace WorldGen
             double deltaYAB = A.Y - B.Y;
             double deltaZAB = A.Z - B.Z;
 
-            double distanceAB = Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2);
+            double distanceAB = deltaXAB * deltaXAB + deltaYAB * deltaYAB + deltaZAB * deltaZAB;
 
 
             double deltaXAC = A.X - C.X;
             double deltaYAC = A.Y - C.Y;
             double deltaZAC = A.Z - C.Z;
 
-            double distanceAC = Math.Pow(deltaXAC, 2) + Math.Pow(deltaYAC, 2) + Math.Pow(deltaZAC, 2);
+            double distanceAC = deltaXAC * deltaXAC + deltaYAC * deltaYAC + deltaZAC * deltaZAC;
 
             if (distanceAB < distanceAC)
             {
@@ -134,7 +134,7 @@ namespace WorldGen
                 double deltaYAD = A.Y - D.Y;
                 double deltaZAD = A.Z - D.Z;
 
-                double distanceAD = Math.Pow(deltaXAD, 2) + Math.Pow(deltaYAD, 2) + Math.Pow(deltaZAD, 2);
+                double distanceAD = deltaXAD * deltaXAD + deltaYAD * deltaYAD + deltaZAD * deltaZAD;
                 if (distanceAB < distanceAD)
                 {
                     /*Intercambiamos B con C*/
@@ -156,7 +156,7 @@ namespace WorldGen
                     double deltaYBC = B.Y - C.Y;
                     double deltaZBC = B.Z - C.Z;
 
-                    double distanceBC = Math.Pow(deltaXBC, 2) + Math.Pow(deltaYBC, 2) + Math.Pow(deltaZBC, 2);
+                    double distanceBC = deltaXBC * deltaXBC + deltaYBC * deltaYBC + deltaZBC * deltaZBC;
                     if (distanceAB < distanceBC)
                     {
                         /*Intercambiamos A con B*/
@@ -183,7 +183,7 @@ namespace WorldGen
                         double deltaYBD = B.Y - D.Y;
                         double deltaZBD = B.Z - D.Z;
 
-                        double distanceBD = Math.Pow(deltaXBD, 2) + Math.Pow(deltaYBD, 2) + Math.Pow(deltaZBD, 2);
+                        double distanceBD = deltaXBD * deltaXBD + deltaYBD * deltaYBD + deltaZBD * deltaZBD;
                         if (distanceAB < distanceBD)
                         {
                             /*Intercambiamos A con B*/
@@ -209,7 +209,7 @@ namespace WorldGen
                             double deltaYCD = C.Y - D.Y;
                             double deltaZCD = C.Z - D.Z;
 
-                            double distanceCD = Math.Pow(deltaXCD, 2) + Math.Pow(deltaYCD, 2) + Math.Pow(deltaZCD, 2);
+                            double distanceCD = deltaXCD * deltaXCD + deltaYCD * deltaYCD + deltaZCD * deltaZCD;
                             if (distanceAB < distanceCD)
                             {
                                 /*Intercambiamos A con C*/
@@ -256,6 +256,7 @@ namespace WorldGen
             double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
             System.Threading.Thread.Sleep(1);
 */
+
             /*
             double ESeed = GetRND(ref R);
             double ESeed1 = GetRND(ref R);
@@ -294,7 +295,7 @@ namespace WorldGen
             double deltaYAB = A.Y - B.Y;
             double deltaZAB = A.Z - B.Z;
 
-            double distanceAB = Math.Pow(deltaXAB, 2) + Math.Pow(deltaYAB, 2) + Math.Pow(deltaZAB, 2);
+            double distanceAB = deltaXAB * deltaXAB + deltaYAB * deltaYAB + deltaZAB * deltaZAB;
 
             if (distanceAB > 1.0)
                 distanceAB = Math.Pow(distanceAB, 0.5);

@@ -19,18 +19,32 @@ namespace WorldGen
 
         private void button1_Click(object sender, EventArgs e)
         {
-            map = new Mapa(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), double.Parse(tbS.Text));
+            map = new Mapa(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), tbS.Text);
             map.Latitude = double.Parse(tbLat.Text);
             map.Longitude = double.Parse(tbLong.Text);
             map.Scale = double.Parse(tbScale.Text);
 
             map.LoadColorFile(((KeyValuePair<string, string>)cbSchema.SelectedItem).Value);
 
-            map.SaveColMap();
+            //map.SaveColMap();
             
             //map.Mercador();
+            int proj = ((KeyValuePair<string, int>)cbProyecciones.SelectedItem).Value;
 
-            map.Mollweide();
+            switch (proj)
+            {
+                case 0:
+                    map.Mercador();
+                    break;
+                case 1:
+                    map.Mollweide();
+                    break;
+                default:
+                    map.Mercador();
+                    break;
+            }
+
+            //map.Mollweide();
             
             //map.MakeHeightMap();
            // map.Save();
@@ -38,7 +52,7 @@ namespace WorldGen
             pbMapa.Image = map.printBMP2();
             //int i = 3;
         }
-        private void inicializarCB()
+        private void inicializarCBSchemas()
         {
             cbSchema.DisplayMember = "Key";
             cbSchema.ValueMember = "Value";
@@ -55,9 +69,20 @@ namespace WorldGen
             cbSchema.Items.Add(new KeyValuePair<string, string>("Yellow", "./Schemas/yellow.col"));
         }
 
+        private void inicializarCBProyecciones()
+        {
+            cbProyecciones.DisplayMember = "Key";
+            cbProyecciones.ValueMember = "Value";
+            cbProyecciones.Items.Add(new KeyValuePair<string, int>("Mercador", 0));
+            cbProyecciones.Items.Add(new KeyValuePair<string, int>("Mollweide", 1));
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            inicializarCB();
+            inicializarCBSchemas();
+            inicializarCBProyecciones();
+            cbSchema.SelectedIndex = 7;
+            cbProyecciones.SelectedIndex = 0;
         }
 
         private void tbLat_KeyPress(object sender, KeyPressEventArgs e)
@@ -72,13 +97,13 @@ namespace WorldGen
             }
             else
             {
-                if (!char.IsDigit(e.KeyChar))
-                {
-                    e.Handled = true;
-                }
-                else if (e.KeyChar == ',')
+                if (e.KeyChar == ',')
                 {
                     e.Handled = false;
+                }
+                else if (!char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
                 }
 
             }
@@ -99,13 +124,13 @@ namespace WorldGen
             }
             else
             {
-                if (!char.IsDigit(e.KeyChar))
-                {
-                    e.Handled = true;
-                }
-                else if (e.KeyChar == ',')
+                if (e.KeyChar == ',')
                 {
                     e.Handled = false;
+                }
+                else if (!char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
                 }
 
             }
@@ -126,13 +151,13 @@ namespace WorldGen
             }
             else
             {
-                if (!char.IsDigit(e.KeyChar))
-                {
-                    e.Handled = true;
-                }
-                else if (e.KeyChar == ',')
+                if (e.KeyChar == ',')
                 {
                     e.Handled = false;
+                }
+                else if (!char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
                 }
 
             }

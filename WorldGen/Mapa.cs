@@ -114,11 +114,12 @@ namespace WorldGen
         /// <param name="W">Valor entero que representa la anchura del mapa</param>
         /// <param name="H">Valor entero que representa la altura del mapa</param>
         /// <param name="S">Valor decimal que representa la semilla del mapa</param>
-        public Mapa(int W, int H, double S)
+        public Mapa(int W, int H, string S)
         {
             _Width = W;
             _Height = H;
-            Seed = S;
+            Semilla = S;
+            setSeedFromString();
             Heightmap = new double[Width, Height];
             ColorMap = new int[Width, Height];
             for (int i = 0; i < Width; i++)
@@ -143,27 +144,7 @@ namespace WorldGen
             r4 = Makerand(r2, r3);
 
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
-            rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));/*
-            r1 = rnd.NextDouble();
-            r2 = rnd.NextDouble();
-            r3 = rnd.NextDouble();
-            r4 = rnd.NextDouble();*/
-
-
-
-            /*
-            ssa = rnd2.Next(-1, 1) * rnd2.NextDouble();
-            ssb = rnd2.Next(-1, 1) * rnd2.NextDouble();
-            ssc = rnd2.Next(-1, 1) * rnd2.NextDouble();
-            ssd = rnd2.Next(-1, 1) * rnd2.NextDouble();
-            ssa = GetRND();
-            ssb = GetRND();
-            ssc = GetRND();
-            ssd = GetRND();
-            r1 = ssa;
-            r2 = ssb;
-            r3 = ssc;
-            r4 = ssd;*/
+            rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
 
         }
 
@@ -499,6 +480,20 @@ namespace WorldGen
             SEA = (HIGHEST + LOWEST) / 2;
             LAND = SEA + 1;
 
+        }
+
+        private void setSeedFromString()
+        {
+
+
+            double aux = 0;
+            bool res = double.TryParse(Semilla,out aux);
+            if(!res)
+                foreach (char c in _Semilla)
+                {
+                        aux += c;
+                }
+            Seed = aux;
         }
 
 

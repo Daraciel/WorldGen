@@ -44,24 +44,30 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbSchema = new System.Windows.Forms.ComboBox();
             this.tbScale = new System.Windows.Forms.TextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tslEstado = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.cbProyecciones = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1204, 10);
+            this.button1.Location = new System.Drawing.Point(40, 264);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
+            this.button1.TabIndex = 9;
             this.button1.Text = "GO!";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // nudW
             // 
-            this.nudW.Location = new System.Drawing.Point(279, 13);
+            this.nudW.Location = new System.Drawing.Point(84, 44);
             this.nudW.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -78,7 +84,7 @@
             // 
             // nudH
             // 
-            this.nudH.Location = new System.Drawing.Point(399, 13);
+            this.nudH.Location = new System.Drawing.Point(204, 44);
             this.nudH.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -113,7 +119,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(232, 15);
+            this.label2.Location = new System.Drawing.Point(37, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 5;
@@ -122,7 +128,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(365, 15);
+            this.label3.Location = new System.Drawing.Point(170, 46);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 6;
@@ -131,7 +137,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(494, 15);
+            this.label4.Location = new System.Drawing.Point(37, 85);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 8;
@@ -140,7 +146,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(632, 15);
+            this.label5.Location = new System.Drawing.Point(175, 85);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
@@ -149,7 +155,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(786, 15);
+            this.label6.Location = new System.Drawing.Point(37, 120);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 12;
@@ -157,7 +163,7 @@
             // 
             // tbLat
             // 
-            this.tbLat.Location = new System.Drawing.Point(542, 12);
+            this.tbLat.Location = new System.Drawing.Point(85, 82);
             this.tbLat.Name = "tbLat";
             this.tbLat.Size = new System.Drawing.Size(62, 20);
             this.tbLat.TabIndex = 4;
@@ -166,7 +172,7 @@
             // 
             // tbLong
             // 
-            this.tbLong.Location = new System.Drawing.Point(689, 12);
+            this.tbLong.Location = new System.Drawing.Point(232, 82);
             this.tbLong.Name = "tbLong";
             this.tbLong.Size = new System.Drawing.Size(62, 20);
             this.tbLong.TabIndex = 5;
@@ -175,16 +181,16 @@
             // 
             // pbMapa
             // 
-            this.pbMapa.Location = new System.Drawing.Point(12, 51);
+            this.pbMapa.Location = new System.Drawing.Point(479, 12);
             this.pbMapa.Name = "pbMapa";
-            this.pbMapa.Size = new System.Drawing.Size(1267, 574);
+            this.pbMapa.Size = new System.Drawing.Size(800, 600);
             this.pbMapa.TabIndex = 13;
             this.pbMapa.TabStop = false;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(935, 18);
+            this.label7.Location = new System.Drawing.Point(37, 150);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(95, 13);
             this.label7.TabIndex = 14;
@@ -193,25 +199,67 @@
             // cbSchema
             // 
             this.cbSchema.FormattingEnabled = true;
-            this.cbSchema.Location = new System.Drawing.Point(1036, 12);
+            this.cbSchema.Location = new System.Drawing.Point(138, 144);
             this.cbSchema.Name = "cbSchema";
             this.cbSchema.Size = new System.Drawing.Size(138, 21);
-            this.cbSchema.TabIndex = 15;
+            this.cbSchema.TabIndex = 7;
             // 
             // tbScale
             // 
-            this.tbScale.Location = new System.Drawing.Point(834, 13);
+            this.tbScale.Location = new System.Drawing.Point(85, 118);
             this.tbScale.Name = "tbScale";
             this.tbScale.Size = new System.Drawing.Size(62, 20);
-            this.tbScale.TabIndex = 16;
+            this.tbScale.TabIndex = 6;
             this.tbScale.Text = "1,0";
             this.tbScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbScale_KeyPress);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tslEstado,
+            this.ProgressBar});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 636);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1291, 22);
+            this.statusStrip1.TabIndex = 17;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tslEstado
+            // 
+            this.tslEstado.Name = "tslEstado";
+            this.tslEstado.Size = new System.Drawing.Size(49, 17);
+            this.tslEstado.Text = "Iniciado";
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // cbProyecciones
+            // 
+            this.cbProyecciones.FormattingEnabled = true;
+            this.cbProyecciones.Location = new System.Drawing.Point(106, 174);
+            this.cbProyecciones.Name = "cbProyecciones";
+            this.cbProyecciones.Size = new System.Drawing.Size(138, 21);
+            this.cbProyecciones.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(37, 177);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(63, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Proyección:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1291, 637);
+            this.ClientSize = new System.Drawing.Size(1291, 658);
+            this.Controls.Add(this.cbProyecciones);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tbScale);
             this.Controls.Add(this.cbSchema);
             this.Controls.Add(this.label7);
@@ -234,6 +282,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +307,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbSchema;
         private System.Windows.Forms.TextBox tbScale;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tslEstado;
+        private System.Windows.Forms.ToolStripProgressBar ProgressBar;
+        private System.Windows.Forms.ComboBox cbProyecciones;
+        private System.Windows.Forms.Label label8;
     }
 }
 

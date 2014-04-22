@@ -34,11 +34,6 @@ namespace WorldGen
         private double InitialHeight = 0.2; //Altura inicial del mapa
         private double _Scale = 1.0;         //Escala del mapa (futura feature)
 
-        public double Scale
-        {
-            get { return _Scale; }
-            set { _Scale = value; }
-        }
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
@@ -46,6 +41,44 @@ namespace WorldGen
 
 
         private int Depth = 11; //Número de subdivisiones que hará el tetraedro
+
+
+
+
+        public Random rnd, rnd2;
+
+
+        private int _Width;             //Ancho del mapa (px)
+        private int _Height;            //Alto del mapa (px)
+        private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
+
+        private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
+
+        public double Longitude
+        {
+            get { return _Longitude; }
+            set 
+            {
+
+                if (value > 180)
+                    value -= 360;
+                _Longitude = value;
+
+
+                _Longitude = (_Longitude * PI) / 180.0;
+            }
+        }
+
+        public double Latitude
+        {
+            get { return _Latitude; }
+            set 
+            { 
+                _Latitude = value;
+
+                _Latitude = (_Latitude * PI) / 180.0;
+            }
+        }
 
         public int Width
         {
@@ -63,7 +96,6 @@ namespace WorldGen
             }
         }
 
-
         public double Seed
         {
             get
@@ -78,26 +110,17 @@ namespace WorldGen
             }
         }
 
-        public Random rnd, rnd2;
-
-
-        private int _Width;             //Ancho del mapa (px)
-        private int _Height;            //Alto del mapa (px)
-        private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
-
-        public double Latitude
+        public double Scale
         {
-            get { return _Latitude; }
-            set { _Latitude = value; }
+            get { return _Scale; }
+            set 
+            {
+                if (value >= 1)
+                    _Scale = value;
+                else
+                    _Scale = 1;
+            }
         }
-        private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
-
-        public double Longitude
-        {
-            get { return _Longitude; }
-            set { _Longitude = value; }
-        }
-
 
         private double _Seed;           //Semilla del mapa
         private double[,] Heightmap;    //Mapa de alturas
@@ -132,10 +155,6 @@ namespace WorldGen
             Schema = new SortedList<int, Color>();
             SetDefaultSchema();
             Depth = 3 * ((int)(Math.Log(_Scale * Height,2))) + 6;
-            if (_Longitude > 180)
-                _Longitude -= 360;
-            _Longitude = (_Longitude * PI)/180.0;
-            _Latitude = (_Latitude * PI)/180.0;
 
             r1 = _Seed;
             r1 = Makerand(r1, r1);

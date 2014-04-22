@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace WorldGen
 {
@@ -87,6 +89,23 @@ namespace WorldGen
 
         private void tbLat_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (tbLat.Text.Contains('-'))
+            {
+                if (e.KeyChar == '-')
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            else
+            {
+                if (e.KeyChar == '-')
+                {
+                    e.Handled = false;
+                    return;
+                }
+            }
+
 
             if (tbLat.Text.Contains(','))
             {
@@ -114,6 +133,24 @@ namespace WorldGen
 
         private void tbLong_KeyPress(object sender, KeyPressEventArgs e)
         {
+
+            if (tbLong.Text.Contains('-'))
+            {
+                if (e.KeyChar == '-')
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            else
+            {
+                if (e.KeyChar == '-')
+                {
+                    e.Handled = false;
+                    return;
+                }
+            }
+
 
             if (tbLong.Text.Contains(','))
             {

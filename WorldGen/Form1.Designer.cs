@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.nudW = new System.Windows.Forms.NumericUpDown();
             this.nudH = new System.Windows.Forms.NumericUpDown();
@@ -49,15 +50,19 @@
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.cbProyecciones = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.menuSalvar = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nSGuardar = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.menuSalvar.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(40, 264);
+            this.button1.Location = new System.Drawing.Point(40, 212);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -181,6 +186,7 @@
             // 
             // pbMapa
             // 
+            this.pbMapa.ContextMenuStrip = this.menuSalvar;
             this.pbMapa.Location = new System.Drawing.Point(479, 12);
             this.pbMapa.Name = "pbMapa";
             this.pbMapa.Size = new System.Drawing.Size(800, 600);
@@ -252,11 +258,36 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Proyección:";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(138, 212);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "Etiquetar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // menuSalvar
+            // 
+            this.menuSalvar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nSGuardar});
+            this.menuSalvar.Name = "menuSalvar";
+            this.menuSalvar.Size = new System.Drawing.Size(162, 48);
+            // 
+            // nSGuardar
+            // 
+            this.nSGuardar.Name = "nSGuardar";
+            this.nSGuardar.Size = new System.Drawing.Size(161, 22);
+            this.nSGuardar.Text = "Guardar Como...";
+            this.nSGuardar.Click += new System.EventHandler(this.nSGuardar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1291, 658);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.cbProyecciones);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.statusStrip1);
@@ -284,6 +315,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuSalvar.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +344,9 @@
         private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         private System.Windows.Forms.ComboBox cbProyecciones;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ContextMenuStrip menuSalvar;
+        private System.Windows.Forms.ToolStripMenuItem nSGuardar;
     }
 }
 

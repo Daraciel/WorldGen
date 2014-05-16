@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.IO;
 
 namespace WorldGen
 {
@@ -201,6 +202,30 @@ namespace WorldGen
 
             if (e.KeyChar == '\b')
                 e.Handled = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //map = new Mapa(100, 100, "0.123");
+            //map.etiquetarDebug();
+        }
+
+        private void nSGuardar_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "bmp files (*.bmp)|*.bmp";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                if (map.printBMP(saveFileDialog1.FileName))
+                {
+                    MessageBox.Show("Guardao!");
+                }
+            }
         }
     }
 }

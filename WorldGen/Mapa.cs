@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using MapLabelling;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -130,6 +134,8 @@ namespace WorldGen
 
         private SortedList<int,Color> Schema;
 
+        private MassLabelling etiquetadora;
+
 
         /// <summary>
         /// Constructor de la clase mapa
@@ -164,7 +170,7 @@ namespace WorldGen
 
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
             rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
-
+            etiquetadora = new MassLabelling();
         }
 
 
@@ -397,6 +403,20 @@ namespace WorldGen
                 }
             }
             img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+        }
+
+        public bool printBMP(string file)
+        {
+            Bitmap img = new Bitmap(Width, Height);
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                }
+            }
+            img.Save(file, System.Drawing.Imaging.ImageFormat.Bmp);
+            return true;
         }
 
         public double Makerand(double A, double B)
@@ -658,5 +678,21 @@ namespace WorldGen
                 }
             }
         }
+
+
+
+        //////////////////////////////////////////////////////
+        //               E T I Q U E T A D O                //
+        //////////////////////////////////////////////////////
+
+        public void etiquetarDebug()
+        {
+            Emgu.CV.Image<Rgb, Byte> img = new Image<Rgb, byte>(printBMP2());
+            Emgu.CV.Structure.MIplImage image = img.MIplImage;
+            etiquetadora.regionprops(image);
+            int i = 6;
+        }
+
+
     }
 }

@@ -3,16 +3,50 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGen", "WorldGen\WorldGen.csproj", "{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapLabelling", "MapLabelling\MapLabelling.csproj", "{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2} = {7C2C5325-8235-4A24-9C67-6BD79A4679E2}
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908} = {9A1A77FE-F01B-495E-87B7-4B16E4F8C908}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.CV", "..\..\..\..\..\Emgu\emgucv-windows-universal-cuda 2.9.0.1922\Emgu.CV\Emgu.CV.csproj", "{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.Util", "..\..\..\..\..\Emgu\emgucv-windows-universal-cuda 2.9.0.1922\Emgu.Util\Emgu.Util.csproj", "{7C2C5325-8235-4A24-9C67-6BD79A4679E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Debug|x86.Build.0 = Debug|Any CPU
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|x86.ActiveCfg = Release|x86
+		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|x86.Build.0 = Release|x86
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C21AC27-B1D9-41A7-8DBD-7450FB1FDA31}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

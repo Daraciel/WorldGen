@@ -1,7 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using MapLabelling;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.UI.DataVisualization.Charting;
+using Masslabelling;
+using System.Threading.Tasks;
+
 
 
 namespace WorldGen
@@ -134,7 +136,7 @@ namespace WorldGen
 
         private SortedList<int,Color> Schema;
 
-        private MassLabelling etiquetadora;
+        //private MassLabelling etiquetadora;
 
 
         /// <summary>
@@ -170,7 +172,7 @@ namespace WorldGen
 
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
             rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
-            etiquetadora = new MassLabelling();
+            //etiquetadora = new MassLabelling();
         }
 
 
@@ -466,6 +468,21 @@ namespace WorldGen
             writer.Close();
         }
 
+        public Bitmap printBW()
+        {
+            Bitmap img = new Bitmap(Width, Height);
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    if (ColorMap[i, j] > SEA)
+                        img.SetPixel(i, j, Color.Black);
+                    else
+                        img.SetPixel(i, j, Color.White);
+                }
+            }
+            return img;
+        }
 
         public Bitmap printBMP2()
         {
@@ -685,12 +702,39 @@ namespace WorldGen
         //               E T I Q U E T A D O                //
         //////////////////////////////////////////////////////
 
-        public void etiquetarDebug()
+        public Image<Bgr, byte> etiquetarDebug()
         {
-            Emgu.CV.Image<Rgb, Byte> img = new Image<Rgb, byte>(printBMP2());
-            Emgu.CV.Structure.MIplImage image = img.MIplImage;
-            etiquetadora.regionprops(image);
+            Bitmap mapa = printBW();
+            Emgu.CV.Image<Gray, Byte> img = new Image<Gray, Byte>(mapa);
+            Emgu.CV.Image<Bgr, Byte> imgColor = new Image<Bgr, Byte>(mapa);
+
+            List<Masslabelling.Region> regiones = Mass.GetRegions(img);
+
+            //Emgu.CV.Structure.MIplImage image = img.MIplImage;
+
+            Parallel.ForEach<Masslabelling.Region>(regiones, (region) =>
+                {
+                    imgColor.Draw(region.Marco, new Bgr(Color.Red), 2);
+                });
+
+            //etiquetadora.regionprops(image);
             int i = 6;
+            return imgColor;
+            
+            /*
+            String win1 = "Test Window"; //The name of the window
+            CvInvoke.cvNamedWindow(win1); //Create the window using the specific name
+
+            Image<Bgr, Byte> img = new Image<Bgr, byte>(400, 200, new Bgr(255, 0, 0)); //Create an image of 400x200 of Blue color
+            MCvFont f = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0); //Create the font
+
+            img.Draw("Hello, world", ref f, new System.Drawing.Point(10, 80), new Bgr(0, 255, 0)); //Draw "Hello, world." on the image using the specific font
+
+            CvInvoke.cvShowImage(win1, img); //Show the image
+            CvInvoke.cvWaitKey(0);  //Wait for the key pressing event
+            CvInvoke.cvDestroyWindow(win1); //Destory the window
+            
+            */
         }
 
 

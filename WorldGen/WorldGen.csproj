@@ -132,9 +132,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MapLabelling\MapLabelling.csproj">
-      <Project>{6c21ac27-b1d9-41a7-8dbd-7450fb1fda31}</Project>
-      <Name>MapLabelling</Name>
+    <ProjectReference Include="..\Masslabelling\Masslabelling.csproj">
+      <Project>{6ade0cbb-c54f-4796-a8f4-60930c0acab1}</Project>
+      <Name>Masslabelling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

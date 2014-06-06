@@ -207,7 +207,7 @@ namespace WorldGen
         private void button2_Click(object sender, EventArgs e)
         {
             //map = new Mapa(100, 100, "0.123");
-            //map.etiquetarDebug();
+            pbMapa.Image = map.etiquetarDebug().ToBitmap();
         }
 
         private void nSGuardar_Click(object sender, EventArgs e)

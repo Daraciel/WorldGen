@@ -705,16 +705,27 @@ namespace WorldGen
             Bitmap mapa = printBW();
             Emgu.CV.Image<Gray, Byte> img = new Image<Gray, Byte>(mapa);
             Emgu.CV.Image<Bgr, Byte> imgColor = new Image<Bgr, Byte>(mapa);
+            double tamanoplaneta = mapa.Size.Height*mapa.Size.Width;
+            double umbralcontinente = tamanoplaneta * 0.03;
+            double umbralislita = tamanoplaneta * 0.000008;
 
-            List<Masslabelling.Region> regiones = Mass.GetRegions(img);
+            List<Masslabelling.Region> regiones = Mass.GetRegions(img, TIPOREGION.TIERRA);
 
             //Emgu.CV.Structure.MIplImage image = img.MIplImage;
             Random randonGen = new Random();
+            MCvFont fuente = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX_SMALL, 0.5, 0.5);
 
             Parallel.ForEach<Masslabelling.Region>(regiones, (region) =>
                 {
                     Color randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
-                    imgColor.Draw(region.Marco, new Bgr(randomColor), 2);
+                    if (region.Area > umbralislita)
+                    {
+                        imgColor.Draw(region.Marco, new Bgr(randomColor), 2);
+                        if (region.Area > umbralcontinente)
+                            imgColor.Draw("Continente", ref fuente, region.Marco.Location, new Bgr(randomColor));
+                        else
+                            imgColor.Draw("Isla", ref fuente, region.Marco.Location, new Bgr(randomColor));
+                    }
                 });
 
             //etiquetadora.regionprops(image);

@@ -20,7 +20,7 @@ namespace Masslabelling
 
         private static double CannyThreshold = 149;
 
-        public static List<Region> GetRegions(Image<Gray, byte> mapa)
+        public static List<Region> GetRegions(Image<Gray, byte> mapa, TIPOREGION tr)
         {
             if (mapa.Size.Height * mapa.Size.Width < MinSize.Height * MinSize.Width)
                 return null;
@@ -30,6 +30,11 @@ namespace Masslabelling
             List<Region> regiones = new List<Region>();
             int contH = 0, contV = 0;
             Region auxH, auxV;
+            TIPOREGION nuevotipo = TIPOREGION.AGUA;
+
+            if(tr == TIPOREGION.AGUA)
+                nuevotipo = TIPOREGION.TIERRA;
+
             while (sourceContours != null)
             {
                 auxH = new Region();
@@ -38,12 +43,13 @@ namespace Masslabelling
                 auxH.Marco = sourceContours.BoundingRectangle;
                 auxH.Perimetro = sourceContours.Perimeter;
                 auxH.NumVertices = sourceContours.Total;
+                auxH.Tipo = tr;
                 Point[] forma = sourceContours.ToArray();
                 for (int i = 0; i < forma.Length; i++)
                 {
                     auxH.Vertices[i] = forma[i];
                 }
-                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco));
+                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco), nuevotipo);
                 regiones.Add(auxH);
                 sourceContours = sourceContours.HNext;
                 contH++;

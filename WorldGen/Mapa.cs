@@ -476,9 +476,9 @@ namespace WorldGen
                 for (int j = 0; j < Height; j++)
                 {
                     if (ColorMap[i, j] > SEA)
-                        img.SetPixel(i, j, Color.Black);
-                    else
                         img.SetPixel(i, j, Color.White);
+                    else
+                        img.SetPixel(i, j, Color.Black);
                 }
             }
             return img;
@@ -606,21 +606,19 @@ namespace WorldGen
 
         public void Mercador()
         {
-            double y,scale1,cos2,theta1;
+            double y, theta1, scale1, cos2;
             //log_2();
-            int i, j, k;
+            int k;
             //planet0();
             y = Math.Sin(Latitude);
             y = (1.0 + y) / (1.0 - y);
             y = 0.5 * Math.Log10(y);
             k = (int)(0.5 * y * Width * Scale / PI);
-            
+
+
+            int i,j;
             for (j = 0; j < Height; j++) 
-            {/*
-                if (debug && ((j % (Height/25)) == 0)) 
-	            {
-		            fprintf (stderr, "%c", view); fflush(stderr);
-	            }*/
+            {
                 y = PI*(2.0*(j-k)-Height)/Width/Scale;
                 y = Math.Exp(2.0*y);
                 y = (y-1.0)/(y+1.0);
@@ -711,10 +709,12 @@ namespace WorldGen
             List<Masslabelling.Region> regiones = Mass.GetRegions(img);
 
             //Emgu.CV.Structure.MIplImage image = img.MIplImage;
+            Random randonGen = new Random();
 
             Parallel.ForEach<Masslabelling.Region>(regiones, (region) =>
                 {
-                    imgColor.Draw(region.Marco, new Bgr(Color.Red), 2);
+                    Color randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
+                    imgColor.Draw(region.Marco, new Bgr(randomColor), 2);
                 });
 
             //etiquetadora.regionprops(image);

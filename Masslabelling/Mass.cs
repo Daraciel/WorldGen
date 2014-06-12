@@ -20,14 +20,85 @@ namespace Masslabelling
 
         private static double CannyThreshold = 149;
 
-        public static List<Region> GetRegions(Image<Gray, byte> mapa, TIPOREGION tr)
+        private static List<string> continentes;
+        private static List<string> islas;
+
+        static Mass()
+        {
+            fillIslands();
+            fillContinents();
+        }
+
+        private static void fillIslands()
+        {
+            string fic = "Islands.res";
+            string texto;
+            islas = new List<string>();
+
+            System.IO.StreamReader sr = new System.IO.StreamReader(fic);
+            while (!sr.EndOfStream)
+            {
+                texto = sr.ReadLine();
+                islas.Add(texto);
+            }
+
+            sr.Close();
+        }
+
+
+        private static void fillContinents()
+        {
+
+            string fic = "Continents.res";
+            string texto;
+            continentes = new List<string>();
+            System.IO.StreamReader sr = new System.IO.StreamReader(fic);
+            while (!sr.EndOfStream)
+            {
+                texto = sr.ReadLine();
+                continentes.Add(texto);
+            }
+
+            sr.Close();
+        }
+
+        public static string getRandomIsland()
+        {
+            string result = "";
+            Random rnd = new Random();
+            if (islas.Count == 0)
+                fillIslands();
+            
+            int num = rnd.Next(islas.Count());
+
+            result = islas.ElementAt(num);
+            islas.RemoveAt(num);
+
+            return result;
+        }
+
+        public static string getRandomContinent()
+        {
+            string result = "";
+            Random rnd = new Random();
+            if (continentes.Count == 0)
+                fillContinents();
+            int num = rnd.Next(continentes.Count());
+
+            result = continentes.ElementAt(num);
+            continentes.RemoveAt(num);
+
+            return result;
+        }
+
+        public static HashSet<Region> GetRegions(Image<Gray, byte> mapa, TIPOREGION tr, double umbral)
         {
             if (mapa.Size.Height * mapa.Size.Width < MinSize.Height * MinSize.Width)
                 return null;
 
             
             Contour<Point> sourceContours = mapa.FindContours(Searchmethod, Retrievaltype);
-            List<Region> regiones = new List<Region>();
+            HashSet<Region> regiones = new HashSet<Region>();
             int contH = 0, contV = 0;
             Region auxH, auxV;
             TIPOREGION nuevotipo = TIPOREGION.AGUA;
@@ -44,12 +115,32 @@ namespace Masslabelling
                 auxH.Perimetro = sourceContours.Perimeter;
                 auxH.NumVertices = sourceContours.Total;
                 auxH.Tipo = tr;
+                if (auxH.Tipo == TIPOREGION.TIERRA)
+                {
+                    if (auxH.Area > umbral)
+                    {
+                        auxH.Nombre = getRandomContinent();
+                        auxH.Tipotam = TIPOTAMANO.CONTINENTE;
+                    }
+                    else
+                    {
+                        auxH.Nombre = getRandomIsland();
+                        auxH.Tipotam = TIPOTAMANO.ISLA;
+                        if (auxH.Nombre.StartsWith("de"))
+                            auxH.Nombre = "Isla " + auxH.Nombre;
+                    }
+
+                }
+                else
+                {
+                    auxH.Nombre = "Lago";
+                }
                 Point[] forma = sourceContours.ToArray();
                 for (int i = 0; i < forma.Length; i++)
                 {
                     auxH.Vertices[i] = forma[i];
                 }
-                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco), nuevotipo);
+                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco), nuevotipo, umbral);
                 regiones.Add(auxH);
                 sourceContours = sourceContours.HNext;
                 contH++;

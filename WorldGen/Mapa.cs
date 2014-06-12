@@ -700,6 +700,8 @@ namespace WorldGen
         //               E T I Q U E T A D O                //
         //////////////////////////////////////////////////////
 
+        public HashSet<Masslabelling.Region> Regiones;
+
         public Image<Bgr, byte> etiquetarDebug()
         {
             Bitmap mapa = printBW();
@@ -709,22 +711,21 @@ namespace WorldGen
             double umbralcontinente = tamanoplaneta * 0.03;
             double umbralislita = tamanoplaneta * 0.000008;
 
-            List<Masslabelling.Region> regiones = Mass.GetRegions(img, TIPOREGION.TIERRA);
+            Regiones = new HashSet<Masslabelling.Region>();
+
+            Regiones = Mass.GetRegions(img, TIPOREGION.TIERRA, umbralcontinente);
 
             //Emgu.CV.Structure.MIplImage image = img.MIplImage;
             Random randonGen = new Random();
             MCvFont fuente = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX_SMALL, 0.5, 0.5);
 
-            Parallel.ForEach<Masslabelling.Region>(regiones, (region) =>
+            Parallel.ForEach<Masslabelling.Region>(Regiones, (region) =>
                 {
                     Color randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
                     if (region.Area > umbralislita)
                     {
                         imgColor.Draw(region.Marco, new Bgr(randomColor), 2);
-                        if (region.Area > umbralcontinente)
-                            imgColor.Draw("Continente", ref fuente, region.Marco.Location, new Bgr(randomColor));
-                        else
-                            imgColor.Draw("Isla", ref fuente, region.Marco.Location, new Bgr(randomColor));
+                        imgColor.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(randomColor));
                     }
                 });
 

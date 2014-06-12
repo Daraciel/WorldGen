@@ -42,6 +42,8 @@
             this.tbLat = new System.Windows.Forms.TextBox();
             this.tbLong = new System.Windows.Forms.TextBox();
             this.pbMapa = new System.Windows.Forms.PictureBox();
+            this.menuSalvar = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nSGuardar = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.cbSchema = new System.Windows.Forms.ComboBox();
             this.tbScale = new System.Windows.Forms.TextBox();
@@ -51,13 +53,12 @@
             this.cbProyecciones = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.menuSalvar = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.nSGuardar = new System.Windows.Forms.ToolStripMenuItem();
+            this.tvAccidentes = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             this.menuSalvar.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -151,7 +152,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(175, 85);
+            this.label5.Location = new System.Drawing.Point(157, 85);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
@@ -177,7 +178,7 @@
             // 
             // tbLong
             // 
-            this.tbLong.Location = new System.Drawing.Point(232, 82);
+            this.tbLong.Location = new System.Drawing.Point(214, 82);
             this.tbLong.Name = "tbLong";
             this.tbLong.Size = new System.Drawing.Size(62, 20);
             this.tbLong.TabIndex = 5;
@@ -187,11 +188,25 @@
             // pbMapa
             // 
             this.pbMapa.ContextMenuStrip = this.menuSalvar;
-            this.pbMapa.Location = new System.Drawing.Point(479, 12);
+            this.pbMapa.Location = new System.Drawing.Point(282, 12);
             this.pbMapa.Name = "pbMapa";
             this.pbMapa.Size = new System.Drawing.Size(800, 600);
             this.pbMapa.TabIndex = 13;
             this.pbMapa.TabStop = false;
+            // 
+            // menuSalvar
+            // 
+            this.menuSalvar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nSGuardar});
+            this.menuSalvar.Name = "menuSalvar";
+            this.menuSalvar.Size = new System.Drawing.Size(162, 26);
+            // 
+            // nSGuardar
+            // 
+            this.nSGuardar.Name = "nSGuardar";
+            this.nSGuardar.Size = new System.Drawing.Size(161, 22);
+            this.nSGuardar.Text = "Guardar Como...";
+            this.nSGuardar.Click += new System.EventHandler(this.nSGuardar_Click);
             // 
             // label7
             // 
@@ -268,25 +283,19 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // menuSalvar
+            // tvAccidentes
             // 
-            this.menuSalvar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nSGuardar});
-            this.menuSalvar.Name = "menuSalvar";
-            this.menuSalvar.Size = new System.Drawing.Size(162, 48);
-            // 
-            // nSGuardar
-            // 
-            this.nSGuardar.Name = "nSGuardar";
-            this.nSGuardar.Size = new System.Drawing.Size(161, 22);
-            this.nSGuardar.Text = "Guardar Como...";
-            this.nSGuardar.Click += new System.EventHandler(this.nSGuardar_Click);
+            this.tvAccidentes.Location = new System.Drawing.Point(1088, 46);
+            this.tvAccidentes.Name = "tvAccidentes";
+            this.tvAccidentes.Size = new System.Drawing.Size(191, 566);
+            this.tvAccidentes.TabIndex = 20;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1291, 658);
+            this.Controls.Add(this.tvAccidentes);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.cbProyecciones);
             this.Controls.Add(this.label8);
@@ -313,9 +322,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
+            this.menuSalvar.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.menuSalvar.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,6 +356,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ContextMenuStrip menuSalvar;
         private System.Windows.Forms.ToolStripMenuItem nSGuardar;
+        private System.Windows.Forms.TreeView tvAccidentes;
     }
 }
 

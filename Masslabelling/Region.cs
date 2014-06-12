@@ -23,6 +23,13 @@ namespace Masslabelling
             set { _Tipo = value; }
         }
 
+        private TIPOTAMANO _tipotam;
+
+        public TIPOTAMANO Tipotam
+        {
+            get { return _tipotam; }
+            set { _tipotam = value; }
+        }
 
         private double _Area;
 
@@ -63,9 +70,9 @@ namespace Masslabelling
             set { _Vertices = value; }
         }
 
-        private List<Region> _Hijos;
+        private HashSet<Region> _Hijos;
 
-        public List<Region> Hijos
+        public HashSet<Region> Hijos
         {
             get { return _Hijos; }
             set { _Hijos = value; }
@@ -78,5 +85,13 @@ namespace Masslabelling
         TIERRA,
         AGUA,
         MAPA
+    }
+
+    public enum TIPOTAMANO
+    {
+        CONTINENTE,
+        ISLA,
+        OCEANO,
+        MAR
     }
 }

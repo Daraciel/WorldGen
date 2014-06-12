@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace WorldGen
 {
@@ -208,6 +209,12 @@ namespace WorldGen
         {
             //map = new Mapa(100, 100, "0.123");
             pbMapa.Image = map.etiquetarDebug().ToBitmap();
+
+            tvAccidentes.Nodes.Clear();
+            foreach(Masslabelling.Region R in map.Regiones)
+            {
+                tvAccidentes.Nodes.Add(fillTree(R));
+            }
         }
 
         private void nSGuardar_Click(object sender, EventArgs e)
@@ -226,6 +233,21 @@ namespace WorldGen
                     MessageBox.Show("Guardao!");
                 }
             }
+        }
+
+        private TreeNode fillTree(Masslabelling.Region R)
+        {
+            TreeNode tn = new TreeNode();
+
+            tn.Name = R.Nombre;
+            tn.Text = R.Nombre;
+            if((R.Hijos!=null) && (R.Hijos.Count>0))
+                foreach (Masslabelling.Region h in R.Hijos)
+                {
+                    tn.Nodes.Add(fillTree(h));
+                }
+
+            return tn;
         }
     }
 }

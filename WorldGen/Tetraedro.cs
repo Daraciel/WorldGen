@@ -18,7 +18,15 @@ namespace WorldGen
         public Point3D A
         {
             get { return _A; }
-            set { _A = value; }
+            set {
+                    _A = value;
+                    if (_B != null)
+                        _DistAB = getDist(ref _A, ref _B);
+                    if (_C != null)
+                        _DistAC = getDist(ref _A, ref _C);
+                    if (_D != null)
+                        _DistAD = getDist(ref _A, ref _D);
+                }
         }
         private double _AHeight;
         public double AHeight
@@ -38,7 +46,16 @@ namespace WorldGen
         public Point3D B
         {
             get { return _B; }
-            set { _B = value; }
+            set
+            {
+                _B = value;
+                if (_A != null)
+                    _DistAB = getDist(ref _A, ref _B);
+                if (_C != null)
+                    _DistBC = getDist(ref _B, ref _C);
+                if (_D != null)
+                    _DistBD = getDist(ref _B, ref _D);
+            }
         }
         private double _BHeight;
         public double BHeight
@@ -58,7 +75,16 @@ namespace WorldGen
         public Point3D C
         {
             get { return _C; }
-            set { _C = value; }
+            set
+            {
+                _C = value;
+                if (_A != null)
+                    _DistAC = getDist(ref _A, ref _C);
+                if (_B != null)
+                    _DistBC = getDist(ref _B, ref _C);
+                if (_D != null)
+                    _DistBC = getDist(ref _B, ref _C);
+            }
         }
         private double _CHeight;
         public double CHeight
@@ -78,7 +104,16 @@ namespace WorldGen
         public Point3D D
         {
             get { return _D; }
-            set { _D = value; }
+            set
+            {
+                _D = value;
+                if (_A != null)
+                    _DistAD = getDist(ref _A, ref _D);
+                if (_B != null)
+                    _DistBD = getDist(ref _B, ref _D);
+                if (_D != null)
+                    _DistCD = getDist(ref _D, ref _C);
+            }
         }
         private double _DHeight;
         public double DHeight
@@ -93,6 +128,45 @@ namespace WorldGen
             set { _DSeed = value; }
         }
 
+        /*DISTANCIAS*/
+        private double _DistAB, _DistAC, _DistAD, _DistBC, _DistBD, _DistCD;
+
+        public double DistAB
+        {
+            get { return _DistAB; }
+        }
+        public double DistAC
+        {
+            get { return _DistAC; }
+        }
+        public double DistAD
+        {
+            get { return _DistAD; }
+        }
+        public double DistBC
+        {
+            get { return _DistBC; }
+        }
+        public double DistBD
+        {
+            get { return _DistBD; }
+        }
+        public double DistCD
+        {
+            get { return _DistCD; }
+        }
+        /**/
+
+        private double getDist(ref Point3D a, ref Point3D b)
+        {
+            double res;
+            double deltaXAB = a.X - b.X;
+            double deltaYAB = a.Y - b.Y;
+            double deltaZAB = a.Z - b.Z;
+            res = deltaXAB * deltaXAB + deltaYAB * deltaYAB + deltaZAB * deltaZAB;
+
+            return res;
+        }
 
         public Tetraedro()
         {
@@ -106,20 +180,7 @@ namespace WorldGen
             Point3D PointAux;
             double SeedAux;
 
-            double deltaXAB = A.X - B.X;
-            double deltaYAB = A.Y - B.Y;
-            double deltaZAB = A.Z - B.Z;
-
-            double distanceAB = deltaXAB * deltaXAB + deltaYAB * deltaYAB + deltaZAB * deltaZAB;
-
-
-            double deltaXAC = A.X - C.X;
-            double deltaYAC = A.Y - C.Y;
-            double deltaZAC = A.Z - C.Z;
-
-            double distanceAC = deltaXAC * deltaXAC + deltaYAC * deltaYAC + deltaZAC * deltaZAC;
-
-            if (distanceAB < distanceAC)
+            if (_DistAB < _DistAC)
             {
                 /*Intercambiamos B con C*/
                 PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
@@ -130,12 +191,7 @@ namespace WorldGen
             }
             else
             {
-                double deltaXAD = A.X - D.X;
-                double deltaYAD = A.Y - D.Y;
-                double deltaZAD = A.Z - D.Z;
-
-                double distanceAD = deltaXAD * deltaXAD + deltaYAD * deltaYAD + deltaZAD * deltaZAD;
-                if (distanceAB < distanceAD)
+                if (_DistAB < _DistAD)
                 {
                     /*Intercambiamos B con C*/
                     PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
@@ -152,12 +208,7 @@ namespace WorldGen
                 else
                 {
 
-                    double deltaXBC = B.X - C.X;
-                    double deltaYBC = B.Y - C.Y;
-                    double deltaZBC = B.Z - C.Z;
-
-                    double distanceBC = deltaXBC * deltaXBC + deltaYBC * deltaYBC + deltaZBC * deltaZBC;
-                    if (distanceAB < distanceBC)
+                    if (_DistAB < _DistBC)
                     {
                         /*Intercambiamos A con B*/
                         PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
@@ -179,12 +230,7 @@ namespace WorldGen
                     }
                     else
                     {
-                        double deltaXBD = B.X - D.X;
-                        double deltaYBD = B.Y - D.Y;
-                        double deltaZBD = B.Z - D.Z;
-
-                        double distanceBD = deltaXBD * deltaXBD + deltaYBD * deltaYBD + deltaZBD * deltaZBD;
-                        if (distanceAB < distanceBD)
+                        if (_DistAB < _DistBD)
                         {
                             /*Intercambiamos A con B*/
                             PointAux = B; SeedAux = BSeed; HeightAux = BHeight;
@@ -205,12 +251,7 @@ namespace WorldGen
                         }
                         else
                         {
-                            double deltaXCD = C.X - D.X;
-                            double deltaYCD = C.Y - D.Y;
-                            double deltaZCD = C.Z - D.Z;
-
-                            double distanceCD = deltaXCD * deltaXCD + deltaYCD * deltaYCD + deltaZCD * deltaZCD;
-                            if (distanceAB < distanceCD)
+                            if (_DistAB < _DistCD)
                             {
                                 /*Intercambiamos A con C*/
                                 PointAux = A; SeedAux = ASeed; HeightAux = AHeight;

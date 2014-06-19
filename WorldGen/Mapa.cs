@@ -10,36 +10,52 @@ using System.Text;
 using System.Web.UI.DataVisualization.Charting;
 using Masslabelling;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 
 
 namespace WorldGen
 {
+    [XmlRootAttribute("person", Namespace = "", IsNullable = false)]
     public class Mapa
     {
+        [XmlIgnoreAttribute()]
         private string _Semilla;
 
+        [XmlIgnoreAttribute()]
         public string Semilla
         {
             get { return _Semilla; }
             set { _Semilla = value; }
         }
 
+        [XmlIgnoreAttribute()]
         private int BLACK = 0;
+        [XmlIgnoreAttribute()]
         private int WHITE = 1;
+        [XmlIgnoreAttribute()]
         private int BACK = 2;
+        [XmlIgnoreAttribute()]
         private int GRID = 3;
+        [XmlIgnoreAttribute()]
         private int OUTLINE1 = 4;
+        [XmlIgnoreAttribute()]
         private int OUTLINE2 = 5;
+        [XmlIgnoreAttribute()]
         private int LOWEST = 6;
+
+        [XmlElementAttribute("agua")]
         private int SEA = 7;
+        [XmlElementAttribute("tierra")]
         private int LAND = 8;
+        [XmlElementAttribute("maximo")]
         private int HIGHEST = 9;
         private int latic = 0;
 
         private double InitialHeight = 0.2; //Altura inicial del mapa
         private double _Scale = 1.0;         //Escala del mapa (futura feature)
 
+        [XmlIgnoreAttribute()]
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
@@ -53,11 +69,13 @@ namespace WorldGen
 
         public Random rnd, rnd2;
 
-
+        [XmlElementAttribute("ancho")]
         private int _Width;             //Ancho del mapa (px)
+        [XmlElementAttribute("alto")]
         private int _Height;            //Alto del mapa (px)
+        [XmlElementAttribute("latitud")]
         private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
-
+        [XmlElementAttribute("longitud")]
         private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
 
         public double Longitude
@@ -128,8 +146,10 @@ namespace WorldGen
             }
         }
 
+        [XmlElementAttribute("seed")]
         private double _Seed;           //Semilla del mapa
         private double[,] Heightmap;    //Mapa de alturas
+
         private int[,] ColorMap;        //Mapa coloreado
 
         private double r1, r2, r3, r4;
@@ -749,6 +769,10 @@ namespace WorldGen
             */
         }
 
+        public void toXML()
+        {
+            XmlSerializer x = new XmlSerializer(this.GetType());
+        }
 
     }
 }

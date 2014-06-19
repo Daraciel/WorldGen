@@ -61,17 +61,21 @@
             this.cargarMapaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trbLat = new System.Windows.Forms.TrackBar();
+            this.trbLong = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
             this.menuSalvar.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.msMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLong)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(40, 230);
+            this.button1.Location = new System.Drawing.Point(40, 352);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -117,7 +121,7 @@
             // 
             this.tbS.Location = new System.Drawing.Point(86, 30);
             this.tbS.Name = "tbS";
-            this.tbS.Size = new System.Drawing.Size(123, 20);
+            this.tbS.Size = new System.Drawing.Size(180, 20);
             this.tbS.TabIndex = 1;
             this.tbS.Text = "0.123";
             // 
@@ -160,7 +164,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(157, 103);
+            this.label5.Location = new System.Drawing.Point(37, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
@@ -169,7 +173,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(37, 138);
+            this.label6.Location = new System.Drawing.Point(37, 260);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 12;
@@ -177,20 +181,22 @@
             // 
             // tbLat
             // 
-            this.tbLat.Location = new System.Drawing.Point(85, 100);
+            this.tbLat.Location = new System.Drawing.Point(94, 100);
             this.tbLat.Name = "tbLat";
             this.tbLat.Size = new System.Drawing.Size(62, 20);
             this.tbLat.TabIndex = 4;
             this.tbLat.Text = "0,0";
+            this.tbLat.TextChanged += new System.EventHandler(this.tbLat_TextChanged);
             this.tbLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLat_KeyPress);
             // 
             // tbLong
             // 
-            this.tbLong.Location = new System.Drawing.Point(214, 100);
+            this.tbLong.Location = new System.Drawing.Point(94, 171);
             this.tbLong.Name = "tbLong";
             this.tbLong.Size = new System.Drawing.Size(62, 20);
             this.tbLong.TabIndex = 5;
             this.tbLong.Text = "0,0";
+            this.tbLong.TextChanged += new System.EventHandler(this.tbLong_TextChanged);
             this.tbLong.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLong_KeyPress);
             // 
             // pbMapa
@@ -219,7 +225,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 168);
+            this.label7.Location = new System.Drawing.Point(37, 290);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(95, 13);
             this.label7.TabIndex = 14;
@@ -228,14 +234,14 @@
             // cbSchema
             // 
             this.cbSchema.FormattingEnabled = true;
-            this.cbSchema.Location = new System.Drawing.Point(138, 162);
+            this.cbSchema.Location = new System.Drawing.Point(138, 284);
             this.cbSchema.Name = "cbSchema";
-            this.cbSchema.Size = new System.Drawing.Size(138, 21);
+            this.cbSchema.Size = new System.Drawing.Size(128, 21);
             this.cbSchema.TabIndex = 7;
             // 
             // tbScale
             // 
-            this.tbScale.Location = new System.Drawing.Point(85, 136);
+            this.tbScale.Location = new System.Drawing.Point(85, 258);
             this.tbScale.Name = "tbScale";
             this.tbScale.Size = new System.Drawing.Size(62, 20);
             this.tbScale.TabIndex = 6;
@@ -267,15 +273,15 @@
             // cbProyecciones
             // 
             this.cbProyecciones.FormattingEnabled = true;
-            this.cbProyecciones.Location = new System.Drawing.Point(106, 192);
+            this.cbProyecciones.Location = new System.Drawing.Point(106, 314);
             this.cbProyecciones.Name = "cbProyecciones";
-            this.cbProyecciones.Size = new System.Drawing.Size(138, 21);
+            this.cbProyecciones.Size = new System.Drawing.Size(160, 21);
             this.cbProyecciones.TabIndex = 8;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(37, 195);
+            this.label8.Location = new System.Drawing.Point(37, 317);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 13);
             this.label8.TabIndex = 18;
@@ -283,7 +289,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(138, 230);
+            this.button2.Location = new System.Drawing.Point(138, 352);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 19;
@@ -323,37 +329,59 @@
             // nuevoMapaToolStripMenuItem
             // 
             this.nuevoMapaToolStripMenuItem.Name = "nuevoMapaToolStripMenuItem";
-            this.nuevoMapaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nuevoMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.nuevoMapaToolStripMenuItem.Text = "Nuevo Mapa";
             // 
             // guardarMapaToolStripMenuItem
             // 
             this.guardarMapaToolStripMenuItem.Name = "guardarMapaToolStripMenuItem";
-            this.guardarMapaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.guardarMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.guardarMapaToolStripMenuItem.Text = "Guardar Mapa";
             // 
             // cargarMapaToolStripMenuItem
             // 
             this.cargarMapaToolStripMenuItem.Name = "cargarMapaToolStripMenuItem";
-            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.cargarMapaToolStripMenuItem.Text = "Cargar Mapa";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
             // 
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.salirToolStripMenuItem.Text = "Salir";
+            // 
+            // trbLat
+            // 
+            this.trbLat.Location = new System.Drawing.Point(40, 126);
+            this.trbLat.Maximum = 90;
+            this.trbLat.Minimum = -90;
+            this.trbLat.Name = "trbLat";
+            this.trbLat.Size = new System.Drawing.Size(226, 45);
+            this.trbLat.TabIndex = 22;
+            this.trbLat.ValueChanged += new System.EventHandler(this.trbLat_ValueChanged);
+            // 
+            // trbLong
+            // 
+            this.trbLong.Location = new System.Drawing.Point(40, 198);
+            this.trbLong.Maximum = 360;
+            this.trbLong.Minimum = -360;
+            this.trbLong.Name = "trbLong";
+            this.trbLong.Size = new System.Drawing.Size(226, 45);
+            this.trbLong.TabIndex = 23;
+            this.trbLong.ValueChanged += new System.EventHandler(this.trbLong_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1291, 674);
+            this.Controls.Add(this.trbLong);
+            this.Controls.Add(this.trbLat);
             this.Controls.Add(this.tvAccidentes);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.cbProyecciones);
@@ -388,6 +416,8 @@
             this.statusStrip1.PerformLayout();
             this.msMenu.ResumeLayout(false);
             this.msMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLong)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -427,6 +457,8 @@
         private System.Windows.Forms.ToolStripMenuItem cargarMapaToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
+        private System.Windows.Forms.TrackBar trbLat;
+        private System.Windows.Forms.TrackBar trbLong;
     }
 }
 

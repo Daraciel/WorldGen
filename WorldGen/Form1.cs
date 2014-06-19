@@ -249,5 +249,49 @@ namespace WorldGen
 
             return tn;
         }
+
+        private void trbLat_ValueChanged(object sender, EventArgs e)
+        {
+            tbLat.Text = trbLat.Value.ToString();
+        }
+
+        private void trbLong_ValueChanged(object sender, EventArgs e)
+        {
+            tbLong.Text = trbLong.Value.ToString();
+        }
+
+        private void tbLat_TextChanged(object sender, EventArgs e)
+        {
+            int val;
+            bool can = int.TryParse(tbLat.Text,out val);
+            if (can)
+            {
+                if (val > trbLat.Maximum)
+                    trbLat.Value = trbLat.Maximum;
+                else if (val < trbLat.Minimum)
+                    trbLat.Value = trbLat.Minimum;
+                else
+                    trbLat.Value = val;
+            }
+            else
+                trbLat.Value = 0;
+        }
+
+        private void tbLong_TextChanged(object sender, EventArgs e)
+        {
+            int val;
+            bool can = int.TryParse(tbLong.Text,out val);
+            if (can)
+            {
+                if (val > trbLong.Maximum)
+                    trbLong.Value = trbLong.Maximum;
+                else if (val < trbLong.Minimum)
+                    trbLong.Value = trbLong.Minimum;
+                else
+                    trbLong.Value = val;
+            }
+            else
+                trbLong.Value = 0;
+        }
     }
 }

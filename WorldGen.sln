@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGen", "WorldGen\WorldGen.csproj", "{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.CV", "..\..\..\..\..\Emgu\emgucv-windows-universal-cuda 2.9.0.1922\Emgu.CV\Emgu.CV.csproj", "{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emgu.Util", "..\..\..\..\..\Emgu\emgucv-windows-universal-cuda 2.9.0.1922\Emgu.Util\Emgu.Util.csproj", "{7C2C5325-8235-4A24-9C67-6BD79A4679E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masslabelling", "Masslabelling\Masslabelling.csproj", "{6ADE0CBB-C54F-4796-A8F4-60930C0ACAB1}"
 EndProject
 Global
@@ -25,18 +21,6 @@ Global
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|x86.ActiveCfg = Release|x86
 		{1380F549-F0AB-40B9-9DDC-3605CD00E3E1}.Release|x86.Build.0 = Release|x86
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A1A77FE-F01B-495E-87B7-4B16E4F8C908}.Release|x86.ActiveCfg = Release|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C2C5325-8235-4A24-9C67-6BD79A4679E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{6ADE0CBB-C54F-4796-A8F4-60930C0ACAB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ADE0CBB-C54F-4796-A8F4-60930C0ACAB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ADE0CBB-C54F-4796-A8F4-60930C0ACAB1}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -46,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

@@ -16,17 +16,22 @@ using System.Xml.Serialization;
 
 namespace WorldGen
 {
-    [XmlRootAttribute("person", Namespace = "", IsNullable = false)]
+    
+
+    //[XmlRootAttribute("person", Namespace = "", IsNullable = false)]
     public class Mapa
     {
         [XmlIgnoreAttribute()]
         private string _Semilla;
 
-        [XmlIgnoreAttribute()]
+        //[XmlIgnoreAttribute()]
         public string Semilla
         {
             get { return _Semilla; }
-            set { _Semilla = value; }
+            set { 
+                    _Semilla = value;
+                    setSeedFromString();
+                }
         }
 
         [XmlIgnoreAttribute()]
@@ -44,18 +49,15 @@ namespace WorldGen
         [XmlIgnoreAttribute()]
         private int LOWEST = 6;
 
-        [XmlElementAttribute("agua")]
         private int SEA = 7;
-        [XmlElementAttribute("tierra")]
         private int LAND = 8;
-        [XmlElementAttribute("maximo")]
         private int HIGHEST = 9;
         private int latic = 0;
 
         private double InitialHeight = 0.2; //Altura inicial del mapa
         private double _Scale = 1.0;         //Escala del mapa (futura feature)
 
-        [XmlIgnoreAttribute()]
+        //[XmlIgnoreAttribute()]
         private double PI = Math.PI;        //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
@@ -69,13 +71,13 @@ namespace WorldGen
 
         public Random rnd, rnd2;
 
-        [XmlElementAttribute("ancho")]
+        //[XmlElementAttribute("ancho")]
         private int _Width;             //Ancho del mapa (px)
-        [XmlElementAttribute("alto")]
+        //[XmlElementAttribute("alto")]
         private int _Height;            //Alto del mapa (px)
-        [XmlElementAttribute("latitud")]
+        //[XmlElementAttribute("latitud")]
         private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
-        [XmlElementAttribute("longitud")]
+        //[XmlElementAttribute("longitud")]
         private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
 
         public double Longitude
@@ -103,12 +105,16 @@ namespace WorldGen
                 _Latitude = (_Latitude * PI) / 180.0;
             }
         }
-
+        //[XmlElementAttribute("ancho")]
         public int Width
         {
             get
             {
                 return _Width;
+            }
+            set
+            {
+                _Width = value;
             }
         }
 
@@ -118,6 +124,10 @@ namespace WorldGen
             {
                 return _Height;
             }
+            set
+            {
+                _Height = value;
+            }
         }
 
         public double Seed
@@ -126,7 +136,7 @@ namespace WorldGen
             {
                 return _Seed;
             }
-            private set
+            set
             {
                 while (value > 1.0)
                     value /= 10.0;
@@ -146,13 +156,37 @@ namespace WorldGen
             }
         }
 
-        [XmlElementAttribute("seed")]
+        //[XmlElementAttribute("seed")]
         private double _Seed;           //Semilla del mapa
         private double[,] Heightmap;    //Mapa de alturas
 
-        private int[,] ColorMap;        //Mapa coloreado
+        private int[,] _ColorMap;        //Mapa coloreado
+
+        private Capa[] _Capas;
+
+        [XmlElementAttribute("Capas")]
+        public Capa[] Capas
+        {
+            get { return _Capas; }
+            set { _Capas = value; }
+        }
 
         private double r1, r2, r3, r4;
+
+        private string _ColorFile;
+
+        public string ColorFile
+        {
+            get
+            {
+                return _ColorFile;
+            }
+            set
+            {
+                _ColorFile = value;
+                LoadColorFile(value);
+            }
+        }
 
         private SortedList<int,Color> Schema;
 
@@ -171,18 +205,23 @@ namespace WorldGen
             _Height = H;
             Semilla = S;
             setSeedFromString();
+            Inicializar();
+        }
+
+        public void Inicializar()
+        {
             Heightmap = new double[Width, Height];
-            ColorMap = new int[Width, Height];
+            _ColorMap = new int[Width, Height];
             for (int i = 0; i < Width; i++)
                 for (int j = 0; j < Height; j++)
                 {
                     Heightmap[i, j] = InitialHeight;
-                    ColorMap[i, j] = 0;
+                    _ColorMap[i, j] = 0;
                 }
 
             Schema = new SortedList<int, Color>();
             SetDefaultSchema();
-            Depth = 3 * ((int)(Math.Log(_Scale * Height,2))) + 6;
+            Depth = 3 * ((int)(Math.Log(_Scale * Height, 2))) + 6;
 
             r1 = _Seed;
             r1 = Makerand(r1, r1);
@@ -193,10 +232,18 @@ namespace WorldGen
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
             rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
             //etiquetadora = new MassLabelling();
+            Capas = new Capa[4];
+            Capas[0] = new Capa(TIPOCAPA.GRAFICA, Width, Height);
+            Capas[1] = new Capa(TIPOCAPA.DIFERENCIA, Width, Height);
+            Capas[2] = new Capa(TIPOCAPA.FORMAS, Width, Height);
+            Capas[3] = new Capa(TIPOCAPA.ETIQUETAS, Width, Height);
         }
 
 
+        public Mapa()
+        {
 
+        }
 
         //////////////////////////////////////////////////////
         //              FUNCIONES NECESARIAS                //
@@ -350,11 +397,17 @@ namespace WorldGen
             }
             /*
             if (colour < LAND)
-                ColorMap[i, j] = 0;
+                _ColorMap[i, j] = 0;
             else
-                ColorMap[i, j] = 1;*/
+                _ColorMap[i, j] = 1;*/
 
-            ColorMap[i, j] = colour;
+            _ColorMap[i, j] = colour;
+            Capas[0].Valores[i, j] = colour;
+
+            if (colour >= LAND)
+                Capas[1].Valores[i, j] = 1;
+            else
+                Capas[1].Valores[i, j] = 0;
 
             return colour;
         }
@@ -421,7 +474,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                    img.SetPixel(i, j, Schema[Capas[0].Valores[i, j]]);
                 }
             }
             img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
@@ -434,7 +487,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                    img.SetPixel(i, j, Schema[_ColorMap[i, j]]);
                 }
             }
             img.Save(file, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -481,7 +534,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    writer.Write(ColorMap[i, j] + " ");
+                    writer.Write(_ColorMap[i, j] + " ");
                 }
                 writer.Write("\n");
             }
@@ -495,7 +548,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    if (ColorMap[i, j] > SEA)
+                    if (_ColorMap[i, j] > SEA)
                         img.SetPixel(i, j, Color.White);
                     else
                         img.SetPixel(i, j, Color.Black);
@@ -511,7 +564,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[ColorMap[i, j]]);
+                    img.SetPixel(i, j, Schema[_ColorMap[i, j]]);
                 }
             }
             return img;
@@ -673,7 +726,7 @@ namespace WorldGen
                 if (Math.Abs(y1)>=1.0) 
                     for (i = 0; i < Width ; i++) 
                     {
-                        ColorMap[i,j] = BLACK;/*
+                        _ColorMap[i,j] = BLACK;/*
                         if (doshade>0) 
                             shades[i][j] = 255;*/
                     } 
@@ -691,7 +744,7 @@ namespace WorldGen
 	                        theta1 = PI/zz*(2.0*i-Width)/Width/_Scale;
                             if (Math.Abs(theta1) > PI) 
                             {
-                                ColorMap[i,j] = BLACK;/*
+                                _ColorMap[i,j] = BLACK;/*
 	                            if (doshade>0) 
                                     shades[i][j] = 255;*/
 	                        } 
@@ -719,7 +772,7 @@ namespace WorldGen
         //////////////////////////////////////////////////////
         //               E T I Q U E T A D O                //
         //////////////////////////////////////////////////////
-
+        [XmlElementAttribute("Regiones")]
         public HashSet<Masslabelling.Region> Regiones;
 
         public Image<Bgr, byte> etiquetarDebug()
@@ -736,16 +789,14 @@ namespace WorldGen
             Regiones = Mass.GetRegions(img, TIPOREGION.TIERRA, umbralcontinente);
 
             //Emgu.CV.Structure.MIplImage image = img.MIplImage;
-            Random randonGen = new Random();
             MCvFont fuente = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX_SMALL, 0.5, 0.5);
 
             Parallel.ForEach<Masslabelling.Region>(Regiones, (region) =>
                 {
-                    Color randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
                     if (region.Area > umbralislita)
                     {
-                        imgColor.Draw(region.Marco, new Bgr(randomColor), 2);
-                        imgColor.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(randomColor));
+                        imgColor.Draw(region.Marco, new Bgr(region.Col), 2);
+                        imgColor.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
                     }
                 });
 
@@ -769,9 +820,23 @@ namespace WorldGen
             */
         }
 
-        public void toXML()
+        public bool Salvar(string FileName)
         {
-            XmlSerializer x = new XmlSerializer(this.GetType());
+            try
+            {
+                using (var writer = new System.IO.StreamWriter(FileName))
+                {
+                    var serializer = new XmlSerializer(this.GetType());
+                    serializer.Serialize(writer, this);
+                    writer.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
     }

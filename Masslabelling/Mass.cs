@@ -96,7 +96,8 @@ namespace Masslabelling
             if (mapa.Size.Height * mapa.Size.Width < MinSize.Height * MinSize.Width)
                 return null;
 
-            
+            Random randonGen = new Random();
+            Color randomColor;
             Contour<Point> sourceContours = mapa.FindContours(Searchmethod, Retrievaltype);
             HashSet<Region> regiones = new HashSet<Region>();
             int contH = 0, contV = 0;
@@ -114,6 +115,8 @@ namespace Masslabelling
                 auxH.Marco = sourceContours.BoundingRectangle;
                 auxH.Perimetro = sourceContours.Perimeter;
                 auxH.NumVertices = sourceContours.Total;
+                randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
+                auxH.Col = randomColor;
                 auxH.Tipo = tr;
                 if (auxH.Tipo == TIPOREGION.TIERRA)
                 {

@@ -78,6 +78,13 @@ namespace Masslabelling
             set { _Hijos = value; }
         }
 
+        private Color _Col;
+
+        public Color Col
+        {
+            get { return _Col; }
+            set { _Col = value; }
+        }
     }
 
     public enum TIPOREGION

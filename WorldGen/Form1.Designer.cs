@@ -63,6 +63,19 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trbLat = new System.Windows.Forms.TrackBar();
             this.trbLong = new System.Windows.Forms.TrackBar();
+            this.gbEtiquetado = new System.Windows.Forms.GroupBox();
+            this.cbMasa = new System.Windows.Forms.CheckBox();
+            this.cbForma = new System.Windows.Forms.CheckBox();
+            this.gbVisu = new System.Windows.Forms.GroupBox();
+            this.pMapa = new System.Windows.Forms.Panel();
+            this.rbMapaColor = new System.Windows.Forms.RadioButton();
+            this.rbMapaBN = new System.Windows.Forms.RadioButton();
+            this.pAccidentes = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.rbShowShape = new System.Windows.Forms.RadioButton();
+            this.rbShowRect = new System.Windows.Forms.RadioButton();
+            this.cbShowNames = new System.Windows.Forms.CheckBox();
+            this.btnMostrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
@@ -71,6 +84,10 @@
             this.msMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbLat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbLong)).BeginInit();
+            this.gbEtiquetado.SuspendLayout();
+            this.gbVisu.SuspendLayout();
+            this.pMapa.SuspendLayout();
+            this.pAccidentes.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -289,7 +306,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(138, 352);
+            this.button2.Location = new System.Drawing.Point(6, 67);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 19;
@@ -337,6 +354,7 @@
             this.guardarMapaToolStripMenuItem.Name = "guardarMapaToolStripMenuItem";
             this.guardarMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.guardarMapaToolStripMenuItem.Text = "Guardar Mapa";
+            this.guardarMapaToolStripMenuItem.Click += new System.EventHandler(this.guardarMapaToolStripMenuItem_Click);
             // 
             // cargarMapaToolStripMenuItem
             // 
@@ -375,15 +393,154 @@
             this.trbLong.TabIndex = 23;
             this.trbLong.ValueChanged += new System.EventHandler(this.trbLong_ValueChanged);
             // 
+            // gbEtiquetado
+            // 
+            this.gbEtiquetado.Controls.Add(this.cbForma);
+            this.gbEtiquetado.Controls.Add(this.cbMasa);
+            this.gbEtiquetado.Controls.Add(this.button2);
+            this.gbEtiquetado.Location = new System.Drawing.Point(13, 381);
+            this.gbEtiquetado.Name = "gbEtiquetado";
+            this.gbEtiquetado.Size = new System.Drawing.Size(253, 98);
+            this.gbEtiquetado.TabIndex = 24;
+            this.gbEtiquetado.TabStop = false;
+            this.gbEtiquetado.Text = "Etiquetado";
+            // 
+            // cbMasa
+            // 
+            this.cbMasa.AutoSize = true;
+            this.cbMasa.Location = new System.Drawing.Point(7, 20);
+            this.cbMasa.Name = "cbMasa";
+            this.cbMasa.Size = new System.Drawing.Size(191, 17);
+            this.cbMasa.TabIndex = 0;
+            this.cbMasa.Text = "Acc. de masa (Islas, continentes...)";
+            this.cbMasa.UseVisualStyleBackColor = true;
+            // 
+            // cbForma
+            // 
+            this.cbForma.AutoSize = true;
+            this.cbForma.Enabled = false;
+            this.cbForma.Location = new System.Drawing.Point(7, 44);
+            this.cbForma.Name = "cbForma";
+            this.cbForma.Size = new System.Drawing.Size(196, 17);
+            this.cbForma.TabIndex = 1;
+            this.cbForma.Text = "Acc. de forma (Peninsulas, cabos...)";
+            this.cbForma.UseVisualStyleBackColor = true;
+            // 
+            // gbVisu
+            // 
+            this.gbVisu.Controls.Add(this.btnMostrar);
+            this.gbVisu.Controls.Add(this.pAccidentes);
+            this.gbVisu.Controls.Add(this.pMapa);
+            this.gbVisu.Location = new System.Drawing.Point(13, 485);
+            this.gbVisu.Name = "gbVisu";
+            this.gbVisu.Size = new System.Drawing.Size(253, 145);
+            this.gbVisu.TabIndex = 25;
+            this.gbVisu.TabStop = false;
+            this.gbVisu.Text = "Visualización";
+            // 
+            // pMapa
+            // 
+            this.pMapa.Controls.Add(this.rbMapaColor);
+            this.pMapa.Controls.Add(this.rbMapaBN);
+            this.pMapa.Location = new System.Drawing.Point(0, 19);
+            this.pMapa.Name = "pMapa";
+            this.pMapa.Size = new System.Drawing.Size(253, 27);
+            this.pMapa.TabIndex = 2;
+            // 
+            // rbMapaColor
+            // 
+            this.rbMapaColor.AutoSize = true;
+            this.rbMapaColor.Location = new System.Drawing.Point(7, 3);
+            this.rbMapaColor.Name = "rbMapaColor";
+            this.rbMapaColor.Size = new System.Drawing.Size(87, 17);
+            this.rbMapaColor.TabIndex = 2;
+            this.rbMapaColor.TabStop = true;
+            this.rbMapaColor.Text = "Mapa a color";
+            this.rbMapaColor.UseVisualStyleBackColor = true;
+            // 
+            // rbMapaBN
+            // 
+            this.rbMapaBN.AutoSize = true;
+            this.rbMapaBN.Location = new System.Drawing.Point(100, 3);
+            this.rbMapaBN.Name = "rbMapaBN";
+            this.rbMapaBN.Size = new System.Drawing.Size(128, 17);
+            this.rbMapaBN.TabIndex = 3;
+            this.rbMapaBN.TabStop = true;
+            this.rbMapaBN.Text = "Mapa Blanco y Negro";
+            this.rbMapaBN.UseVisualStyleBackColor = true;
+            // 
+            // pAccidentes
+            // 
+            this.pAccidentes.Controls.Add(this.cbShowNames);
+            this.pAccidentes.Controls.Add(this.rbShowRect);
+            this.pAccidentes.Controls.Add(this.rbShowShape);
+            this.pAccidentes.Controls.Add(this.label9);
+            this.pAccidentes.Location = new System.Drawing.Point(0, 47);
+            this.pAccidentes.Name = "pAccidentes";
+            this.pAccidentes.Size = new System.Drawing.Size(253, 60);
+            this.pAccidentes.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 2);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(126, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Opciones de Accidentes:";
+            // 
+            // rbShowShape
+            // 
+            this.rbShowShape.AutoSize = true;
+            this.rbShowShape.Location = new System.Drawing.Point(7, 18);
+            this.rbShowShape.Name = "rbShowShape";
+            this.rbShowShape.Size = new System.Drawing.Size(110, 17);
+            this.rbShowShape.TabIndex = 1;
+            this.rbShowShape.TabStop = true;
+            this.rbShowShape.Text = "Mostrar contornos";
+            this.rbShowShape.UseVisualStyleBackColor = true;
+            // 
+            // rbShowRect
+            // 
+            this.rbShowRect.AutoSize = true;
+            this.rbShowRect.Location = new System.Drawing.Point(118, 18);
+            this.rbShowRect.Name = "rbShowRect";
+            this.rbShowRect.Size = new System.Drawing.Size(110, 17);
+            this.rbShowRect.TabIndex = 2;
+            this.rbShowRect.TabStop = true;
+            this.rbShowRect.Text = "Mostrar Recuadro";
+            this.rbShowRect.UseVisualStyleBackColor = true;
+            // 
+            // cbShowNames
+            // 
+            this.cbShowNames.AutoSize = true;
+            this.cbShowNames.Location = new System.Drawing.Point(7, 40);
+            this.cbShowNames.Name = "cbShowNames";
+            this.cbShowNames.Size = new System.Drawing.Size(106, 17);
+            this.cbShowNames.TabIndex = 3;
+            this.cbShowNames.Text = "Mostrar Nombres";
+            this.cbShowNames.UseVisualStyleBackColor = true;
+            // 
+            // btnMostrar
+            // 
+            this.btnMostrar.Location = new System.Drawing.Point(6, 113);
+            this.btnMostrar.Name = "btnMostrar";
+            this.btnMostrar.Size = new System.Drawing.Size(75, 23);
+            this.btnMostrar.TabIndex = 4;
+            this.btnMostrar.Text = "Mostrar";
+            this.btnMostrar.UseVisualStyleBackColor = true;
+            this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1291, 674);
+            this.Controls.Add(this.gbVisu);
+            this.Controls.Add(this.gbEtiquetado);
             this.Controls.Add(this.trbLong);
             this.Controls.Add(this.trbLat);
             this.Controls.Add(this.tvAccidentes);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.cbProyecciones);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.statusStrip1);
@@ -418,6 +575,13 @@
             this.msMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbLat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbLong)).EndInit();
+            this.gbEtiquetado.ResumeLayout(false);
+            this.gbEtiquetado.PerformLayout();
+            this.gbVisu.ResumeLayout(false);
+            this.pMapa.ResumeLayout(false);
+            this.pMapa.PerformLayout();
+            this.pAccidentes.ResumeLayout(false);
+            this.pAccidentes.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,6 +623,19 @@
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.TrackBar trbLat;
         private System.Windows.Forms.TrackBar trbLong;
+        private System.Windows.Forms.GroupBox gbEtiquetado;
+        private System.Windows.Forms.CheckBox cbForma;
+        private System.Windows.Forms.CheckBox cbMasa;
+        private System.Windows.Forms.GroupBox gbVisu;
+        private System.Windows.Forms.Button btnMostrar;
+        private System.Windows.Forms.Panel pAccidentes;
+        private System.Windows.Forms.CheckBox cbShowNames;
+        private System.Windows.Forms.RadioButton rbShowRect;
+        private System.Windows.Forms.RadioButton rbShowShape;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel pMapa;
+        private System.Windows.Forms.RadioButton rbMapaColor;
+        private System.Windows.Forms.RadioButton rbMapaBN;
     }
 }
 

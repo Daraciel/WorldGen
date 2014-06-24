@@ -10,6 +10,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
 using System.Threading.Tasks;
+using Emgu.CV.CvEnum;
 
 namespace WorldGen
 {
@@ -27,8 +28,7 @@ namespace WorldGen
             map.Latitude = double.Parse(tbLat.Text);
             map.Longitude = double.Parse(tbLong.Text);
             map.Scale = double.Parse(tbScale.Text);
-
-            map.LoadColorFile(((KeyValuePair<string, string>)cbSchema.SelectedItem).Value);
+            map.ColorFile = ((KeyValuePair<string, string>)cbSchema.SelectedItem).Value;
 
             //map.SaveColMap();
             
@@ -292,6 +292,48 @@ namespace WorldGen
             }
             else
                 trbLong.Value = 0;
+        }
+
+        private void guardarMapaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "Ficheros XML (*.xml)|*.xml";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                if (map.Salvar(saveFileDialog1.FileName))
+                    MessageBox.Show("Guardao!");
+                else
+                    MessageBox.Show("Error!");
+
+            }
+        }
+
+        private void btnMostrar_Click(object sender, EventArgs e)
+        {
+            MCvFont fuente = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX_SMALL, 0.5, 0.5);
+            Emgu.CV.Image<Bgr, Byte> b;
+            if (rbMapaColor.Checked)
+                b = new Emgu.CV.Image<Bgr, Byte>(map.printBMP2());
+            else
+                b = new Emgu.CV.Image<Bgr, Byte>(map.printBW());
+
+            Parallel.ForEach(map.Regiones, region =>
+                {
+                    if(rbShowRect.Checked)
+                        b.Draw(region.Marco, new Bgr(region.Col), 2);
+                    else
+                        b.DrawPolyline(region.Vertices, true, new Bgr(region.Col), 1);
+                    
+                    if(cbShowNames.Checked)
+                        b.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
+                    
+                });
+            pbMapa.Image = b.ToBitmap();
         }
     }
 }

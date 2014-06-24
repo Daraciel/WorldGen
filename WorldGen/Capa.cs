@@ -17,10 +17,9 @@ namespace WorldGen
             set { _Tipo = value; }
         }
 
-        private int[,] _Valores;
+        private int[] _Valores;
 
-        [XmlIgnore]
-        public int[,] Valores
+        public int[] Valores
         {
             get { return _Valores; }
             set { _Valores = value; }
@@ -34,7 +33,7 @@ namespace WorldGen
             set { 
                     _Width = value;
                     if (_Height != null && _Width != null)
-                        _Valores = new int[_Width, _Height];
+                        Inicializar();
                 }
         }
 
@@ -46,7 +45,7 @@ namespace WorldGen
             set { 
                     _Height = value;
                     if (_Height != null && _Width != null)
-                        _Valores = new int[_Width, _Height];
+                        Inicializar();
                 }
         }
         /*
@@ -83,15 +82,17 @@ namespace WorldGen
         {
         }
 
-        public void Inicializar(int w, int h)
+        public void Inicializar()
         {
-            _Valores = new int[w, h];
+            _Valores = new int[_Width*_Height];
         }
 
         public Capa(TIPOCAPA c, int w, int h)
         {
             Tipo = c;
-            Valores = new int[w, h];
+            _Width = w;
+            _Height = h;
+            Inicializar();
         }
     }
 

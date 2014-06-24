@@ -76,6 +76,9 @@
             this.rbShowRect = new System.Windows.Forms.RadioButton();
             this.cbShowNames = new System.Windows.Forms.CheckBox();
             this.btnMostrar = new System.Windows.Forms.Button();
+            this.cbContinentes = new System.Windows.Forms.CheckBox();
+            this.cbIslas = new System.Windows.Forms.CheckBox();
+            this.cbIslotes = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
@@ -92,7 +95,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(40, 352);
+            this.button1.Location = new System.Drawing.Point(32, 315);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -172,7 +175,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(37, 103);
+            this.label4.Location = new System.Drawing.Point(29, 91);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 8;
@@ -181,7 +184,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(37, 174);
+            this.label5.Location = new System.Drawing.Point(29, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
@@ -190,7 +193,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(37, 260);
+            this.label6.Location = new System.Drawing.Point(29, 234);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 12;
@@ -198,7 +201,7 @@
             // 
             // tbLat
             // 
-            this.tbLat.Location = new System.Drawing.Point(94, 100);
+            this.tbLat.Location = new System.Drawing.Point(86, 88);
             this.tbLat.Name = "tbLat";
             this.tbLat.Size = new System.Drawing.Size(62, 20);
             this.tbLat.TabIndex = 4;
@@ -208,7 +211,7 @@
             // 
             // tbLong
             // 
-            this.tbLong.Location = new System.Drawing.Point(94, 171);
+            this.tbLong.Location = new System.Drawing.Point(86, 159);
             this.tbLong.Name = "tbLong";
             this.tbLong.Size = new System.Drawing.Size(62, 20);
             this.tbLong.TabIndex = 5;
@@ -242,7 +245,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 290);
+            this.label7.Location = new System.Drawing.Point(29, 264);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(95, 13);
             this.label7.TabIndex = 14;
@@ -251,14 +254,14 @@
             // cbSchema
             // 
             this.cbSchema.FormattingEnabled = true;
-            this.cbSchema.Location = new System.Drawing.Point(138, 284);
+            this.cbSchema.Location = new System.Drawing.Point(130, 258);
             this.cbSchema.Name = "cbSchema";
             this.cbSchema.Size = new System.Drawing.Size(128, 21);
             this.cbSchema.TabIndex = 7;
             // 
             // tbScale
             // 
-            this.tbScale.Location = new System.Drawing.Point(85, 258);
+            this.tbScale.Location = new System.Drawing.Point(77, 232);
             this.tbScale.Name = "tbScale";
             this.tbScale.Size = new System.Drawing.Size(62, 20);
             this.tbScale.TabIndex = 6;
@@ -290,7 +293,7 @@
             // cbProyecciones
             // 
             this.cbProyecciones.FormattingEnabled = true;
-            this.cbProyecciones.Location = new System.Drawing.Point(106, 314);
+            this.cbProyecciones.Location = new System.Drawing.Point(98, 288);
             this.cbProyecciones.Name = "cbProyecciones";
             this.cbProyecciones.Size = new System.Drawing.Size(160, 21);
             this.cbProyecciones.TabIndex = 8;
@@ -298,7 +301,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(37, 317);
+            this.label8.Location = new System.Drawing.Point(29, 291);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 13);
             this.label8.TabIndex = 18;
@@ -375,7 +378,7 @@
             // 
             // trbLat
             // 
-            this.trbLat.Location = new System.Drawing.Point(40, 126);
+            this.trbLat.Location = new System.Drawing.Point(32, 114);
             this.trbLat.Maximum = 90;
             this.trbLat.Minimum = -90;
             this.trbLat.Name = "trbLat";
@@ -385,7 +388,7 @@
             // 
             // trbLong
             // 
-            this.trbLong.Location = new System.Drawing.Point(40, 198);
+            this.trbLong.Location = new System.Drawing.Point(32, 186);
             this.trbLong.Maximum = 360;
             this.trbLong.Minimum = -360;
             this.trbLong.Name = "trbLong";
@@ -398,7 +401,7 @@
             this.gbEtiquetado.Controls.Add(this.cbForma);
             this.gbEtiquetado.Controls.Add(this.cbMasa);
             this.gbEtiquetado.Controls.Add(this.button2);
-            this.gbEtiquetado.Location = new System.Drawing.Point(13, 381);
+            this.gbEtiquetado.Location = new System.Drawing.Point(13, 344);
             this.gbEtiquetado.Name = "gbEtiquetado";
             this.gbEtiquetado.Size = new System.Drawing.Size(253, 98);
             this.gbEtiquetado.TabIndex = 24;
@@ -431,9 +434,9 @@
             this.gbVisu.Controls.Add(this.btnMostrar);
             this.gbVisu.Controls.Add(this.pAccidentes);
             this.gbVisu.Controls.Add(this.pMapa);
-            this.gbVisu.Location = new System.Drawing.Point(13, 485);
+            this.gbVisu.Location = new System.Drawing.Point(13, 448);
             this.gbVisu.Name = "gbVisu";
-            this.gbVisu.Size = new System.Drawing.Size(253, 145);
+            this.gbVisu.Size = new System.Drawing.Size(253, 201);
             this.gbVisu.TabIndex = 25;
             this.gbVisu.TabStop = false;
             this.gbVisu.Text = "Visualización";
@@ -471,13 +474,16 @@
             // 
             // pAccidentes
             // 
+            this.pAccidentes.Controls.Add(this.cbIslotes);
+            this.pAccidentes.Controls.Add(this.cbIslas);
+            this.pAccidentes.Controls.Add(this.cbContinentes);
             this.pAccidentes.Controls.Add(this.cbShowNames);
             this.pAccidentes.Controls.Add(this.rbShowRect);
             this.pAccidentes.Controls.Add(this.rbShowShape);
             this.pAccidentes.Controls.Add(this.label9);
             this.pAccidentes.Location = new System.Drawing.Point(0, 47);
             this.pAccidentes.Name = "pAccidentes";
-            this.pAccidentes.Size = new System.Drawing.Size(253, 60);
+            this.pAccidentes.Size = new System.Drawing.Size(253, 119);
             this.pAccidentes.TabIndex = 3;
             // 
             // label9
@@ -514,7 +520,7 @@
             // cbShowNames
             // 
             this.cbShowNames.AutoSize = true;
-            this.cbShowNames.Location = new System.Drawing.Point(7, 40);
+            this.cbShowNames.Location = new System.Drawing.Point(7, 99);
             this.cbShowNames.Name = "cbShowNames";
             this.cbShowNames.Size = new System.Drawing.Size(106, 17);
             this.cbShowNames.TabIndex = 3;
@@ -523,13 +529,43 @@
             // 
             // btnMostrar
             // 
-            this.btnMostrar.Location = new System.Drawing.Point(6, 113);
+            this.btnMostrar.Location = new System.Drawing.Point(6, 172);
             this.btnMostrar.Name = "btnMostrar";
             this.btnMostrar.Size = new System.Drawing.Size(75, 23);
             this.btnMostrar.TabIndex = 4;
             this.btnMostrar.Text = "Mostrar";
             this.btnMostrar.UseVisualStyleBackColor = true;
             this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
+            // 
+            // cbContinentes
+            // 
+            this.cbContinentes.AutoSize = true;
+            this.cbContinentes.Location = new System.Drawing.Point(7, 41);
+            this.cbContinentes.Name = "cbContinentes";
+            this.cbContinentes.Size = new System.Drawing.Size(120, 17);
+            this.cbContinentes.TabIndex = 4;
+            this.cbContinentes.Text = "Mostrar Continentes";
+            this.cbContinentes.UseVisualStyleBackColor = true;
+            // 
+            // cbIslas
+            // 
+            this.cbIslas.AutoSize = true;
+            this.cbIslas.Location = new System.Drawing.Point(133, 41);
+            this.cbIslas.Name = "cbIslas";
+            this.cbIslas.Size = new System.Drawing.Size(85, 17);
+            this.cbIslas.TabIndex = 5;
+            this.cbIslas.Text = "Mostrar Islas";
+            this.cbIslas.UseVisualStyleBackColor = true;
+            // 
+            // cbIslotes
+            // 
+            this.cbIslotes.AutoSize = true;
+            this.cbIslotes.Location = new System.Drawing.Point(7, 64);
+            this.cbIslotes.Name = "cbIslotes";
+            this.cbIslotes.Size = new System.Drawing.Size(94, 17);
+            this.cbIslotes.TabIndex = 6;
+            this.cbIslotes.Text = "Mostrar Islotes";
+            this.cbIslotes.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -636,6 +672,9 @@
         private System.Windows.Forms.Panel pMapa;
         private System.Windows.Forms.RadioButton rbMapaColor;
         private System.Windows.Forms.RadioButton rbMapaBN;
+        private System.Windows.Forms.CheckBox cbIslotes;
+        private System.Windows.Forms.CheckBox cbIslas;
+        private System.Windows.Forms.CheckBox cbContinentes;
     }
 }
 

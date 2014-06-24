@@ -11,6 +11,7 @@ using Emgu.CV.Structure;
 using System.IO;
 using System.Threading.Tasks;
 using Emgu.CV.CvEnum;
+using Masslabelling;
 
 namespace WorldGen
 {
@@ -324,13 +325,19 @@ namespace WorldGen
 
             Parallel.ForEach(map.Regiones, region =>
                 {
-                    if(rbShowRect.Checked)
-                        b.Draw(region.Marco, new Bgr(region.Col), 2);
-                    else
-                        b.DrawPolyline(region.Vertices, true, new Bgr(region.Col), 1);
+                    if( (region.Tipo==TIPOREGION.TIERRA) &&
+                        ((region.Tipotam==TIPOTAMANO.CONTINENTE && cbContinentes.Checked) || 
+                         (region.Tipotam==TIPOTAMANO.ISLA && cbIslas.Checked) || 
+                         (region.Tipotam==TIPOTAMANO.ISLOTE && cbIslotes.Checked)))
+                    {
+                        if(rbShowRect.Checked)
+                            b.Draw(region.Marco, new Bgr(region.Col), 2);
+                        else
+                            b.DrawPolyline(region.Vertices, true, new Bgr(region.Col), 1);
                     
-                    if(cbShowNames.Checked)
-                        b.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
+                        if(cbShowNames.Checked)
+                            b.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
+                    }
                     
                 });
             pbMapa.Image = b.ToBitmap();

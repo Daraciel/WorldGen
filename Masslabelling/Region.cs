@@ -98,6 +98,7 @@ namespace Masslabelling
     {
         CONTINENTE,
         ISLA,
+        ISLOTE,
         OCEANO,
         MAR
     }

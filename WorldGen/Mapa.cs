@@ -11,20 +11,19 @@ using System.Web.UI.DataVisualization.Charting;
 using Masslabelling;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ProtoBuf;
 
 
 
 namespace WorldGen
 {
     
-
-    //[XmlRootAttribute("person", Namespace = "", IsNullable = false)]
+    [ProtoContract]
     public class Mapa
     {
-        [XmlIgnoreAttribute()]
         private string _Semilla;
 
-        //[XmlIgnoreAttribute()]
+        [ProtoMember(1)]
         public string Semilla
         {
             get { return _Semilla; }
@@ -34,19 +33,12 @@ namespace WorldGen
                 }
         }
 
-        [XmlIgnoreAttribute()]
         private int BLACK = 0;
-        [XmlIgnoreAttribute()]
         private int WHITE = 1;
-        [XmlIgnoreAttribute()]
         private int BACK = 2;
-        [XmlIgnoreAttribute()]
         private int GRID = 3;
-        [XmlIgnoreAttribute()]
         private int OUTLINE1 = 4;
-        [XmlIgnoreAttribute()]
         private int OUTLINE2 = 5;
-        [XmlIgnoreAttribute()]
         private int LOWEST = 6;
 
         private int SEA = 7;
@@ -79,7 +71,7 @@ namespace WorldGen
         private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
         //[XmlElementAttribute("longitud")]
         private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
-
+        [ProtoMember(2)]
         public double Longitude
         {
             get { return _Longitude; }
@@ -94,7 +86,7 @@ namespace WorldGen
                 _Longitude = (_Longitude * PI) / 180.0;
             }
         }
-
+        [ProtoMember(3)]
         public double Latitude
         {
             get { return _Latitude; }
@@ -105,7 +97,7 @@ namespace WorldGen
                 _Latitude = (_Latitude * PI) / 180.0;
             }
         }
-        //[XmlElementAttribute("ancho")]
+        [ProtoMember(4)]
         public int Width
         {
             get
@@ -117,7 +109,7 @@ namespace WorldGen
                 _Width = value;
             }
         }
-
+        [ProtoMember(5)]
         public int Height
         {
             get
@@ -143,7 +135,7 @@ namespace WorldGen
                 _Seed = value;
             }
         }
-
+        [ProtoMember(6)]
         public double Scale
         {
             get { return _Scale; }
@@ -164,7 +156,6 @@ namespace WorldGen
 
         private Capa[] _Capas;
 
-        [XmlElementAttribute("Capas")]
         public Capa[] Capas
         {
             get { return _Capas; }
@@ -232,11 +223,9 @@ namespace WorldGen
             rnd = new Random(Convert.ToInt32(1000000 * _Seed));
             rnd2 = new Random(Convert.ToInt32(1000000 * _Seed));
             //etiquetadora = new MassLabelling();
-            Capas = new Capa[4];
+            Capas = new Capa[2];
             Capas[0] = new Capa(TIPOCAPA.GRAFICA, Width, Height);
             Capas[1] = new Capa(TIPOCAPA.DIFERENCIA, Width, Height);
-            Capas[2] = new Capa(TIPOCAPA.FORMAS, Width, Height);
-            Capas[3] = new Capa(TIPOCAPA.ETIQUETAS, Width, Height);
         }
 
 
@@ -401,13 +390,13 @@ namespace WorldGen
             else
                 _ColorMap[i, j] = 1;*/
 
-            _ColorMap[i, j] = colour;
-            Capas[0].Valores[i, j] = colour;
+            //_ColorMap[i, j] = colour;
+            Capas[0].Valores[_Width*j+i] = colour;
 
-            if (colour >= LAND)
-                Capas[1].Valores[i, j] = 1;
+            if (colour > SEA)
+                Capas[1].Valores[_Width * j + i] = 1;
             else
-                Capas[1].Valores[i, j] = 0;
+                Capas[1].Valores[_Width * j + i] = 0;
 
             return colour;
         }
@@ -474,7 +463,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[Capas[0].Valores[i, j]]);
+                    img.SetPixel(i, j, Schema[Capas[0].Valores[_Width * j + i]]);
                 }
             }
             img.Save(Seed + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
@@ -487,7 +476,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[_ColorMap[i, j]]);
+                    img.SetPixel(i, j, Schema[Capas[0].Valores[_Width * j + i]]);
                 }
             }
             img.Save(file, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -548,7 +537,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    if (_ColorMap[i, j] > SEA)
+                    if (Capas[1].Valores[_Width * j + i] == 1)
                         img.SetPixel(i, j, Color.White);
                     else
                         img.SetPixel(i, j, Color.Black);
@@ -564,7 +553,7 @@ namespace WorldGen
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    img.SetPixel(i, j, Schema[_ColorMap[i, j]]);
+                    img.SetPixel(i, j, Schema[Capas[0].Valores[_Width * j + i]]);
                 }
             }
             return img;
@@ -772,7 +761,6 @@ namespace WorldGen
         //////////////////////////////////////////////////////
         //               E T I Q U E T A D O                //
         //////////////////////////////////////////////////////
-        [XmlElementAttribute("Regiones")]
         public HashSet<Masslabelling.Region> Regiones;
 
         public Image<Bgr, byte> etiquetarDebug()

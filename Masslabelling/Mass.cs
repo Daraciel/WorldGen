@@ -96,6 +96,7 @@ namespace Masslabelling
             if (mapa.Size.Height * mapa.Size.Width < MinSize.Height * MinSize.Width)
                 return null;
 
+            double umbralIslote = umbral / 100.0;
             Random randonGen = new Random();
             Color randomColor;
             Contour<Point> sourceContours = mapa.FindContours(Searchmethod, Retrievaltype);
@@ -128,9 +129,18 @@ namespace Masslabelling
                     else
                     {
                         auxH.Nombre = getRandomIsland();
-                        auxH.Tipotam = TIPOTAMANO.ISLA;
-                        if (auxH.Nombre.StartsWith("de"))
-                            auxH.Nombre = "Isla " + auxH.Nombre;
+                        if (auxH.Area > umbralIslote)
+                        {
+                            auxH.Tipotam = TIPOTAMANO.ISLA;
+                            if (auxH.Nombre.StartsWith("de"))
+                                auxH.Nombre = "Isla " + auxH.Nombre;
+                        }
+                        else
+                        {
+                            auxH.Tipotam = TIPOTAMANO.ISLOTE;
+                            if (auxH.Nombre.StartsWith("de"))
+                                auxH.Nombre = "Islote " + auxH.Nombre;
+                        }
                     }
 
                 }

@@ -362,8 +362,9 @@
             // cargarMapaToolStripMenuItem
             // 
             this.cargarMapaToolStripMenuItem.Name = "cargarMapaToolStripMenuItem";
-            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cargarMapaToolStripMenuItem.Text = "Cargar Mapa";
+            this.cargarMapaToolStripMenuItem.Click += new System.EventHandler(this.cargarMapaToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

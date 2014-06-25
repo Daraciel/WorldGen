@@ -113,7 +113,7 @@ namespace Masslabelling
                 auxH = new Region();
 
                 auxH.Area = sourceContours.Area;
-                auxH.Marco = sourceContours.BoundingRectangle;
+                auxH.Marco = new Rectangulo(sourceContours.BoundingRectangle.Location, sourceContours.BoundingRectangle.Width, sourceContours.BoundingRectangle.Height);
                 auxH.Perimetro = sourceContours.Perimeter;
                 auxH.NumVertices = sourceContours.Total;
                 randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
@@ -153,7 +153,7 @@ namespace Masslabelling
                 {
                     auxH.Vertices[i] = forma[i];
                 }
-                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco), nuevotipo, umbral);
+                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco.ToRect()), nuevotipo, umbral);
                 regiones.Add(auxH);
                 sourceContours = sourceContours.HNext;
                 contH++;

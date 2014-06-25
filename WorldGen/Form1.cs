@@ -12,6 +12,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Emgu.CV.CvEnum;
 using Masslabelling;
+using ProtoBuf;
+using ProtoBuf.Meta;
 
 namespace WorldGen
 {
@@ -19,6 +21,9 @@ namespace WorldGen
     {
         public Form1()
         {
+            //RuntimeTypeModel.Default.Add(typeof(System.Windows.Point), false).Add("X", "Y");
+            RuntimeTypeModel.Default.Add(typeof(System.Drawing.Point), false).Add("X", "Y");
+            RuntimeTypeModel.Default.Add(typeof(System.Drawing.Color), false).Add("A", "R", "G","B");
             InitializeComponent();
         }
         public Mapa map;
@@ -299,7 +304,7 @@ namespace WorldGen
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-            saveFileDialog1.Filter = "Ficheros XML (*.xml)|*.xml";
+            saveFileDialog1.Filter = "Ficheros DCM (*.dcm)|*.dcm";
             saveFileDialog1.FilterIndex = 2;
             saveFileDialog1.RestoreDirectory = true;
 
@@ -312,6 +317,26 @@ namespace WorldGen
                     MessageBox.Show("Error!");
 
             }
+        }
+
+        private void cargarMapaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Ficheros DCM (*.dcm)|*.dcm";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (var file = File.OpenRead(openFileDialog1.FileName))
+                {
+                    map = Serializer.Deserialize<Mapa>(file);
+                    pbMapa.Image = map.printBW();
+                    foreach (Masslabelling.Region R in map.Regiones)
+                    {
+                        tvAccidentes.Nodes.Add(fillTree(R));
+                    }
+                    tbS.Text = map.Semilla;
+                }
+            }
+
         }
 
         private void btnMostrar_Click(object sender, EventArgs e)
@@ -331,7 +356,7 @@ namespace WorldGen
                          (region.Tipotam==TIPOTAMANO.ISLOTE && cbIslotes.Checked)))
                     {
                         if(rbShowRect.Checked)
-                            b.Draw(region.Marco, new Bgr(region.Col), 2);
+                            b.Draw(region.Marco.ToRect(), new Bgr(region.Col), 2);
                         else
                             b.DrawPolyline(region.Vertices, true, new Bgr(region.Col), 1);
                     

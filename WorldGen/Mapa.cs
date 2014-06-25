@@ -154,18 +154,10 @@ namespace WorldGen
 
         private int[,] _ColorMap;        //Mapa coloreado
 
-        private Capa[] _Capas;
-
-        public Capa[] Capas
-        {
-            get { return _Capas; }
-            set { _Capas = value; }
-        }
-
-        private double r1, r2, r3, r4;
 
         private string _ColorFile;
 
+        [ProtoMember(7)]
         public string ColorFile
         {
             get
@@ -178,6 +170,22 @@ namespace WorldGen
                 LoadColorFile(value);
             }
         }
+
+        private Capa[] _Capas;
+
+        [ProtoMember(8, OverwriteList = true)]
+        public Capa[] Capas
+        {
+            get { return _Capas; }
+            set { _Capas = value; }
+        }
+
+
+        [ProtoMember(9)]
+        public HashSet<Masslabelling.Region> Regiones;
+
+        private double r1, r2, r3, r4;
+
 
         private SortedList<int,Color> Schema;
 
@@ -568,6 +576,8 @@ namespace WorldGen
             char[] delimiters = new char[2];
             int indice = 0, r, g, b;
             Color C;
+            if (Schema == null)
+                Schema = new SortedList<int, Color>();
             Schema.Clear();
             delimiters[0] = ' ';
             delimiters[1] = (char)ConsoleKey.Tab;
@@ -761,7 +771,6 @@ namespace WorldGen
         //////////////////////////////////////////////////////
         //               E T I Q U E T A D O                //
         //////////////////////////////////////////////////////
-        public HashSet<Masslabelling.Region> Regiones;
 
         public Image<Bgr, byte> etiquetarDebug()
         {
@@ -783,7 +792,7 @@ namespace WorldGen
                 {
                     if (region.Area > umbralislita)
                     {
-                        imgColor.Draw(region.Marco, new Bgr(region.Col), 2);
+                        imgColor.Draw(region.Marco.ToRect(), new Bgr(region.Col), 2);
                         imgColor.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
                     }
                 });
@@ -812,11 +821,9 @@ namespace WorldGen
         {
             try
             {
-                using (var writer = new System.IO.StreamWriter(FileName))
+                using (var file = File.Create(FileName))
                 {
-                    var serializer = new XmlSerializer(this.GetType());
-                    serializer.Serialize(writer, this);
-                    writer.Flush();
+                    Serializer.Serialize(file, this);
                 }
             }
             catch (Exception ex)

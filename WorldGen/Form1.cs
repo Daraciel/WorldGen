@@ -14,6 +14,7 @@ using Emgu.CV.CvEnum;
 using Masslabelling;
 using ProtoBuf;
 using ProtoBuf.Meta;
+using DCMapLib;
 
 namespace WorldGen
 {
@@ -329,10 +330,13 @@ namespace WorldGen
                 {
                     map = Serializer.Deserialize<Mapa>(file);
                     pbMapa.Image = map.printBW();
-                    foreach (Masslabelling.Region R in map.Regiones)
-                    {
-                        tvAccidentes.Nodes.Add(fillTree(R));
-                    }
+                    if (map.Regiones == null)
+                        map.Regiones = new HashSet<Masslabelling.Region>();
+                    else
+                        foreach (Masslabelling.Region R in map.Regiones)
+                        {
+                            tvAccidentes.Nodes.Add(fillTree(R));
+                        }
                     tbS.Text = map.Semilla;
                 }
             }

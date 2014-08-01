@@ -99,6 +99,7 @@ namespace Masslabelling
             double umbralIslote = umbral / 100.0;
             Random randonGen = new Random();
             Color randomColor;
+            //Contour<Point> sourceContours = mapa.Canny(CannyThreshold, CannyThreshold).FindContours(Searchmethod, Retrievaltype);
             Contour<Point> sourceContours = mapa.FindContours(Searchmethod, Retrievaltype);
             HashSet<Region> regiones = new HashSet<Region>();
             int contH = 0, contV = 0;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI.DataVisualization.Charting;
 
 
-namespace WorldGen
+namespace DCMapLib
 {
     public class Tetraedro
     {

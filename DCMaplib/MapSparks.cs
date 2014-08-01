@@ -99,11 +99,12 @@ namespace DCMaplib
 
         public void Domap()
         {
-            int num, r;
+            int num, r, puestos = 0;
             TIPOCASILLA t;
             List<int> v;
             while (Cola.Count > 0)
             {
+                Random rnd2 = new Random(DateTime.Now.Millisecond - Cola.Count * puestos);
                 r = rnd.Next(Cola.Count);
                 num = Cola.ElementAt(r);
                 Cola.RemoveAt(r);
@@ -120,7 +121,7 @@ namespace DCMaplib
                         }
                         else
                         {
-                            r = rnd.Next(100);
+                            r = rnd2.Next(100);
                             if (r <=  _Prob)
                                 _Mapa[vecino] = TIPOCASILLA.TIERRA;
                             else
@@ -129,6 +130,7 @@ namespace DCMaplib
                         }
                     }
                 }
+                puestos++;
             }
         }
 

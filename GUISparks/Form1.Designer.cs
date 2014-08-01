@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbSemilla = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nudAncho = new System.Windows.Forms.NumericUpDown();
-            this.nudAlto = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.nudSparks = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.nudTierra = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
+            this.nudSparks = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nudAlto = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.nudAncho = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbSemilla = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.pbMapa = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAncho)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAlto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSparks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTierra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSparks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAlto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAncho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,83 +69,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
-            // label1
+            // button1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Semilla";
+            this.button1.Location = new System.Drawing.Point(52, 167);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Generar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // tbSemilla
+            // nudTierra
             // 
-            this.tbSemilla.Location = new System.Drawing.Point(52, 22);
-            this.tbSemilla.Name = "tbSemilla";
-            this.tbSemilla.Size = new System.Drawing.Size(142, 20);
-            this.tbSemilla.TabIndex = 1;
+            this.nudTierra.Location = new System.Drawing.Point(114, 126);
+            this.nudTierra.Name = "nudTierra";
+            this.nudTierra.Size = new System.Drawing.Size(80, 20);
+            this.nudTierra.TabIndex = 9;
             // 
-            // label2
+            // label5
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Ancho";
-            // 
-            // nudAncho
-            // 
-            this.nudAncho.Location = new System.Drawing.Point(52, 48);
-            this.nudAncho.Maximum = new decimal(new int[] {
-            2048,
-            0,
-            0,
-            0});
-            this.nudAncho.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.nudAncho.Name = "nudAncho";
-            this.nudAncho.Size = new System.Drawing.Size(142, 20);
-            this.nudAncho.TabIndex = 3;
-            this.nudAncho.Value = new decimal(new int[] {
-            800,
-            0,
-            0,
-            0});
-            // 
-            // nudAlto
-            // 
-            this.nudAlto.Location = new System.Drawing.Point(52, 74);
-            this.nudAlto.Maximum = new decimal(new int[] {
-            2048,
-            0,
-            0,
-            0});
-            this.nudAlto.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.nudAlto.Name = "nudAlto";
-            this.nudAlto.Size = new System.Drawing.Size(142, 20);
-            this.nudAlto.TabIndex = 5;
-            this.nudAlto.Value = new decimal(new int[] {
-            600,
-            0,
-            0,
-            0});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 76);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Alto";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 128);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Probailidad de Tierra";
             // 
             // nudSparks
             // 
@@ -168,21 +116,83 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Cantidad de Sparks";
             // 
-            // nudTierra
+            // nudAlto
             // 
-            this.nudTierra.Location = new System.Drawing.Point(114, 126);
-            this.nudTierra.Name = "nudTierra";
-            this.nudTierra.Size = new System.Drawing.Size(80, 20);
-            this.nudTierra.TabIndex = 9;
+            this.nudAlto.Location = new System.Drawing.Point(52, 74);
+            this.nudAlto.Maximum = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            this.nudAlto.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.nudAlto.Name = "nudAlto";
+            this.nudAlto.Size = new System.Drawing.Size(142, 20);
+            this.nudAlto.TabIndex = 5;
+            this.nudAlto.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
             // 
-            // label5
+            // label3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 128);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Probailidad de Tierra";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 76);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(25, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Alto";
+            // 
+            // nudAncho
+            // 
+            this.nudAncho.Location = new System.Drawing.Point(52, 48);
+            this.nudAncho.Maximum = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            this.nudAncho.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.nudAncho.Name = "nudAncho";
+            this.nudAncho.Size = new System.Drawing.Size(142, 20);
+            this.nudAncho.TabIndex = 3;
+            this.nudAncho.Value = new decimal(new int[] {
+            800,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Ancho";
+            // 
+            // tbSemilla
+            // 
+            this.tbSemilla.Location = new System.Drawing.Point(52, 22);
+            this.tbSemilla.Name = "tbSemilla";
+            this.tbSemilla.Size = new System.Drawing.Size(142, 20);
+            this.tbSemilla.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Semilla";
             // 
             // pbMapa
             // 
@@ -191,16 +201,6 @@
             this.pbMapa.Size = new System.Drawing.Size(800, 600);
             this.pbMapa.TabIndex = 1;
             this.pbMapa.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(52, 167);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Generar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -213,10 +213,10 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAncho)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAlto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSparks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTierra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSparks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAlto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAncho)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
             this.ResumeLayout(false);
 

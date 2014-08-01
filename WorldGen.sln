@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUISparks", "GUISparks\GUIS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCMaplib", "DCMaplib\DCMaplib.csproj", "{2C70CD93-671A-437B-B074-7BAE486C68BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipperPro", "ClipperPro\ClipperPro.csproj", "{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,12 @@ Global
 		{2C70CD93-671A-437B-B074-7BAE486C68BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C70CD93-671A-437B-B074-7BAE486C68BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C70CD93-671A-437B-B074-7BAE486C68BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E96A3DFA-B4E9-409C-AB5C-71C1A3AA0418}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

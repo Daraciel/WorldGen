@@ -117,19 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="rbGolfo.Tag" xml:space="preserve">
-    <value>Un golfo es una parte del mar de gran extensión, encerrado por puntas o cabos de tierra. Aunque normalmente se confunde con una bahía y no está claro donde está la frontera entre lo que es un golfo y una bahía,1 se entiende que las bahías son de menor extensión.</value>
-  </data>
-  <data name="rbBahia.Tag" xml:space="preserve">
-    <value>Una bahía es una entrada a un mar, océano o lago, rodeada por tierra excepto por una apertura, que suele ser más ancha que el resto de la penetración en tierra adentro. Es decir, una concavidad en la línea costera formada por los movimientos del mar o del lago. La bahía es el concepto geográfico opuesto a un cabo o a una península. Las grandes bahías suelen considerarse golfos</value>
-  </data>
-  <data name="rbCabo.Tag" xml:space="preserve">
-    <value>un cabo o punta es un accidente geográfico formado por una masa de tierra que se proyecta hacia el interior del mar; recibe este nombre sobre todo cuando su influencia sobre el flujo de las corrientes costeras es grande, provocando dificultades para la navegación.</value>
-  </data>
-  <data name="rbPen.Tag" xml:space="preserve">
-    <value>Una península es una extensión de tierra que está rodeada de agua por todas partes excepto por una zona o Istmo que la une al continente. En general, el agua que rodea la tierra es el agua de mar, aunque también aparecen penínsulas en grandes lagos</value>
-  </data>
 </root>

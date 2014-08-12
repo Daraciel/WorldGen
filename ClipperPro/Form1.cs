@@ -2,6 +2,7 @@
 using Emgu.CV;
 using Emgu.CV.Structure;
 using ProtoBuf;
+using ProtoBuf.Meta;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Masslabelling;
 using System.Windows.Forms;
+using System.Media;
+
 
 namespace ClipperPro
 {
@@ -23,6 +27,7 @@ namespace ClipperPro
         private Image<Gray, Byte> src;
         private Image<Gray, Byte> srcCrop;
         private int X, Y, X2, Y2;
+        SoundPlayer sonido;
 
         private DirectoryInfo[] dirs;
 
@@ -36,6 +41,9 @@ namespace ClipperPro
             dirs[3] = new DirectoryInfo("Canales\\");
             dirs[4] = new DirectoryInfo("Golfos\\");
             dirs[5] = new DirectoryInfo("Nada\\");
+            RuntimeTypeModel.Default.Add(typeof(System.Drawing.Point), false).Add("X", "Y");
+            RuntimeTypeModel.Default.Add(typeof(System.Drawing.Color), false).Add("A", "R", "G", "B");
+            sonido = new SoundPlayer("click.wav");
         }
 
         private void abrirImágenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,6 +58,8 @@ namespace ClipperPro
                 {
                     map = Serializer.Deserialize<Mapa>(file);
                     src = new Image<Gray, Byte>(map.printBW());
+                    if (map.Regiones == null)
+                        map.Regiones = new HashSet<Masslabelling.Region>();
                     ibImagen.Image = src;
                 }
             }
@@ -302,13 +312,13 @@ namespace ClipperPro
                 tipo = "Falso";
                 carpeta = "Nada";
             }
-            string archivo = carpeta + "\\" + tipo + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpg";
+            string archivo = tipo + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpg";
             try
             {
                 saveJpeg(archivo, ibCrop.Image.Bitmap, 100);
                 string linea = archivo+" 1 ";
                 if (rbNada.Checked)
-                    linea = archivo;
+                    linea += "0 0 " + ibCrop.Image.Bitmap.Width + " " + ibCrop.Image.Bitmap.Height;
                 else
                 {
                     if (rectcrop.Size != new Rectangle().Size)
@@ -316,7 +326,8 @@ namespace ClipperPro
                     else
                         linea += "0 0 " + ibCrop.Image.Bitmap.Width + " " + ibCrop.Image.Bitmap.Height;
                 }
-                File.AppendAllText(tipo+"s.info", linea + Environment.NewLine);
+                File.AppendAllText(carpeta + "\\" + tipo + "s.info", linea + Environment.NewLine);
+                sonido.Play();
             }
             catch(Exception ex)
             {

@@ -64,21 +64,21 @@
             this.trbLat = new System.Windows.Forms.TrackBar();
             this.trbLong = new System.Windows.Forms.TrackBar();
             this.gbEtiquetado = new System.Windows.Forms.GroupBox();
-            this.cbMasa = new System.Windows.Forms.CheckBox();
             this.cbForma = new System.Windows.Forms.CheckBox();
+            this.cbMasa = new System.Windows.Forms.CheckBox();
             this.gbVisu = new System.Windows.Forms.GroupBox();
+            this.btnMostrar = new System.Windows.Forms.Button();
+            this.pAccidentes = new System.Windows.Forms.Panel();
+            this.cbIslotes = new System.Windows.Forms.CheckBox();
+            this.cbIslas = new System.Windows.Forms.CheckBox();
+            this.cbContinentes = new System.Windows.Forms.CheckBox();
+            this.cbShowNames = new System.Windows.Forms.CheckBox();
+            this.rbShowRect = new System.Windows.Forms.RadioButton();
+            this.rbShowShape = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
             this.pMapa = new System.Windows.Forms.Panel();
             this.rbMapaColor = new System.Windows.Forms.RadioButton();
             this.rbMapaBN = new System.Windows.Forms.RadioButton();
-            this.pAccidentes = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.rbShowShape = new System.Windows.Forms.RadioButton();
-            this.rbShowRect = new System.Windows.Forms.RadioButton();
-            this.cbShowNames = new System.Windows.Forms.CheckBox();
-            this.btnMostrar = new System.Windows.Forms.Button();
-            this.cbContinentes = new System.Windows.Forms.CheckBox();
-            this.cbIslas = new System.Windows.Forms.CheckBox();
-            this.cbIslotes = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
@@ -89,8 +89,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trbLong)).BeginInit();
             this.gbEtiquetado.SuspendLayout();
             this.gbVisu.SuspendLayout();
-            this.pMapa.SuspendLayout();
             this.pAccidentes.SuspendLayout();
+            this.pMapa.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -105,7 +105,7 @@
             // 
             // nudW
             // 
-            this.nudW.Location = new System.Drawing.Point(84, 62);
+            this.nudW.Location = new System.Drawing.Point(94, 62);
             this.nudW.Maximum = new decimal(new int[] {
             8192,
             0,
@@ -175,7 +175,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(29, 91);
+            this.label4.Location = new System.Drawing.Point(37, 91);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 8;
@@ -184,7 +184,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 162);
+            this.label5.Location = new System.Drawing.Point(37, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
@@ -193,7 +193,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 234);
+            this.label6.Location = new System.Drawing.Point(37, 234);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 12;
@@ -201,7 +201,7 @@
             // 
             // tbLat
             // 
-            this.tbLat.Location = new System.Drawing.Point(86, 88);
+            this.tbLat.Location = new System.Drawing.Point(94, 88);
             this.tbLat.Name = "tbLat";
             this.tbLat.Size = new System.Drawing.Size(62, 20);
             this.tbLat.TabIndex = 4;
@@ -211,7 +211,7 @@
             // 
             // tbLong
             // 
-            this.tbLong.Location = new System.Drawing.Point(86, 159);
+            this.tbLong.Location = new System.Drawing.Point(94, 159);
             this.tbLong.Name = "tbLong";
             this.tbLong.Size = new System.Drawing.Size(62, 20);
             this.tbLong.TabIndex = 5;
@@ -221,12 +221,14 @@
             // 
             // pbMapa
             // 
+            this.pbMapa.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMapa.ContextMenuStrip = this.menuSalvar;
             this.pbMapa.Location = new System.Drawing.Point(282, 30);
             this.pbMapa.Name = "pbMapa";
             this.pbMapa.Size = new System.Drawing.Size(800, 600);
             this.pbMapa.TabIndex = 13;
             this.pbMapa.TabStop = false;
+            this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
             // 
             // menuSalvar
             // 
@@ -261,7 +263,7 @@
             // 
             // tbScale
             // 
-            this.tbScale.Location = new System.Drawing.Point(77, 232);
+            this.tbScale.Location = new System.Drawing.Point(94, 231);
             this.tbScale.Name = "tbScale";
             this.tbScale.Size = new System.Drawing.Size(62, 20);
             this.tbScale.TabIndex = 6;
@@ -323,6 +325,8 @@
             this.tvAccidentes.Name = "tvAccidentes";
             this.tvAccidentes.Size = new System.Drawing.Size(191, 566);
             this.tvAccidentes.TabIndex = 20;
+            this.tvAccidentes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvAccidentes_AfterSelect);
+            this.tvAccidentes.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvAccidentes_NodeMouseDoubleClick);
             // 
             // msMenu
             // 
@@ -362,7 +366,7 @@
             // cargarMapaToolStripMenuItem
             // 
             this.cargarMapaToolStripMenuItem.Name = "cargarMapaToolStripMenuItem";
-            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cargarMapaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.cargarMapaToolStripMenuItem.Text = "Cargar Mapa";
             this.cargarMapaToolStripMenuItem.Click += new System.EventHandler(this.cargarMapaToolStripMenuItem_Click);
             // 
@@ -409,16 +413,6 @@
             this.gbEtiquetado.TabStop = false;
             this.gbEtiquetado.Text = "Etiquetado";
             // 
-            // cbMasa
-            // 
-            this.cbMasa.AutoSize = true;
-            this.cbMasa.Location = new System.Drawing.Point(7, 20);
-            this.cbMasa.Name = "cbMasa";
-            this.cbMasa.Size = new System.Drawing.Size(191, 17);
-            this.cbMasa.TabIndex = 0;
-            this.cbMasa.Text = "Acc. de masa (Islas, continentes...)";
-            this.cbMasa.UseVisualStyleBackColor = true;
-            // 
             // cbForma
             // 
             this.cbForma.AutoSize = true;
@@ -429,6 +423,16 @@
             this.cbForma.TabIndex = 1;
             this.cbForma.Text = "Acc. de forma (Peninsulas, cabos...)";
             this.cbForma.UseVisualStyleBackColor = true;
+            // 
+            // cbMasa
+            // 
+            this.cbMasa.AutoSize = true;
+            this.cbMasa.Location = new System.Drawing.Point(7, 20);
+            this.cbMasa.Name = "cbMasa";
+            this.cbMasa.Size = new System.Drawing.Size(191, 17);
+            this.cbMasa.TabIndex = 0;
+            this.cbMasa.Text = "Acc. de masa (Islas, continentes...)";
+            this.cbMasa.UseVisualStyleBackColor = true;
             // 
             // gbVisu
             // 
@@ -441,6 +445,101 @@
             this.gbVisu.TabIndex = 25;
             this.gbVisu.TabStop = false;
             this.gbVisu.Text = "Visualización";
+            // 
+            // btnMostrar
+            // 
+            this.btnMostrar.Location = new System.Drawing.Point(6, 172);
+            this.btnMostrar.Name = "btnMostrar";
+            this.btnMostrar.Size = new System.Drawing.Size(75, 23);
+            this.btnMostrar.TabIndex = 4;
+            this.btnMostrar.Text = "Mostrar";
+            this.btnMostrar.UseVisualStyleBackColor = true;
+            this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
+            // 
+            // pAccidentes
+            // 
+            this.pAccidentes.Controls.Add(this.cbIslotes);
+            this.pAccidentes.Controls.Add(this.cbIslas);
+            this.pAccidentes.Controls.Add(this.cbContinentes);
+            this.pAccidentes.Controls.Add(this.cbShowNames);
+            this.pAccidentes.Controls.Add(this.rbShowRect);
+            this.pAccidentes.Controls.Add(this.rbShowShape);
+            this.pAccidentes.Controls.Add(this.label9);
+            this.pAccidentes.Location = new System.Drawing.Point(0, 47);
+            this.pAccidentes.Name = "pAccidentes";
+            this.pAccidentes.Size = new System.Drawing.Size(253, 119);
+            this.pAccidentes.TabIndex = 3;
+            // 
+            // cbIslotes
+            // 
+            this.cbIslotes.AutoSize = true;
+            this.cbIslotes.Location = new System.Drawing.Point(7, 64);
+            this.cbIslotes.Name = "cbIslotes";
+            this.cbIslotes.Size = new System.Drawing.Size(94, 17);
+            this.cbIslotes.TabIndex = 6;
+            this.cbIslotes.Text = "Mostrar Islotes";
+            this.cbIslotes.UseVisualStyleBackColor = true;
+            // 
+            // cbIslas
+            // 
+            this.cbIslas.AutoSize = true;
+            this.cbIslas.Location = new System.Drawing.Point(133, 41);
+            this.cbIslas.Name = "cbIslas";
+            this.cbIslas.Size = new System.Drawing.Size(85, 17);
+            this.cbIslas.TabIndex = 5;
+            this.cbIslas.Text = "Mostrar Islas";
+            this.cbIslas.UseVisualStyleBackColor = true;
+            // 
+            // cbContinentes
+            // 
+            this.cbContinentes.AutoSize = true;
+            this.cbContinentes.Location = new System.Drawing.Point(7, 41);
+            this.cbContinentes.Name = "cbContinentes";
+            this.cbContinentes.Size = new System.Drawing.Size(120, 17);
+            this.cbContinentes.TabIndex = 4;
+            this.cbContinentes.Text = "Mostrar Continentes";
+            this.cbContinentes.UseVisualStyleBackColor = true;
+            // 
+            // cbShowNames
+            // 
+            this.cbShowNames.AutoSize = true;
+            this.cbShowNames.Location = new System.Drawing.Point(7, 99);
+            this.cbShowNames.Name = "cbShowNames";
+            this.cbShowNames.Size = new System.Drawing.Size(106, 17);
+            this.cbShowNames.TabIndex = 3;
+            this.cbShowNames.Text = "Mostrar Nombres";
+            this.cbShowNames.UseVisualStyleBackColor = true;
+            // 
+            // rbShowRect
+            // 
+            this.rbShowRect.AutoSize = true;
+            this.rbShowRect.Location = new System.Drawing.Point(118, 18);
+            this.rbShowRect.Name = "rbShowRect";
+            this.rbShowRect.Size = new System.Drawing.Size(110, 17);
+            this.rbShowRect.TabIndex = 2;
+            this.rbShowRect.Text = "Mostrar Recuadro";
+            this.rbShowRect.UseVisualStyleBackColor = true;
+            // 
+            // rbShowShape
+            // 
+            this.rbShowShape.AutoSize = true;
+            this.rbShowShape.Checked = true;
+            this.rbShowShape.Location = new System.Drawing.Point(7, 18);
+            this.rbShowShape.Name = "rbShowShape";
+            this.rbShowShape.Size = new System.Drawing.Size(110, 17);
+            this.rbShowShape.TabIndex = 1;
+            this.rbShowShape.TabStop = true;
+            this.rbShowShape.Text = "Mostrar contornos";
+            this.rbShowShape.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 2);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(126, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Opciones de Accidentes:";
             // 
             // pMapa
             // 
@@ -465,6 +564,7 @@
             // rbMapaBN
             // 
             this.rbMapaBN.AutoSize = true;
+            this.rbMapaBN.Checked = true;
             this.rbMapaBN.Location = new System.Drawing.Point(100, 3);
             this.rbMapaBN.Name = "rbMapaBN";
             this.rbMapaBN.Size = new System.Drawing.Size(128, 17);
@@ -472,101 +572,6 @@
             this.rbMapaBN.TabStop = true;
             this.rbMapaBN.Text = "Mapa Blanco y Negro";
             this.rbMapaBN.UseVisualStyleBackColor = true;
-            // 
-            // pAccidentes
-            // 
-            this.pAccidentes.Controls.Add(this.cbIslotes);
-            this.pAccidentes.Controls.Add(this.cbIslas);
-            this.pAccidentes.Controls.Add(this.cbContinentes);
-            this.pAccidentes.Controls.Add(this.cbShowNames);
-            this.pAccidentes.Controls.Add(this.rbShowRect);
-            this.pAccidentes.Controls.Add(this.rbShowShape);
-            this.pAccidentes.Controls.Add(this.label9);
-            this.pAccidentes.Location = new System.Drawing.Point(0, 47);
-            this.pAccidentes.Name = "pAccidentes";
-            this.pAccidentes.Size = new System.Drawing.Size(253, 119);
-            this.pAccidentes.TabIndex = 3;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 2);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(126, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Opciones de Accidentes:";
-            // 
-            // rbShowShape
-            // 
-            this.rbShowShape.AutoSize = true;
-            this.rbShowShape.Location = new System.Drawing.Point(7, 18);
-            this.rbShowShape.Name = "rbShowShape";
-            this.rbShowShape.Size = new System.Drawing.Size(110, 17);
-            this.rbShowShape.TabIndex = 1;
-            this.rbShowShape.TabStop = true;
-            this.rbShowShape.Text = "Mostrar contornos";
-            this.rbShowShape.UseVisualStyleBackColor = true;
-            // 
-            // rbShowRect
-            // 
-            this.rbShowRect.AutoSize = true;
-            this.rbShowRect.Location = new System.Drawing.Point(118, 18);
-            this.rbShowRect.Name = "rbShowRect";
-            this.rbShowRect.Size = new System.Drawing.Size(110, 17);
-            this.rbShowRect.TabIndex = 2;
-            this.rbShowRect.TabStop = true;
-            this.rbShowRect.Text = "Mostrar Recuadro";
-            this.rbShowRect.UseVisualStyleBackColor = true;
-            // 
-            // cbShowNames
-            // 
-            this.cbShowNames.AutoSize = true;
-            this.cbShowNames.Location = new System.Drawing.Point(7, 99);
-            this.cbShowNames.Name = "cbShowNames";
-            this.cbShowNames.Size = new System.Drawing.Size(106, 17);
-            this.cbShowNames.TabIndex = 3;
-            this.cbShowNames.Text = "Mostrar Nombres";
-            this.cbShowNames.UseVisualStyleBackColor = true;
-            // 
-            // btnMostrar
-            // 
-            this.btnMostrar.Location = new System.Drawing.Point(6, 172);
-            this.btnMostrar.Name = "btnMostrar";
-            this.btnMostrar.Size = new System.Drawing.Size(75, 23);
-            this.btnMostrar.TabIndex = 4;
-            this.btnMostrar.Text = "Mostrar";
-            this.btnMostrar.UseVisualStyleBackColor = true;
-            this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
-            // 
-            // cbContinentes
-            // 
-            this.cbContinentes.AutoSize = true;
-            this.cbContinentes.Location = new System.Drawing.Point(7, 41);
-            this.cbContinentes.Name = "cbContinentes";
-            this.cbContinentes.Size = new System.Drawing.Size(120, 17);
-            this.cbContinentes.TabIndex = 4;
-            this.cbContinentes.Text = "Mostrar Continentes";
-            this.cbContinentes.UseVisualStyleBackColor = true;
-            // 
-            // cbIslas
-            // 
-            this.cbIslas.AutoSize = true;
-            this.cbIslas.Location = new System.Drawing.Point(133, 41);
-            this.cbIslas.Name = "cbIslas";
-            this.cbIslas.Size = new System.Drawing.Size(85, 17);
-            this.cbIslas.TabIndex = 5;
-            this.cbIslas.Text = "Mostrar Islas";
-            this.cbIslas.UseVisualStyleBackColor = true;
-            // 
-            // cbIslotes
-            // 
-            this.cbIslotes.AutoSize = true;
-            this.cbIslotes.Location = new System.Drawing.Point(7, 64);
-            this.cbIslotes.Name = "cbIslotes";
-            this.cbIslotes.Size = new System.Drawing.Size(94, 17);
-            this.cbIslotes.TabIndex = 6;
-            this.cbIslotes.Text = "Mostrar Islotes";
-            this.cbIslotes.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -600,7 +605,7 @@
             this.Controls.Add(this.button1);
             this.MainMenuStrip = this.msMenu;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "WorldGen";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudH)).EndInit();
@@ -615,10 +620,10 @@
             this.gbEtiquetado.ResumeLayout(false);
             this.gbEtiquetado.PerformLayout();
             this.gbVisu.ResumeLayout(false);
-            this.pMapa.ResumeLayout(false);
-            this.pMapa.PerformLayout();
             this.pAccidentes.ResumeLayout(false);
             this.pAccidentes.PerformLayout();
+            this.pMapa.ResumeLayout(false);
+            this.pMapa.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

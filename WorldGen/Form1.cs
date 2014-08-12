@@ -20,13 +20,16 @@ namespace WorldGen
 {
     public partial class Form1 : Form
     {
+        Masslabelling.Region poligono;
+
         public Form1()
         {
-            //RuntimeTypeModel.Default.Add(typeof(System.Windows.Point), false).Add("X", "Y");
             RuntimeTypeModel.Default.Add(typeof(System.Drawing.Point), false).Add("X", "Y");
             RuntimeTypeModel.Default.Add(typeof(System.Drawing.Color), false).Add("A", "R", "G","B");
             InitializeComponent();
         }
+
+
         public Mapa map;
 
         private void button1_Click(object sender, EventArgs e)
@@ -371,5 +374,57 @@ namespace WorldGen
                 });
             pbMapa.Image = b.ToBitmap();
         }
+
+        private void tvAccidentes_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            Stack<string> nodos = new Stack<string>();
+            TreeNode nodo = e.Node;
+            nodos.Push(nodo.Name);
+            if (nodo.Parent != null)
+            {
+                nodo = nodo.Parent;
+                nodos.Push(nodo.Name);
+            }
+            string peek;
+            bool find = false, find2 = false;
+            HashSet<Masslabelling.Region> reg = map.Regiones;
+            Masslabelling.Region sal = new Masslabelling.Region() ;
+            while (nodos.Count > 0)
+            {
+                peek = nodos.Pop();
+                for (int i = 0; i < reg.Count && !find; i++)
+                {
+                    sal = reg.ElementAt(i);
+                    if (sal.Nombre == peek)
+                    {
+                        find = true;
+                        if (sal.Hijos != null && sal.Hijos.Count > 0)
+                        {
+                            reg = sal.Hijos;
+                        }
+                    }
+                }
+            }
+            poligono = sal;
+            pbMapa.Refresh();
+
+           
+        }
+
+        private void pbMapa_Paint(object sender, PaintEventArgs e)
+        {
+            if (poligono != null)
+            {
+                Pen boli = new Pen(poligono.Col, 1.0f);
+                e.Graphics.DrawPolygon(boli, poligono.Vertices);
+            }
+        }
+
+        private void tvAccidentes_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            //poligono = null;
+        }
+
+
     }
 }

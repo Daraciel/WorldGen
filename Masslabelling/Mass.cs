@@ -16,7 +16,7 @@ namespace Masslabelling
     {
         private static Size MinSize = new Size(2,1);
         private static Emgu.CV.CvEnum.CHAIN_APPROX_METHOD Searchmethod = Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_NONE;
-        private static Emgu.CV.CvEnum.RETR_TYPE Retrievaltype = Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_EXTERNAL;
+        private static Emgu.CV.CvEnum.RETR_TYPE Retrievaltype = Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_TREE;
 
         private static double CannyThreshold = 149;
 

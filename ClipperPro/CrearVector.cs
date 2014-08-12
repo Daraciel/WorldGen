@@ -17,6 +17,12 @@ namespace ClipperPro
         public CrearVector()
         {
             InitializeComponent();
+            lblPen.Text = "(" + File.ReadLines("Peninsulas\\Peninsulas.info").Count() + " ítems)";
+            lblBahias.Text = "(" + File.ReadLines("Bahias\\Bahias.info").Count() + " ítems)";
+            lblCabos.Text = "(" + File.ReadLines("Cabos\\Cabos.info").Count() + " ítems)";
+            lblCanales.Text = "(" + File.ReadLines("Canales\\Canales.info").Count() + " ítems)";
+            lblGolfos.Text = "(" + File.ReadLines("Golfos\\Golfos.info").Count() + " ítems)";
+            lblNeg.Text = "(" + File.ReadLines("Nada\\Falsos.info").Count() + " ítems)";
         }
 
         private void btnGO_Click(object sender, EventArgs e)
@@ -26,7 +32,7 @@ namespace ClipperPro
         }
 
         private void CreateSampleFile(string output, int alto, int ancho, int cant, bool dist, bool show)
-        {//opencv_createsamples   -img   source.png   -num   10  -bg negatives.dat -vec samples_out.vec -show
+        {
             string mostrar = "";
             ProcessStartInfo startInfo = new ProcessStartInfo();
             //startInfo.CreateNoWindow = false;
@@ -57,6 +63,11 @@ namespace ClipperPro
             {
                 MessageBox.Show("Ha ocurrido un error: "+ex.Message);
             }
+        }
+
+        private void gbCrear_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -416,7 +416,6 @@
             // cbForma
             // 
             this.cbForma.AutoSize = true;
-            this.cbForma.Enabled = false;
             this.cbForma.Location = new System.Drawing.Point(7, 44);
             this.cbForma.Name = "cbForma";
             this.cbForma.Size = new System.Drawing.Size(196, 17);

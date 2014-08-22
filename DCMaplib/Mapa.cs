@@ -779,7 +779,7 @@ namespace DCMapLib
             Emgu.CV.Image<Gray, Byte> img = new Image<Gray, Byte>(mapa);
             Emgu.CV.Image<Bgr, Byte> imgColor = new Image<Bgr, Byte>(mapa);
             double tamanoplaneta = mapa.Size.Height*mapa.Size.Width;
-            double umbralcontinente = tamanoplaneta * 0.03;
+            double umbralcontinente = tamanoplaneta * 0.015;
             double umbralislita = tamanoplaneta * 0.000008;
 
             Regiones = new HashSet<Masslabelling.Region>();
@@ -795,6 +795,7 @@ namespace DCMapLib
                     {
                         imgColor.Draw(region.Marco.ToRect(), new Bgr(region.Col), 2);
                         imgColor.Draw(region.Nombre, ref fuente, region.Marco.Location, new Bgr(region.Col));
+                        imgColor.Draw(new CircleF(region.Centroide, 1), new Bgr(region.Col), 2);
                     }
                 });
 

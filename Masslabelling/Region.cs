@@ -151,6 +151,12 @@ namespace Masslabelling
             set { _Vertices = value; }
         }
 
+        private Point _Centroide;
+        public Point Centroide
+        {
+            get { return _Centroide; }
+            set { _Centroide = value; }
+        }
 
         private HashSet<Region> _Hijos;
 
@@ -162,6 +168,28 @@ namespace Masslabelling
         }
 
         private Color _Col;
+
+        public Point SetCentroide()
+        {
+            float accumulatedArea = 0.0f;
+            float centerX = 0.0f;
+            float centerY = 0.0f;
+
+            for (int i = 0, j = _NumVertices - 1; i < _NumVertices; j = i++)
+            {
+                float temp = Vertices[i].X * Vertices[j].Y - Vertices[j].X * Vertices[i].Y;
+                accumulatedArea += temp;
+                centerX += (Vertices[i].X + Vertices[j].X) * temp;
+                centerY += (Vertices[i].Y + Vertices[j].Y) * temp;
+            }
+
+            if (accumulatedArea < 1E-7f)
+                return Point.Empty;  // Avoid division by zero
+
+            accumulatedArea *= 3f;
+            _Centroide = new Point((int)(centerX / accumulatedArea), (int)(centerY / accumulatedArea));
+            return _Centroide;
+        }
 
     }
 

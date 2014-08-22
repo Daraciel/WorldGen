@@ -14,7 +14,7 @@ namespace Masslabelling
 {
     public static class Mass
     {
-        private static Size MinSize = new Size(2,1);
+        private static Size MinSize = new Size(1,1);
         private static Emgu.CV.CvEnum.CHAIN_APPROX_METHOD Searchmethod = Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_NONE;
         private static Emgu.CV.CvEnum.RETR_TYPE Retrievaltype = Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_TREE;
 
@@ -92,11 +92,11 @@ namespace Masslabelling
         }
 
         public static HashSet<Region> GetRegions(Image<Gray, byte> mapa, TIPOREGION tr, double umbral)
-        {
+        {/*
             if (mapa.Size.Height * mapa.Size.Width < MinSize.Height * MinSize.Width)
                 return null;
-
-            double umbralIslote = umbral / 100.0;
+            */
+            double umbralIslote = umbral / 300.0;
             Random randonGen = new Random();
             Color randomColor;
             //Contour<Point> sourceContours = mapa.Canny(CannyThreshold, CannyThreshold).FindContours(Searchmethod, Retrievaltype);
@@ -114,48 +114,55 @@ namespace Masslabelling
                 auxH = new Region();
 
                 auxH.Area = sourceContours.Area;
-                auxH.Marco = new Rectangulo(sourceContours.BoundingRectangle.Location, sourceContours.BoundingRectangle.Width, sourceContours.BoundingRectangle.Height);
-                auxH.Perimetro = sourceContours.Perimeter;
                 auxH.NumVertices = sourceContours.Total;
-                randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
-                auxH.Col = randomColor;
-                auxH.Tipo = tr;
-                if (auxH.Tipo == TIPOREGION.TIERRA)
+                if (auxH.NumVertices >2)
                 {
-                    if (auxH.Area > umbral)
+                    
+                    auxH.Marco = new Rectangulo(sourceContours.BoundingRectangle.Location, sourceContours.BoundingRectangle.Width, sourceContours.BoundingRectangle.Height);
+
+                    Point[] forma = sourceContours.ToArray();
+                    for (int i = 0; i < forma.Length; i++)
                     {
-                        auxH.Nombre = getRandomContinent();
-                        auxH.Tipotam = TIPOTAMANO.CONTINENTE;
+                        auxH.Vertices[i] = forma[i];
                     }
-                    else
-                    {
-                        auxH.Nombre = getRandomIsland();
-                        if (auxH.Area > umbralIslote)
+                    Point cent = auxH.SetCentroide();
+                    byte r = mapa.Data[cent.Y, cent.X, 0];
+                    Color c = Color.FromArgb(r, r, r, r);
+                        auxH.Perimetro = sourceContours.Perimeter;
+                        randomColor = Color.FromArgb(randonGen.Next(255), randonGen.Next(255), randonGen.Next(255));
+                        auxH.Col = randomColor;
+                        auxH.Tipo = tr;
+                        if (auxH.Tipo == TIPOREGION.TIERRA)
                         {
-                            auxH.Tipotam = TIPOTAMANO.ISLA;
-                            if (auxH.Nombre.StartsWith("de"))
-                                auxH.Nombre = "Isla " + auxH.Nombre;
+                            if (auxH.Area > umbral)
+                            {
+                                auxH.Nombre = getRandomContinent();
+                                auxH.Tipotam = TIPOTAMANO.CONTINENTE;
+                            }
+                            else
+                            {
+                                auxH.Nombre = getRandomIsland();
+                                if (auxH.Area > umbralIslote)
+                                {
+                                    auxH.Tipotam = TIPOTAMANO.ISLA;
+                                    if (auxH.Nombre.StartsWith("de"))
+                                        auxH.Nombre = "Isla " + auxH.Nombre;
+                                }
+                                else
+                                {
+                                    auxH.Tipotam = TIPOTAMANO.ISLOTE;
+                                    if (auxH.Nombre.StartsWith("de"))
+                                        auxH.Nombre = "Islote " + auxH.Nombre;
+                                }
+                            }
+
                         }
                         else
                         {
-                            auxH.Tipotam = TIPOTAMANO.ISLOTE;
-                            if (auxH.Nombre.StartsWith("de"))
-                                auxH.Nombre = "Islote " + auxH.Nombre;
+                            auxH.Nombre = "Lago";
                         }
-                    }
-
+                        regiones.Add(auxH);
                 }
-                else
-                {
-                    auxH.Nombre = "Lago";
-                }
-                Point[] forma = sourceContours.ToArray();
-                for (int i = 0; i < forma.Length; i++)
-                {
-                    auxH.Vertices[i] = forma[i];
-                }
-                auxH.Hijos = GetRegions(mapa.GetSubRect(auxH.Marco.ToRect()), nuevotipo, umbral);
-                regiones.Add(auxH);
                 sourceContours = sourceContours.HNext;
                 contH++;
             }

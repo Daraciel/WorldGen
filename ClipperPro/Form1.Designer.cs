@@ -34,6 +34,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirImágenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crearArchivoDeEjemplosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crearArchivosDeEntrenamientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ejemploToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vaciarFicherosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vaciarFicheroBahíasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,9 +61,6 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.gbHelp = new System.Windows.Forms.GroupBox();
             this.lblHelp = new System.Windows.Forms.Label();
-            this.crearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearArchivoDeEjemplosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearArchivosDeEntrenamientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ibImagen)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ibCrop)).BeginInit();
@@ -104,9 +104,32 @@
             // abrirImágenToolStripMenuItem
             // 
             this.abrirImágenToolStripMenuItem.Name = "abrirImágenToolStripMenuItem";
-            this.abrirImágenToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.abrirImágenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.abrirImágenToolStripMenuItem.Text = "Abrir mapa";
             this.abrirImágenToolStripMenuItem.Click += new System.EventHandler(this.abrirImágenToolStripMenuItem_Click);
+            // 
+            // crearToolStripMenuItem
+            // 
+            this.crearToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.crearArchivoDeEjemplosToolStripMenuItem,
+            this.crearArchivosDeEntrenamientoToolStripMenuItem});
+            this.crearToolStripMenuItem.Name = "crearToolStripMenuItem";
+            this.crearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.crearToolStripMenuItem.Text = "Crear...";
+            // 
+            // crearArchivoDeEjemplosToolStripMenuItem
+            // 
+            this.crearArchivoDeEjemplosToolStripMenuItem.Name = "crearArchivoDeEjemplosToolStripMenuItem";
+            this.crearArchivoDeEjemplosToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.crearArchivoDeEjemplosToolStripMenuItem.Text = "Crear archivo de ejemplos";
+            this.crearArchivoDeEjemplosToolStripMenuItem.Click += new System.EventHandler(this.crearArchivoDeEjemplosToolStripMenuItem_Click);
+            // 
+            // crearArchivosDeEntrenamientoToolStripMenuItem
+            // 
+            this.crearArchivosDeEntrenamientoToolStripMenuItem.Name = "crearArchivosDeEntrenamientoToolStripMenuItem";
+            this.crearArchivosDeEntrenamientoToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.crearArchivosDeEntrenamientoToolStripMenuItem.Text = "Crear archivos de entrenamiento";
+            this.crearArchivosDeEntrenamientoToolStripMenuItem.Click += new System.EventHandler(this.crearArchivosDeEntrenamientoToolStripMenuItem_Click);
             // 
             // ejemploToolStripMenuItem
             // 
@@ -348,28 +371,6 @@
             this.lblHelp.Size = new System.Drawing.Size(188, 271);
             this.lblHelp.TabIndex = 0;
             this.lblHelp.Text = "label5";
-            // 
-            // crearToolStripMenuItem
-            // 
-            this.crearToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.crearArchivoDeEjemplosToolStripMenuItem,
-            this.crearArchivosDeEntrenamientoToolStripMenuItem});
-            this.crearToolStripMenuItem.Name = "crearToolStripMenuItem";
-            this.crearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.crearToolStripMenuItem.Text = "Crear...";
-            // 
-            // crearArchivoDeEjemplosToolStripMenuItem
-            // 
-            this.crearArchivoDeEjemplosToolStripMenuItem.Name = "crearArchivoDeEjemplosToolStripMenuItem";
-            this.crearArchivoDeEjemplosToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.crearArchivoDeEjemplosToolStripMenuItem.Text = "Crear archivo de ejemplos";
-            this.crearArchivoDeEjemplosToolStripMenuItem.Click += new System.EventHandler(this.crearArchivoDeEjemplosToolStripMenuItem_Click);
-            // 
-            // crearArchivosDeEntrenamientoToolStripMenuItem
-            // 
-            this.crearArchivosDeEntrenamientoToolStripMenuItem.Name = "crearArchivosDeEntrenamientoToolStripMenuItem";
-            this.crearArchivosDeEntrenamientoToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.crearArchivosDeEntrenamientoToolStripMenuItem.Text = "Crear archivos de entrenamiento";
             // 
             // Form1
             // 

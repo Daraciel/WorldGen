@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace DCMaplib
 {
@@ -37,14 +39,6 @@ namespace DCMaplib
 
         private Random rnd;
 
-        private double _Seed;
-
-        public double Seed
-        {
-            get { return _Seed; }
-            set { _Seed = value; }
-        }
-
         private int _CantSparks;
 
         public int CantSparks
@@ -63,15 +57,16 @@ namespace DCMaplib
 
         private List<int> Cola;
 
+        private int _Magnitud = 8;
+
         public MapSparks()
         {
         }
 
-        public MapSparks(int w, int h, int s, int c, int p)
+        public MapSparks(int w, int h, int c, int p)
         {
             _Width = w;
             _Height = h;
-            _Seed = s;
             _CantSparks = c;
             _Prob = p;
             rnd = new Random();
@@ -82,9 +77,11 @@ namespace DCMaplib
         private void InicializarLista()
         {
             Cola = new List<int>();
+            int ancho = _Width / _Magnitud;
+            int alto = _Height / _Magnitud;
             for (int i = 0; i < _CantSparks; i++)
             {
-                int num = rnd.Next(_Width * _Height);
+                int num = rnd.Next(ancho * alto);
                 _Mapa[num] = TIPOCASILLA.TIERRA;
                 Cola.Add(num);
             }
@@ -92,8 +89,10 @@ namespace DCMaplib
 
         private void InicializarMatriz()
         {
-            _Mapa = new TIPOCASILLA[_Width * _Height];
-            for (int i = 0; i < _Width * _Height; i++)
+            int ancho = _Width / _Magnitud;
+            int alto = _Height / _Magnitud;
+            _Mapa = new TIPOCASILLA[ancho * alto];
+            for (int i = 0; i < ancho * alto; i++)
                 _Mapa[i] = TIPOCASILLA.UNDEFINED;
         }
 
@@ -102,9 +101,9 @@ namespace DCMaplib
             int num, r, puestos = 0;
             TIPOCASILLA t;
             List<int> v;
+            Random rnd2 = new Random(DateTime.Now.Millisecond - Cola.Count * puestos);
             while (Cola.Count > 0)
             {
-                Random rnd2 = new Random(DateTime.Now.Millisecond - Cola.Count * puestos);
                 r = rnd.Next(Cola.Count);
                 num = Cola.ElementAt(r);
                 Cola.RemoveAt(r);
@@ -137,35 +136,55 @@ namespace DCMaplib
         private List<int> getVecinos(int num)
         {
             List<int> res = new List<int>();
-            int mod = num % _Width;
-            int div = num / _Width;
+            int ancho = _Width / _Magnitud;
+            int alto = _Height / _Magnitud;
+            int mod = num % ancho;
+            int div = num / ancho;
 
-            if (num > _Width)
+            if (num > ancho)
             {
                 if(mod>0)
-                    res.Add(num - _Width - 1);
-                res.Add(num - _Width);
-                if (mod != _Width-1)
-                    res.Add(num - _Width + 1);
+                    res.Add(num - ancho - 1);
+                res.Add(num - ancho);
+                if (mod != ancho - 1)
+                    res.Add(num - ancho + 1);
             }
 
             if (mod > 0)
                 res.Add(num - 1);
-            if (mod != _Width - 1)
+            if (mod != ancho - 1)
                 res.Add(num + 1);
 
-            if (num < _Width * (_Height - 1))
+            if (num < ancho * (alto - 1))
             {
                 if (mod > 0)
-                    res.Add(num + _Width - 1);
-                res.Add(num + _Width);
-                if (mod != _Width - 1)
-                    res.Add(num + _Width + 1);
+                    res.Add(num + ancho - 1);
+                res.Add(num + ancho);
+                if (mod != ancho - 1)
+                    res.Add(num + ancho + 1);
             }
 
             return res;
         }
 
+        public void setBMP()
+        {
+
+            int ancho = _Width / _Magnitud;
+            int alto = _Height / _Magnitud;
+            img = new Bitmap(_Width, _Height);
+            Image<Bgr, byte> img2 = new Image<Bgr, byte>(_Width, _Height, new Bgr(Color.Blue));
+            for (int i = 0; i < ancho; i++)
+            {
+                for (int j = 0; j < alto; j++)
+                {
+                    if (_Mapa[ancho * j + i] == TIPOCASILLA.TIERRA)
+                        img2.Draw(new Rectangle(i * _Magnitud, j * _Magnitud, _Magnitud - 1, _Magnitud - 1), new Bgr(Color.Green), -1);
+                }
+            }
+            img = img2.ToBitmap();
+        }
+        /*
         public void setBMP()
         {
 
@@ -180,7 +199,7 @@ namespace DCMaplib
                         img.SetPixel(i, j, Color.Green);
                 }
             }
-        }
+        }*/
 
     }
     public enum TIPOCASILLA

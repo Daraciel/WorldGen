@@ -21,6 +21,7 @@ namespace WorldGen
     public partial class Form1 : Form
     {
         Masslabelling.Region poligono;
+        private CascadeClassifier clasificadorPeninsulas, clasificadorBahias;
 
         public Form1()
         {
@@ -218,12 +219,28 @@ namespace WorldGen
         private void button2_Click(object sender, EventArgs e)
         {
             //map = new Mapa(100, 100, "0.123");
-            pbMapa.Image = map.etiquetarDebug().ToBitmap();
-
-            tvAccidentes.Nodes.Clear();
-            foreach(Masslabelling.Region R in map.Regiones)
+            if (cbMasa.Checked)
             {
-                tvAccidentes.Nodes.Add(fillTree(R));
+                pbMapa.Image = map.etiquetarDebug().ToBitmap();
+
+                tvAccidentes.Nodes.Clear();
+                foreach (Masslabelling.Region R in map.Regiones)
+                {
+                    tvAccidentes.Nodes.Add(fillTree(R));
+                }
+            }
+            if (cbForma.Checked)
+            {
+                clasificadorBahias = new CascadeClassifier("Clasificadores\\Bahias.xml");
+                Bitmap bmp = map.printBW();
+                Image<Gray,byte> image = new Image<Gray,byte>(bmp);
+                Image<Bgr,byte> img = new Image<Bgr,byte>(bmp);
+                Rectangle[] rectangles = clasificadorBahias.DetectMultiScale(image, 1.4, 10, new Size(24,24), new Size(50,50));
+                foreach (Rectangle r in rectangles)
+                {
+                    img.Draw(r, new Bgr(Color.Cyan), 1);
+                }
+                pbMapa.Image = img.ToBitmap();
             }
         }
 

@@ -38,8 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.nudAncho = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbSemilla = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.pbMapa = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTierra)).BeginInit();
@@ -60,18 +58,16 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.nudAncho);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.tbSemilla);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 600);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Valores del mapa";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(52, 167);
+            this.button1.Location = new System.Drawing.Point(52, 142);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 10;
@@ -81,15 +77,20 @@
             // 
             // nudTierra
             // 
-            this.nudTierra.Location = new System.Drawing.Point(114, 126);
+            this.nudTierra.Location = new System.Drawing.Point(114, 101);
             this.nudTierra.Name = "nudTierra";
             this.nudTierra.Size = new System.Drawing.Size(80, 20);
             this.nudTierra.TabIndex = 9;
+            this.nudTierra.Value = new decimal(new int[] {
+            75,
+            0,
+            0,
+            0});
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 128);
+            this.label5.Location = new System.Drawing.Point(8, 103);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 13);
             this.label5.TabIndex = 8;
@@ -97,7 +98,7 @@
             // 
             // nudSparks
             // 
-            this.nudSparks.Location = new System.Drawing.Point(114, 100);
+            this.nudSparks.Location = new System.Drawing.Point(114, 75);
             this.nudSparks.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -106,11 +107,16 @@
             this.nudSparks.Name = "nudSparks";
             this.nudSparks.Size = new System.Drawing.Size(80, 20);
             this.nudSparks.TabIndex = 7;
+            this.nudSparks.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 102);
+            this.label4.Location = new System.Drawing.Point(8, 77);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 13);
             this.label4.TabIndex = 6;
@@ -118,7 +124,8 @@
             // 
             // nudAlto
             // 
-            this.nudAlto.Location = new System.Drawing.Point(52, 74);
+            this.nudAlto.Enabled = false;
+            this.nudAlto.Location = new System.Drawing.Point(52, 49);
             this.nudAlto.Maximum = new decimal(new int[] {
             2048,
             0,
@@ -141,7 +148,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 76);
+            this.label3.Location = new System.Drawing.Point(8, 51);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 4;
@@ -149,7 +156,8 @@
             // 
             // nudAncho
             // 
-            this.nudAncho.Location = new System.Drawing.Point(52, 48);
+            this.nudAncho.Enabled = false;
+            this.nudAncho.Location = new System.Drawing.Point(52, 23);
             this.nudAncho.Maximum = new decimal(new int[] {
             2048,
             0,
@@ -172,30 +180,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 50);
+            this.label2.Location = new System.Drawing.Point(8, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Ancho";
             // 
-            // tbSemilla
-            // 
-            this.tbSemilla.Location = new System.Drawing.Point(52, 22);
-            this.tbSemilla.Name = "tbSemilla";
-            this.tbSemilla.Size = new System.Drawing.Size(142, 20);
-            this.tbSemilla.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Semilla";
-            // 
             // pbMapa
             // 
+            this.pbMapa.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMapa.Location = new System.Drawing.Point(218, 12);
             this.pbMapa.Name = "pbMapa";
             this.pbMapa.Size = new System.Drawing.Size(800, 600);
@@ -210,7 +203,7 @@
             this.Controls.Add(this.pbMapa);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "GUISparks";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTierra)).EndInit();
@@ -233,8 +226,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudAncho;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbSemilla;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbMapa;
         private System.Windows.Forms.Button button1;
     }

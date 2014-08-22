@@ -29,6 +29,14 @@ namespace ClipperPro
         {
             if (cbPen.Checked)
                 CreateSampleFile("Peninsulas", Int32.Parse(nudAlto.Value.ToString()), Int32.Parse(nudAncho.Value.ToString()), Int32.Parse(nudCant.Value.ToString()), cbDist.Checked, cbShow.Checked);
+            else if (cbBahia.Checked)
+                CreateSampleFile("Bahias", Int32.Parse(nudAlto.Value.ToString()), Int32.Parse(nudAncho.Value.ToString()), Int32.Parse(nudCant.Value.ToString()), cbDist.Checked, cbShow.Checked);
+            else if (cbCabo.Checked)
+                CreateSampleFile("Cabos", Int32.Parse(nudAlto.Value.ToString()), Int32.Parse(nudAncho.Value.ToString()), Int32.Parse(nudCant.Value.ToString()), cbDist.Checked, cbShow.Checked);
+            else if (cbCanal.Checked)
+                CreateSampleFile("Canales", Int32.Parse(nudAlto.Value.ToString()), Int32.Parse(nudAncho.Value.ToString()), Int32.Parse(nudCant.Value.ToString()), cbDist.Checked, cbShow.Checked);
+            else if (cbGolfo.Checked)
+                CreateSampleFile("Golfos", Int32.Parse(nudAlto.Value.ToString()), Int32.Parse(nudAncho.Value.ToString()), Int32.Parse(nudCant.Value.ToString()), cbDist.Checked, cbShow.Checked);
         }
 
         private void CreateSampleFile(string output, int alto, int ancho, int cant, bool dist, bool show)

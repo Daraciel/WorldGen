@@ -20,14 +20,13 @@ namespace GUISparks
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int sem, w, h, c, p;
-            int.TryParse(tbSemilla.Text,out sem);
+            int w, h, c, p;
             int.TryParse(nudAlto.Value.ToString(), out h);
             int.TryParse(nudAncho.Value.ToString(), out w);
             int.TryParse(nudSparks.Value.ToString(), out c);
             int.TryParse(nudTierra.Value.ToString(), out p);
 
-            MapSparks m = new MapSparks(w, h, sem, c, p);
+            MapSparks m = new MapSparks(w, h, c, p);
             m.Domap();
             m.setBMP();
             pbMapa.Image = m.img;

@@ -424,6 +424,12 @@ namespace ClipperPro
             cv.ShowDialog(this);
         }
 
+        private void crearArchivosDeEntrenamientoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CrearXML cx = new CrearXML();
+            cx.ShowDialog(this);
+        }
+
 
     }
 }

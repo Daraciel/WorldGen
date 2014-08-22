@@ -66,6 +66,12 @@
     <Compile Include="CrearVector.Designer.cs">
       <DependentUpon>CrearVector.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrearXML.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrearXML.Designer.cs">
+      <DependentUpon>CrearXML.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CrearVector.resx">
       <DependentUpon>CrearVector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrearXML.resx">
+      <DependentUpon>CrearXML.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -130,6 +139,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Clasificadores\" />
     <Folder Include="Ejemplos\" />
   </ItemGroup>
   <ItemGroup>

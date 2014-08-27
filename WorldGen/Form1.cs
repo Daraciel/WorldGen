@@ -39,6 +39,7 @@ namespace WorldGen
             map.Latitude = double.Parse(tbLat.Text);
             map.Longitude = double.Parse(tbLong.Text);
             map.Scale = double.Parse(tbScale.Text);
+            map.WaterLine = double.Parse(nudAgua.Value.ToString());
             map.ColorFile = ((KeyValuePair<string, string>)cbSchema.SelectedItem).Value;
 
             //map.SaveColMap();
@@ -440,6 +441,11 @@ namespace WorldGen
         private void tvAccidentes_AfterSelect(object sender, TreeViewEventArgs e)
         {
             //poligono = null;
+        }
+
+        private void configuraciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
 

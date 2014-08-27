@@ -312,10 +312,21 @@ namespace ClipperPro
                 tipo = "Falso";
                 carpeta = "Nada";
             }
-            string archivo = tipo + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpg";
+            string archivo = "\\" + tipo + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpg";
+            string imagen = carpeta + "\\" + tipo + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpg";
+
+            if (rectcrop.X < 0)
+                rectcrop.X = 0;
+            if (rectcrop.Y < 0)
+                rectcrop.Y = 0;
+            if (rectcrop.X + rectcrop.Width > ibCrop.Image.Bitmap.Width)
+                rectcrop.Width = ibCrop.Image.Bitmap.Width - rectcrop.X;
+            if (rectcrop.Y + rectcrop.Height > ibCrop.Image.Bitmap.Height)
+                rectcrop.Height = ibCrop.Image.Bitmap.Height - rectcrop.Y;
+
             try
             {
-                saveJpeg(archivo, ibCrop.Image.Bitmap, 100);
+                saveJpeg(imagen, ibCrop.Image.Bitmap, 100);
                 string linea = archivo+" 1 ";
                 if (rbNada.Checked)
                     linea += "0 0 " + ibCrop.Image.Bitmap.Width + " " + ibCrop.Image.Bitmap.Height;
@@ -327,6 +338,7 @@ namespace ClipperPro
                         linea += "0 0 " + ibCrop.Image.Bitmap.Width + " " + ibCrop.Image.Bitmap.Height;
                 }
                 File.AppendAllText(carpeta + "\\" + tipo + "s.info", linea + Environment.NewLine);
+                rectcrop = new Rectangle();
                 sonido.Play();
             }
             catch(Exception ex)

@@ -47,14 +47,13 @@ namespace DCMapLib
         private int HIGHEST = 9;
         private int latic = 0;
 
-        private double InitialHeight = 0.2; //Altura inicial del mapa
-        private double _Scale = 1.0;         //Escala del mapa (futura feature)
+        private double InitialHeight = 0.2;     //Altura inicial del mapa
+        private double _Scale = 1.0;            //Escala del mapa
 
         //[XmlIgnoreAttribute()]
-        private double PI = Math.PI;        //Constante PI
+        private double PI = Math.PI;            //Constante PI
         private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
   ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
-        private double M = -0.02;            // altitud inicial
 
 
         private int Depth = 11; //Número de subdivisiones que hará el tetraedro
@@ -149,6 +148,20 @@ namespace DCMapLib
             }
         }
 
+        private double _WaterLine;      // Nivel del agua
+        [ProtoMember(10)]
+        public double WaterLine
+        {
+            get
+            {
+                return _WaterLine;
+            }
+            set
+            {
+                _WaterLine = value;
+            }
+        }    
+
         //[XmlElementAttribute("seed")]
         private double _Seed;           //Semilla del mapa
         private double[,] Heightmap;    //Mapa de alturas
@@ -204,6 +217,7 @@ namespace DCMapLib
             _Width = W;
             _Height = H;
             Semilla = S;
+            _WaterLine = -0.02;
             setSeedFromString();
             Inicializar();
         }
@@ -319,10 +333,10 @@ namespace DCMapLib
             tetra.C = new Point3D((float)(Math.Sqrt(3.0) + 0.21), (float)(-Math.Sqrt(3.0) - 0.24), (float)(Math.Sqrt(3.0) + 0.15));
             tetra.D = new Point3D((float)(Math.Sqrt(3.0) + 0.24), (float)(Math.Sqrt(3.0) + 0.22), (float)(-Math.Sqrt(3.0) - 0.25));
 
-            tetra.AHeight = M;
-            tetra.BHeight = M;
-            tetra.CHeight = M;
-            tetra.DHeight = M;
+            tetra.AHeight = _WaterLine;
+            tetra.BHeight = _WaterLine;
+            tetra.CHeight = _WaterLine;
+            tetra.DHeight = _WaterLine;
 
             tetra.ASeed = r1;
             tetra.BSeed = r2;

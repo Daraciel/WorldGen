@@ -167,16 +167,59 @@ namespace ClipperPro
             else
                 featureType = "LBP";
 
-            string call = "-data Clasificadores\\ -vec ";
+
+
+            //string call = "-data Clasificadores\\ -vec ";
+            string call = "-data temp\\ -vec ";
 
             string call2 = " -bg Nada\\Falsos.info -numPos " + positivos + " -numNeg " + negativos + " -numStages " + stages + " -featureType " + featureType + " -w " + ancho + " -h " + alto;
             if(positivos>2000)
                 call2 += " -minHitRate " + minhitrate + " -maxFalseAlarmRate " + maxalarmrate;
 
             if (cbPen.Checked)
+            {
+                Directory.CreateDirectory("temp");
                 Learn(call, call2, "", tbPen.Text);
+                File.Move("temp\\cascade.xml", "Clasificadores\\Peninsulas.xml");
+                Directory.Delete("temp", true);
+
+            }
             if (cbBahias.Checked)
+            {
+                Directory.CreateDirectory("temp");
                 Learn(call, call2, "", tbBahias.Text);
+                try
+                {
+                    File.Move("temp\\cascade.xml", "Clasificadores\\Bahias.xml");
+                }
+                catch(IOException io)
+                {
+                    File.Delete("Clasificadores\\Bahias.xml");
+                    File.Move("temp\\cascade.xml", "Clasificadores\\Bahias.xml");
+                }
+                Directory.Delete("temp", true);
+            }
+            if (cbCabos.Checked)
+            {
+                Directory.CreateDirectory("temp");
+                Learn(call, call2, "", tbCabos.Text);
+                File.Move("temp\\cascade.xml", "Clasificadores\\Cabos.xml");
+                Directory.Delete("temp", true);
+            }
+            if (cbCanales.Checked)
+            {
+                Directory.CreateDirectory("temp");
+                Learn(call, call2, "", tbCanales.Text);
+                File.Move("temp\\cascade.xml", "Clasificadores\\Canales.xml");
+                Directory.Delete("temp", true);
+            }
+            if (cbGolfos.Checked)
+            {
+                Directory.CreateDirectory("temp");
+                Learn(call, call2, "", tbGolfos.Text);
+                File.Move("temp\\cascade.xml", "Clasificadores\\Golfos.xml");
+                Directory.Delete("temp", true);
+            }
             //-data imgs/cascade/ -vec imgs/vector.vec -bg imgs/negat.dat -numPos 1900 
             //-numNeg 900 -numStages 12  -featureType HAAR -minHitRate 0.999 -maxFalseAlarmRate 0.5 -w 24 -h 30
         }
@@ -197,6 +240,7 @@ namespace ClipperPro
                     using (Process exeProcess = Process.Start(startInfo))
                     {
                         exeProcess.WaitForExit();
+                        //string a = startInfo.FileName + " " + startInfo.Arguments;
                     }
                 }
                 catch (Exception ex)

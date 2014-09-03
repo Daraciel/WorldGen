@@ -252,6 +252,15 @@ namespace WorldGen
                     }
                 }
 
+                if (File.Exists("Clasificadores\\Bahias.xml"))
+                {
+                    clasificadorGolfos = new CascadeClassifier("Clasificadores\\Bahias.xml");
+                    map.Golfos = Masslabelling.Mass.GetAccidentes(clasificadorGolfos, TIPOACCIDENTE.GOLFO, image);
+                    foreach (Accidente G in map.Golfos)
+                    {
+                        img.Draw(G.Posicion.ToRect(), new Bgr(Color.Orange), 1);
+                    }
+                }
                 if (File.Exists("Clasificadores\\Cabos.xml"))
                 {
                     clasificadorCabos = new CascadeClassifier("Clasificadores\\Cabos.xml");
@@ -262,33 +271,22 @@ namespace WorldGen
                     }
                 }
 
+                if (File.Exists("Clasificadores\\Cabos.xml"))
+                {
+                    clasificadorPeninsulas = new CascadeClassifier("Clasificadores\\Cabos.xml");
+                    map.Peninsulas = Masslabelling.Mass.GetAccidentes(clasificadorPeninsulas, TIPOACCIDENTE.PENINSULA, image);
+                    foreach (Accidente P in map.Peninsulas)
+                    {
+                        img.Draw(P.Posicion.ToRect(), new Bgr(Color.Red), 1);
+                    }
+                }
                 if (File.Exists("Clasificadores\\Canales.xml"))
                 {
                     clasificadorCanales = new CascadeClassifier("Clasificadores\\Canales.xml");
                     map.Canales = Masslabelling.Mass.GetAccidentes(clasificadorCanales, TIPOACCIDENTE.CANAL, image);
-                    foreach (Accidente Can in map.Bahias)
+                    foreach (Accidente Can in map.Canales)
                     {
                         img.Draw(Can.Posicion.ToRect(), new Bgr(Color.Yellow), 1);
-                    }
-                }
-
-                if (File.Exists("Clasificadores\\Golfos.xml"))
-                {
-                    clasificadorGolfos = new CascadeClassifier("Clasificadores\\Golfos.xml");
-                    map.Golfos = Masslabelling.Mass.GetAccidentes(clasificadorGolfos, TIPOACCIDENTE.GOLFO, image);
-                    foreach (Accidente G in map.Bahias)
-                    {
-                        img.Draw(G.Posicion.ToRect(), new Bgr(Color.Orange), 1);
-                    }
-                }
-
-                if (File.Exists("Clasificadores\\Peninsulas.xml"))
-                {
-                    clasificadorPeninsulas = new CascadeClassifier("Clasificadores\\Peninsulas.xml");
-                    map.Peninsulas = Masslabelling.Mass.GetAccidentes(clasificadorPeninsulas, TIPOACCIDENTE.PENINSULA, image);
-                    foreach (Accidente P in map.Bahias)
-                    {
-                        img.Draw(P.Posicion.ToRect(), new Bgr(Color.Red), 1);
                     }
                 }
 

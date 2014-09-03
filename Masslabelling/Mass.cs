@@ -187,23 +187,28 @@ namespace Masslabelling
             {
                 case TIPOACCIDENTE.BAHIA:
                     min = new Size(24, 24);
-                    max = new Size(70, 70);
+                    max = new Size(48, 48);
+                    vecinos = 15;
                     break;
                 case TIPOACCIDENTE.CABO:
                     min = new Size(24, 24);
-                    max = new Size(70, 70);
+                    max = new Size(48, 48);
+                    vecinos = 10;
                     break;
                 case TIPOACCIDENTE.CANAL:
-                    min = new Size(24, 24);
-                    max = new Size(70, 70);
+                    min = new Size(12, 12);
+                    max = new Size(40, 40);
+                    vecinos = 10;
                     break;
                 case TIPOACCIDENTE.GOLFO:
-                    min = new Size(24, 24);
+                    min = new Size(50, 50);
                     max = new Size(70, 70);
+                    vecinos = 10;
                     break;
                 case TIPOACCIDENTE.PENINSULA:
-                    min = new Size(24, 24);
+                    min = new Size(50, 50);
                     max = new Size(70, 70);
+                    vecinos = 10;
                     break;
                 default:
                     min = new Size(24, 24);

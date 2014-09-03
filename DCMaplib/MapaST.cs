@@ -152,7 +152,7 @@ namespace DCMapLib
 
         private double _WaterLine;      // Nivel del agua
 
-        [ProtoMember(10)]
+        [ProtoMember(15)]
         public double WaterLine
         {
             get

@@ -176,6 +176,12 @@ namespace ClipperPro
             if(positivos>2000)
                 call2 += " -minHitRate " + minhitrate + " -maxFalseAlarmRate " + maxalarmrate;
 
+            if (rbHAAR.Checked)
+            {
+                call2 += " -mode BASIC -precalcValBufSize 1024 -precalcIdxBufSize 1024";
+            }
+
+
             if (cbPen.Checked)
             {
                 Directory.CreateDirectory("temp");

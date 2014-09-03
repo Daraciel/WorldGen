@@ -4,9 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using ProtoBuf;
+using ProtoBuf.Meta;
 
 namespace Masslabelling
 {
+    [ProtoContract(SkipConstructor = true)]
     public class Accidente
     {
         private TIPOACCIDENTE _Tipo;
@@ -25,6 +27,10 @@ namespace Masslabelling
         {
             get { return _Posicion; }
             set { _Posicion = value; }
+        }
+
+        public Accidente()
+        {
         }
     }
 

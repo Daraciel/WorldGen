@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,8 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Capa.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="Mapa.cs" />
+    <Compile Include="MapaST.cs" />
     <Compile Include="MapGC.cs" />
     <Compile Include="MapSparks.cs" />
     <Compile Include="PerlinMap.cs" />
@@ -68,6 +68,9 @@
       <Project>{6ade0cbb-c54f-4796-a8f4-60930c0acab1}</Project>
       <Name>Masslabelling</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DCMapLib.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

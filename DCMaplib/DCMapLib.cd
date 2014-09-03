@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DCMapLib.Capa">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAYAAABAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAABQ=</HashCode>
+      <FileName>Capa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DCMapLib.Mapa">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KoIUbJAABELgQGBiklIIAtFEYBF4MHCwoCBAIMiKEDA=</HashCode>
+      <FileName>Mapa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DCMapLib.Tetraedro">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBAEAAAAAECCAQAAiQQAEAAEFDAANIRAEAAorEsAgAA=</HashCode>
+      <FileName>Tetraedro.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DCMaplib.MapGC">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAGAABQBAACAkAAAkAAgEIAIAIAAAAAQAAgIBTAIgA=</HashCode>
+      <FileName>MapGC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DCMaplib.MapSparks">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAABAEAEAABCAAAAkQIAgAAAgAAAAQAKIAAABA=</HashCode>
+      <FileName>MapSparks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DCMaplib.PerlinMap">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMAEAAAAEAgAgAAGAACAAAAAMAAAAAAgEAAAAIAIABA=</HashCode>
+      <FileName>PerlinMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="DCMapLib.TIPOCAPA">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAABAAAAg=</HashCode>
+      <FileName>Capa.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DCMaplib.TIPOCASILLA">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MapSparks.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

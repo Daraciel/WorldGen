@@ -66,6 +66,13 @@ namespace Masslabelling
         {
         }
 
+        public Rectangulo(Rectangle R)
+        {
+            _Location = R.Location;
+            _Width = R.Width;
+            _Height = R.Height;
+        }
+
         public Rectangulo(Point p, int w, int h)
         {
             _Location = p;

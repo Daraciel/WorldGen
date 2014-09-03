@@ -21,7 +21,11 @@ namespace WorldGen
     public partial class Form1 : Form
     {
         Masslabelling.Region poligono;
-        private CascadeClassifier clasificadorPeninsulas, clasificadorBahias;
+        private CascadeClassifier clasificadorPeninsulas;
+        private CascadeClassifier clasificadorBahias;
+        private CascadeClassifier clasificadorGolfos;
+        private CascadeClassifier clasificadorCabos;
+        private CascadeClassifier clasificadorCanales;
 
         public Form1()
         {
@@ -31,11 +35,13 @@ namespace WorldGen
         }
 
 
-        public Mapa map;
+        public MapaST map;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            map = new Mapa(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), tbS.Text);
+
+            tvAccidentes.Nodes.Clear();
+            map = new MapaST(Convert.ToInt32(nudW.Value), Convert.ToInt32(nudH.Value), tbS.Text);
             map.Latitude = double.Parse(tbLat.Text);
             map.Longitude = double.Parse(tbLong.Text);
             map.Scale = double.Parse(tbScale.Text);
@@ -236,10 +242,12 @@ namespace WorldGen
                 Bitmap bmp = map.printBW();
                 Image<Gray,byte> image = new Image<Gray,byte>(bmp);
                 Image<Bgr,byte> img = new Image<Bgr,byte>(bmp);
-                Rectangle[] rectangles = clasificadorBahias.DetectMultiScale(image, 1.4, 10, new Size(24,24), new Size(50,50));
-                foreach (Rectangle r in rectangles)
+
+                map.Bahias = Masslabelling.Mass.GetAccidentes(clasificadorBahias, TIPOACCIDENTE.BAHIA, image);
+
+                foreach (Accidente B in map.Bahias)
                 {
-                    img.Draw(r, new Bgr(Color.Cyan), 1);
+                    img.Draw(B.Posicion.ToRect(), new Bgr(Color.Cyan), 1);
                 }
                 pbMapa.Image = img.ToBitmap();
             }
@@ -349,7 +357,7 @@ namespace WorldGen
             {
                 using (var file = File.OpenRead(openFileDialog1.FileName))
                 {
-                    map = Serializer.Deserialize<Mapa>(file);
+                    map = Serializer.Deserialize<MapaST>(file);
                     pbMapa.Image = map.printBW();
                     if (map.Regiones == null)
                         map.Regiones = new HashSet<Masslabelling.Region>();
@@ -446,6 +454,13 @@ namespace WorldGen
         private void configuraciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void nuevoMapaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pbMapa.Image = null;
+            tvAccidentes.Nodes.Clear();
+            map = null;
         }
 
 

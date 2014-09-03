@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="1e190d68-eb99-466e-8a26-d5f739d5736e"
+  name="CvEnum"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="581f1c7e-248b-4173-ad1a-9a550b89cab8"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DEmgu.CV.CvEnum"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="a582c1f0-ed75-4ccd-b4e4-1b30a1f416c5"
+        name="RETR_TYPE"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="89bec999-7eb4-4fbd-b670-09b164601199"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3D&quot;file:%2F%2F%2FC:%2FEmgu%2Femgucv-windows-universal-cuda 2.9.0.1922%2Fbin%2FEmgu.CV.dll&quot; Namespace%3DEmgu.CV.CvEnum Type%3DRETR_TYPE"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="4c793891-3c2a-467e-8bbf-dbe8e258c053"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6f1bf931-44d6-45b1-8d50-62879844620d">
+                <propertyInstance
+                  Id="14dadd95-dc6d-40cf-a211-41df5a9406f8"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4857d0e8-a7f8-411e-b2f9-9e0ecfcc84d7">
+                <propertyInstance
+                  Id="e73f7d6e-6959-41c7-9c56-c773a832a154"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4d90ac98-aa4a-4c73-94b2-d5118efcd7ea">
+                <propertyInstance
+                  Id="6b847fbe-5510-4b90-ab80-5242868fa905"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="18ee9291-4524-4798-8971-5d7b30a40d5d"
+        name="CHAIN_APPROX_METHOD"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="57be46bf-34a1-41ae-a973-d5a51a902b8a"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3D&quot;file:%2F%2F%2FC:%2FEmgu%2Femgucv-windows-universal-cuda 2.9.0.1922%2Fbin%2FEmgu.CV.dll&quot; Namespace%3DEmgu.CV.CvEnum Type%3DCHAIN_APPROX_METHOD"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="0d3f9392-d3b0-40f5-869f-f784c2b4aa17"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="49309b9a-0d26-4847-94ef-cd2650fdcbb2">
+                <propertyInstance
+                  Id="992680df-314a-4487-97dd-71fb69e1ab63"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9c41cea4-b997-4e7a-8135-49b41fa41f22">
+                <propertyInstance
+                  Id="4992b821-e529-4767-bd1d-aca97272e290"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="103fe2a7-527e-4569-a5ca-1d1ed7365698">
+                <propertyInstance
+                  Id="a24bb1ff-145c-4aa5-a6f5-f7a1ce23100a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

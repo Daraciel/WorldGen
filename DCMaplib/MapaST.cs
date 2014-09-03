@@ -20,7 +20,7 @@ namespace DCMapLib
 {
     
     [ProtoContract]
-    public class Mapa
+    public class MapaST
     {
         private string _Semilla;
 
@@ -50,11 +50,9 @@ namespace DCMapLib
         private double InitialHeight = 0.2;     //Altura inicial del mapa
         private double _Scale = 1.0;            //Escala del mapa
 
-        //[XmlIgnoreAttribute()]
         private double PI = Math.PI;            //Constante PI
-        private double ssa, ssb, ssc, ssd, ssas, ssbs, sscs, ssds,
-  ssax, ssay, ssaz, ssbx, ssby, ssbz, sscx, sscy, sscz, ssdx, ssdy, ssdz;
 
+        private Tetraedro T;
 
         private int Depth = 11; //Número de subdivisiones que hará el tetraedro
 
@@ -63,14 +61,14 @@ namespace DCMapLib
 
         public Random rnd, rnd2;
 
-        //[XmlElementAttribute("ancho")]
         private int _Width;             //Ancho del mapa (px)
-        //[XmlElementAttribute("alto")]
+
         private int _Height;            //Alto del mapa (px)
-        //[XmlElementAttribute("latitud")]
-        private double _Latitude = 0.0;  //Latitud del centro del mapa (futura feature)
-        //[XmlElementAttribute("longitud")]
-        private double _Longitude = 0.0; //Longitud del centro del mapa (futura feature)
+
+        private double _Latitude = 0.0;  //Latitud del centro del mapa
+
+        private double _Longitude = 0.0; //Longitud del centro del mapa 
+
         [ProtoMember(2)]
         public double Longitude
         {
@@ -86,6 +84,7 @@ namespace DCMapLib
                 _Longitude = (_Longitude * PI) / 180.0;
             }
         }
+
         [ProtoMember(3)]
         public double Latitude
         {
@@ -97,6 +96,7 @@ namespace DCMapLib
                 _Latitude = (_Latitude * PI) / 180.0;
             }
         }
+
         [ProtoMember(4)]
         public int Width
         {
@@ -109,6 +109,7 @@ namespace DCMapLib
                 _Width = value;
             }
         }
+
         [ProtoMember(5)]
         public int Height
         {
@@ -135,6 +136,7 @@ namespace DCMapLib
                 _Seed = value;
             }
         }
+
         [ProtoMember(6)]
         public double Scale
         {
@@ -149,6 +151,7 @@ namespace DCMapLib
         }
 
         private double _WaterLine;      // Nivel del agua
+
         [ProtoMember(10)]
         public double WaterLine
         {
@@ -162,7 +165,6 @@ namespace DCMapLib
             }
         }    
 
-        //[XmlElementAttribute("seed")]
         private double _Seed;           //Semilla del mapa
         private double[,] Heightmap;    //Mapa de alturas
 
@@ -198,6 +200,52 @@ namespace DCMapLib
         [ProtoMember(9)]
         public HashSet<Masslabelling.Region> Regiones;
 
+        private HashSet<Accidente> _Peninsulas;
+
+        [ProtoMember(10, OverwriteList = true)]
+        public HashSet<Accidente> Peninsulas
+        {
+            get { return _Peninsulas; }
+            set { _Peninsulas = value; }
+        }
+
+        private HashSet<Accidente> _Cabos;
+
+        [ProtoMember(11, OverwriteList = true)]
+        public HashSet<Accidente> Cabos
+        {
+            get { return _Cabos; }
+            set { _Cabos = value; }
+        }
+
+        private HashSet<Accidente> _Bahias;
+
+        [ProtoMember(12, OverwriteList = true)]
+        public HashSet<Accidente> Bahias
+        {
+            get { return _Bahias; }
+            set { _Bahias = value; }
+        }
+
+        private HashSet<Accidente> _Golfos;
+
+        [ProtoMember(13, OverwriteList = true)]
+        public HashSet<Accidente> Golfos
+        {
+            get { return _Golfos; }
+            set { _Golfos = value; }
+        }
+
+        private HashSet<Accidente> _Canales;
+
+        [ProtoMember(14, OverwriteList = true)]
+        public HashSet<Accidente> Canales
+        {
+            get { return _Canales; }
+            set { _Canales = value; }
+        }
+
+
         private double r1, r2, r3, r4;
 
 
@@ -212,8 +260,9 @@ namespace DCMapLib
         /// <param name="W">Valor entero que representa la anchura del mapa</param>
         /// <param name="H">Valor entero que representa la altura del mapa</param>
         /// <param name="S">Valor decimal que representa la semilla del mapa</param>
-        public Mapa(int W, int H, string S)
+        public MapaST(int W, int H, string S)
         {
+            T = new Tetraedro();
             _Width = W;
             _Height = H;
             Semilla = S;
@@ -252,7 +301,7 @@ namespace DCMapLib
         }
 
 
-        public Mapa()
+        public MapaST()
         {
 
         }
@@ -274,53 +323,54 @@ namespace DCMapLib
 
             Tetraedro tetra = new Tetraedro();
 
-            abx = ssbx - ssax; aby = ssby - ssay; abz = ssbz - ssaz;
-            acx = sscx - ssax; acy = sscy - ssay; acz = sscz - ssaz;
-            adx = ssdx - ssax; ady = ssdy - ssay; adz = ssdz - ssaz;
-            apx = P.X - ssax; apy = P.Y - ssay; apz = P.Z - ssaz;
+            abx = T.B.X - T.A.X; aby = T.B.Y - T.A.Y; abz = T.B.Z - T.A.Z;
+            acx = T.C.X - T.A.X; acy = T.C.Y - T.A.Y; acz = T.C.Z - T.A.Z;
+            adx = T.D.X - T.A.X; ady = T.D.Y - T.A.Y; adz = T.D.Z - T.A.Z;
+            apx = P.X - T.A.X; apy = P.Y - T.A.Y; apz = P.Z - T.A.Z;
             if ((adx * aby * acz + ady * abz * acx + adz * abx * acy
                  - adz * aby * acx - ady * abx * acz - adx * abz * acy) *
                 (apx * aby * acz + apy * abz * acx + apz * abx * acy
                  - apz * aby * acx - apy * abx * acz - apx * abz * acy) > 0.0)
             {
-                /* p is on same side of abc as d */
+                /* p está en el mismo lado de abc que d */
                 if ((acx * aby * adz + acy * abz * adx + acz * abx * ady
                  - acz * aby * adx - acy * abx * adz - acx * abz * ady) *
                 (apx * aby * adz + apy * abz * adx + apz * abx * ady
                  - apz * aby * adx - apy * abx * adz - apx * abz * ady) > 0.0)
                 {
-                    /* p is on same side of abd as c */
+                    /* p está en el mismo lado de abd que c */
                     if ((abx * ady * acz + aby * adz * acx + abz * adx * acy
                      - abz * ady * acx - aby * adx * acz - abx * adz * acy) *
                     (apx * ady * acz + apy * adz * acx + apz * adx * acy
                      - apz * ady * acx - apy * adx * acz - apx * adz * acy) > 0.0)
                     {
-                        /* p is on same side of acd as b */
+                        /* p está en el mismo lado de acd que b */
                         bax = -abx; bay = -aby; baz = -abz;
-                        bcx = sscx - ssbx; bcy = sscy - ssby; bcz = sscz - ssbz;
-                        bdx = ssdx - ssbx; bdy = ssdy - ssby; bdz = ssdz - ssbz;
-                        bpx = P.X - ssbx; bpy = P.Y - ssby; bpz = P.Z - ssbz;
+
+                        bcx = T.C.X - T.B.X; bcy = T.C.Y - T.B.Y; bcz = T.C.Z - T.B.Z;
+                        bdx = T.D.X - T.B.X; bdy = T.D.Y - T.B.Y; bdz = T.D.Z - T.B.Z;
+                        bpx = P.X - T.B.X; bpy = P.Y - T.B.Y; bpz = P.Z - T.B.Z;
                         if ((bax * bcy * bdz + bay * bcz * bdx + baz * bcx * bdy
                              - baz * bcy * bdx - bay * bcx * bdz - bax * bcz * bdy) *
                             (bpx * bcy * bdz + bpy * bcz * bdx + bpz * bcx * bdy
                              - bpz * bcy * bdx - bpy * bcx * bdz - bpx * bcz * bdy) > 0.0)
                         {
-                            /* p is on same side of bcd as a */
-                            /* Hence, p is inside tetrahedron */
-                            tetra.A = new Point3D((float)ssax, (float)ssay, (float)ssaz);
-                            tetra.B = new Point3D((float)ssbx, (float)ssby, (float)ssbz);
-                            tetra.C = new Point3D((float)sscx, (float)sscy, (float)sscz);
-                            tetra.D = new Point3D((float)ssdx, (float)ssdy, (float)ssdz);
+                            /* p está en el mismo lado de bcd que a */
+                            /* Por lo que p está dentro del tetraedro */
+                            tetra.A = new Point3D(T.A.X, T.A.Y, T.A.Z);
+                            tetra.B = new Point3D(T.B.X, T.B.Y, T.B.Z);
+                            tetra.C = new Point3D(T.C.X, T.C.Y, T.C.Z);
+                            tetra.D = new Point3D(T.D.X, T.D.Y, T.D.Z);
 
-                            tetra.AHeight = ssa;
-                            tetra.BHeight = ssb;
-                            tetra.CHeight = ssc;
-                            tetra.DHeight = ssd;
+                            tetra.AHeight = T.AHeight;
+                            tetra.BHeight = T.BHeight;
+                            tetra.CHeight = T.CHeight;
+                            tetra.DHeight = T.DHeight;
 
-                            tetra.ASeed = ssas;
-                            tetra.BSeed = ssbs;
-                            tetra.CSeed = sscs;
-                            tetra.DSeed = ssds;
+                            tetra.ASeed = T.ASeed;
+                            tetra.BSeed = T.BSeed;
+                            tetra.CSeed = T.CSeed;
+                            tetra.DSeed = T.DSeed;
 
                             return (MakePoint(tetra, P, 11));
                         }
@@ -347,27 +397,29 @@ namespace DCMapLib
         }
 
         /*Planet*/
-        private double MakePoint(Tetraedro T, Point3D P, int D)
+        private double MakePoint(Tetraedro T1, Point3D P, int D)
         {
             if (D > 0)
             {
                 if (D == 11)
                 {
-                    ssa = T.AHeight; ssb = T.BHeight; ssc = T.CHeight; ssd = T.DHeight;
-                    ssas = T.ASeed; ssbs = T.BSeed; sscs = T.CSeed; ssds = T.DSeed;
-                    ssax = T.A.X; ssay = T.A.Y; ssaz = T.A.Z;
-                    ssbx = T.B.X; ssby = T.B.Y; ssbz = T.B.Z;
-                    sscx = T.C.X; sscy = T.C.Y; sscz = T.C.Z;
-                    ssdx = T.D.X; ssdy = T.D.Y; ssdz = T.D.Z;
+
+                    T.AHeight = T1.AHeight; T.BHeight = T1.BHeight; T.CHeight = T1.CHeight; T.DHeight = T1.DHeight;
+                    T.ASeed = T1.ASeed; T.BSeed = T1.BSeed; T.CSeed = T1.CSeed; T.DSeed = T1.DSeed;
+
+                    T.A.X = T1.A.X; T.A.Y = T1.A.Y; T.A.Y = T1.A.Z;
+                    T.B.X = T1.B.X; T.B.Y = T1.B.Y; T.B.Z = T1.B.Z;
+                    T.C.X = T1.C.X; T.C.Y = T1.C.Y; T.C.Z = T1.C.Z;
+                    T.D.X = T1.D.X; T.D.X = T1.D.Y; T.D.X = T1.D.Z;
                 }
-                T.Reordenar();
-                T.Cortar(P, ref rnd);
-                return MakePoint(T, P, --D);
+                T1.Reordenar();
+                T1.Cortar(P, ref rnd);
+                return MakePoint(T1, P, --D);
             }
             else
             {
             }
-            double blaa = ((T.AHeight + T.BHeight + T.CHeight + T.DHeight) / 4.0);
+            double blaa = ((T1.AHeight + T1.BHeight + T1.CHeight + T1.DHeight) / 4.0);
             return blaa;
         }
 
@@ -813,24 +865,7 @@ namespace DCMapLib
                     }
                 });
 
-            //etiquetadora.regionprops(image);
-            int i = 6;
             return imgColor;
-            
-            /*
-            String win1 = "Test Window"; //The name of the window
-            CvInvoke.cvNamedWindow(win1); //Create the window using the specific name
-
-            Image<Bgr, Byte> img = new Image<Bgr, byte>(400, 200, new Bgr(255, 0, 0)); //Create an image of 400x200 of Blue color
-            MCvFont f = new MCvFont(FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0); //Create the font
-
-            img.Draw("Hello, world", ref f, new System.Drawing.Point(10, 80), new Bgr(0, 255, 0)); //Draw "Hello, world." on the image using the specific font
-
-            CvInvoke.cvShowImage(win1, img); //Show the image
-            CvInvoke.cvWaitKey(0);  //Wait for the key pressing event
-            CvInvoke.cvDestroyWindow(win1); //Destory the window
-            
-            */
         }
 
         public bool Salvar(string FileName)

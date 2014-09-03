@@ -171,7 +171,10 @@ namespace DCMapLib
 
         public Tetraedro()
         {
-            
+            A = new Point3D();
+            B = new Point3D();
+            C = new Point3D();
+            D = new Point3D();
         }
 
         public void Reordenar()

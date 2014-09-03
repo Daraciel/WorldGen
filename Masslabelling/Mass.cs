@@ -18,7 +18,7 @@ namespace Masslabelling
         private static Emgu.CV.CvEnum.CHAIN_APPROX_METHOD Searchmethod = Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_NONE;
         private static Emgu.CV.CvEnum.RETR_TYPE Retrievaltype = Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_TREE;
 
-        private static double CannyThreshold = 149;
+        //private static double CannyThreshold = 149;
 
         private static List<string> continentes;
         private static List<string> islas;
@@ -102,8 +102,10 @@ namespace Masslabelling
             //Contour<Point> sourceContours = mapa.Canny(CannyThreshold, CannyThreshold).FindContours(Searchmethod, Retrievaltype);
             Contour<Point> sourceContours = mapa.FindContours(Searchmethod, Retrievaltype);
             HashSet<Region> regiones = new HashSet<Region>();
-            int contH = 0, contV = 0;
-            Region auxH, auxV;
+            int contH = 0;
+            //int contV = 0;
+            Region auxH;
+            //Region auxV;
             TIPOREGION nuevotipo = TIPOREGION.AGUA;
 
             if(tr == TIPOREGION.AGUA)
@@ -168,6 +170,59 @@ namespace Masslabelling
             }
 
             return regiones;
+        }
+
+        public static HashSet<Accidente> GetAccidentes(CascadeClassifier cc, TIPOACCIDENTE ta, Image<Gray,byte> img)
+        {
+
+            //Rectangle[] rectangles = clasificadorBahias.DetectMultiScale(image, 1.4, 10, new Size(24, 24), new Size(50, 50));
+            HashSet<Accidente> accidentes = new HashSet<Accidente>();
+            Size min, max;
+            min = new Size(24, 24);
+            max = new Size(70, 70);
+            double scale = 1.4;
+            int vecinos = 0;
+            Accidente aux;
+            switch (ta)
+            {
+                case TIPOACCIDENTE.BAHIA:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+                case TIPOACCIDENTE.CABO:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+                case TIPOACCIDENTE.CANAL:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+                case TIPOACCIDENTE.GOLFO:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+                case TIPOACCIDENTE.PENINSULA:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+                default:
+                    min = new Size(24, 24);
+                    max = new Size(70, 70);
+                    break;
+            }
+            Rectangle[] detectados = cc.DetectMultiScale(img, scale, vecinos, min, max);
+            foreach (Rectangle R in detectados)
+            {
+                aux = new Accidente();
+                aux.Tipo = ta;
+                aux.Posicion = new Rectangulo(R);
+                accidentes.Add(aux);
+
+            }
+
+
+            return accidentes;
+
         }
     }
 }

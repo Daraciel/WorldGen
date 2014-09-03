@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="2d62ee2c-bf79-406a-be5a-3703441eda6e"
+  name="Charting"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="c9a06e71-b9ff-4846-817a-3875553ff827"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DSystem.Web.UI.DataVisualization.Charting"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="736b1928-0db1-4e84-9392-66036c5763aa"
+        name="Point3D"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="fda56176-d146-4ee1-b3cc-8b0b99ac1221"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Web.DataVisualization.dll&quot; Namespace%3DSystem.Web.UI.DataVisualization.Charting Type%3DPoint3D"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="85b3bd34-1dfd-4366-9e59-ed0791e02fb5"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="74eb537c-6d0f-4138-9a58-74eb82ee59c2">
+                <propertyInstance
+                  Id="bf610cda-13a5-4f3f-9ad2-024c30cf8bda"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e50e6793-f0a4-4a94-a8fc-a05deaa3635a">
+                <propertyInstance
+                  Id="26d235e9-2369-49ef-b5e5-68495293efec"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fd97e14b-1a65-40ce-a51c-4326549fb94f">
+                <propertyInstance
+                  Id="5211b36f-2f4c-4826-8846-a42de8f18185"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9b182903-8615-4170-93bc-ad126796d5fd">
+                <propertyInstance
+                  Id="069f20e6-aee8-4b8d-a699-be0d0018b3b9"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b6f04692-ddc6-4bb4-ab91-075c38c4b7c6">
+                <propertyInstance
+                  Id="007cdff7-8946-4a3c-a9c5-6bc1e4488d08"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

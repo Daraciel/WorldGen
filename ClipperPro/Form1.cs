@@ -21,7 +21,7 @@ namespace ClipperPro
 {
     public partial class Form1 : Form
     {
-        public Mapa map;
+        public MapaST map;
         private Rectangle rect, rectcrop;
         private bool go, go2;
         private Image<Gray, Byte> src;
@@ -56,7 +56,7 @@ namespace ClipperPro
             {
                 using (var file = File.OpenRead(openFileDialog1.FileName))
                 {
-                    map = Serializer.Deserialize<Mapa>(file);
+                    map = Serializer.Deserialize<MapaST>(file);
                     src = new Image<Gray, Byte>(map.printBW());
                     if (map.Regiones == null)
                         map.Regiones = new HashSet<Masslabelling.Region>();

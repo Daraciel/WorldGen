@@ -138,7 +138,6 @@ namespace DCMaplib
                     break;
             }
 
-            /* Threshold now holds where sea-level is */
             Threshold = k * (MaxZ - MinZ + 1) / 30 + MinZ;
         }
 
@@ -146,12 +145,10 @@ namespace DCMaplib
         {
             for (int j = 0, row = 0; j < Width; j++)
             {
-                /* We have to start somewhere, and the top row was initialized to 0,
-                 * but it might have changed during the iterations... */
                 int Color = Mapa[row];
                 for (int i = 1; i < Height; i++)
                 {
-                    /* We "fill" all positions with values != INT_MIN with Color */
+                    /* Ponemos cada posición con su respectivo color */
                     int actual = Mapa[row + i];
                     if (actual != Int32.MinValue)
                     {

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Capa.cs" />
+    <Compile Include="DPoint3D.cs" />
     <Compile Include="MapaST.cs" />
     <Compile Include="MapGC.cs" />
     <Compile Include="MapSparks.cs" />

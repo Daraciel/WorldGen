@@ -322,7 +322,7 @@ namespace DCMapLib
             double bax, bay, baz, bcx, bcy, bcz, bdx, bdy, bdz, bpx, bpy, bpz;
 
             Tetraedro tetra = new Tetraedro();
-
+            
             abx = T.B.X - T.A.X; aby = T.B.Y - T.A.Y; abz = T.B.Z - T.A.Z;
             acx = T.C.X - T.A.X; acy = T.C.Y - T.A.Y; acz = T.C.Z - T.A.Z;
             adx = T.D.X - T.A.X; ady = T.D.Y - T.A.Y; adz = T.D.Z - T.A.Z;
@@ -346,10 +346,12 @@ namespace DCMapLib
                     {
                         /* p está en el mismo lado de acd que b */
                         bax = -abx; bay = -aby; baz = -abz;
-
+                        
                         bcx = T.C.X - T.B.X; bcy = T.C.Y - T.B.Y; bcz = T.C.Z - T.B.Z;
                         bdx = T.D.X - T.B.X; bdy = T.D.Y - T.B.Y; bdz = T.D.Z - T.B.Z;
                         bpx = P.X - T.B.X; bpy = P.Y - T.B.Y; bpz = P.Z - T.B.Z;
+
+
                         if ((bax * bcy * bdz + bay * bcz * bdx + baz * bcx * bdy
                              - baz * bcy * bdx - bay * bcx * bdz - bax * bcz * bdy) *
                             (bpx * bcy * bdz + bpy * bcz * bdx + bpz * bcx * bdy
@@ -357,10 +359,11 @@ namespace DCMapLib
                         {
                             /* p está en el mismo lado de bcd que a */
                             /* Por lo que p está dentro del tetraedro */
-                            tetra.A = new Point3D(T.A.X, T.A.Y, T.A.Z);
-                            tetra.B = new Point3D(T.B.X, T.B.Y, T.B.Z);
-                            tetra.C = new Point3D(T.C.X, T.C.Y, T.C.Z);
-                            tetra.D = new Point3D(T.D.X, T.D.Y, T.D.Z);
+                            
+                            tetra.A = new DPoint3D(T.A.X, T.A.Y, T.A.Z);
+                            tetra.B = new DPoint3D(T.B.X, T.B.Y, T.B.Z);
+                            tetra.C = new DPoint3D(T.C.X, T.C.Y, T.C.Z);
+                            tetra.D = new DPoint3D(T.D.X, T.D.Y, T.D.Z);
 
                             tetra.AHeight = T.AHeight;
                             tetra.BHeight = T.BHeight;
@@ -378,10 +381,10 @@ namespace DCMapLib
                 }
             } /* otherwise */
 
-            tetra.A = new Point3D((float)(-Math.Sqrt(3.0) - 0.20), (float)(-Math.Sqrt(3.0) - 0.22), (float)(-Math.Sqrt(3.0) - 0.23));
-            tetra.B = new Point3D((float)(-Math.Sqrt(3.0) - 0.19), (float)(Math.Sqrt(3.0) + 0.18), (float)(Math.Sqrt(3.0) + 0.17));
-            tetra.C = new Point3D((float)(Math.Sqrt(3.0) + 0.21), (float)(-Math.Sqrt(3.0) - 0.24), (float)(Math.Sqrt(3.0) + 0.15));
-            tetra.D = new Point3D((float)(Math.Sqrt(3.0) + 0.24), (float)(Math.Sqrt(3.0) + 0.22), (float)(-Math.Sqrt(3.0) - 0.25));
+            tetra.A = new DPoint3D((-Math.Sqrt(3.0) - 0.20), (-Math.Sqrt(3.0) - 0.22), (-Math.Sqrt(3.0) - 0.23));
+            tetra.B = new DPoint3D((-Math.Sqrt(3.0) - 0.19), (Math.Sqrt(3.0) + 0.18), (Math.Sqrt(3.0) + 0.17));
+            tetra.C = new DPoint3D((Math.Sqrt(3.0) + 0.21), (-Math.Sqrt(3.0) - 0.24), (Math.Sqrt(3.0) + 0.15));
+            tetra.D = new DPoint3D((Math.Sqrt(3.0) + 0.24), (Math.Sqrt(3.0) + 0.22), (-Math.Sqrt(3.0) - 0.25));
 
             tetra.AHeight = _WaterLine;
             tetra.BHeight = _WaterLine;
@@ -403,14 +406,21 @@ namespace DCMapLib
             {
                 if (D == 11)
                 {
+                    
+                    T.AHeight = T1.AHeight; 
+                    T.BHeight = T1.BHeight; 
+                    T.CHeight = T1.CHeight; 
+                    T.DHeight = T1.DHeight;
 
-                    T.AHeight = T1.AHeight; T.BHeight = T1.BHeight; T.CHeight = T1.CHeight; T.DHeight = T1.DHeight;
-                    T.ASeed = T1.ASeed; T.BSeed = T1.BSeed; T.CSeed = T1.CSeed; T.DSeed = T1.DSeed;
+                    T.ASeed = T1.ASeed; 
+                    T.BSeed = T1.BSeed; 
+                    T.CSeed = T1.CSeed; 
+                    T.DSeed = T1.DSeed;
 
-                    T.A.X = T1.A.X; T.A.Y = T1.A.Y; T.A.Y = T1.A.Z;
+                    T.A.X = T1.A.X; T.A.Y = T1.A.Y; T.A.Z = T1.A.Z;
                     T.B.X = T1.B.X; T.B.Y = T1.B.Y; T.B.Z = T1.B.Z;
                     T.C.X = T1.C.X; T.C.Y = T1.C.Y; T.C.Z = T1.C.Z;
-                    T.D.X = T1.D.X; T.D.X = T1.D.Y; T.D.X = T1.D.Z;
+                    T.D.X = T1.D.X; T.D.Y = T1.D.Y; T.D.Z = T1.D.Z;
                 }
                 T1.Reordenar();
                 T1.Cortar(P, ref rnd);

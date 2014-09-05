@@ -15,8 +15,8 @@ namespace DCMapLib
         private double dd2 = 0.035; /* weight for distance */
         private double POW = 0.47;  /* power for distance function */
         
-        private Point3D _A;
-        public Point3D A
+        private DPoint3D _A;
+        public DPoint3D A
         {
             get { return _A; }
             set {
@@ -43,8 +43,8 @@ namespace DCMapLib
         }
 
 
-        private Point3D _B;
-        public Point3D B
+        private DPoint3D _B;
+        public DPoint3D B
         {
             get { return _B; }
             set
@@ -72,8 +72,8 @@ namespace DCMapLib
         }
 
 
-        private Point3D _C;
-        public Point3D C
+        private DPoint3D _C;
+        public DPoint3D C
         {
             get { return _C; }
             set
@@ -101,8 +101,8 @@ namespace DCMapLib
         }
 
 
-        private Point3D _D;
-        public Point3D D
+        private DPoint3D _D;
+        public DPoint3D D
         {
             get { return _D; }
             set
@@ -158,7 +158,7 @@ namespace DCMapLib
         }
         /**/
 
-        private double getDist(ref Point3D a, ref Point3D b)
+        private double getDist(ref DPoint3D a, ref DPoint3D b)
         {
             double res;
             double deltaXAB = a.X - b.X;
@@ -171,17 +171,17 @@ namespace DCMapLib
 
         public Tetraedro()
         {
-            A = new Point3D();
-            B = new Point3D();
-            C = new Point3D();
-            D = new Point3D();
+            A = new DPoint3D();
+            B = new DPoint3D();
+            C = new DPoint3D();
+            D = new DPoint3D();
         }
 
         public void Reordenar()
         {
 
             double HeightAux;
-            Point3D PointAux;
+            DPoint3D PointAux;
             double SeedAux;
 
             if (_DistAB < _DistAC)
@@ -314,7 +314,7 @@ namespace DCMapLib
             double ESeed2 = 0.5 + 0.1 * Makerand(ESeed1, ESeed1);
             double ESeed3 = 1.0 - ESeed2;
 
-            Point3D E = new Point3D();
+            DPoint3D E = new DPoint3D();
             
             if (A.X < B.X)
             {
@@ -349,11 +349,11 @@ namespace DCMapLib
                             + ESeed * dd1 * Math.Abs(AHeight-BHeight)   // + contribucion por la diferencia de altitudes
                             + ESeed1 * dd2 * Math.Pow(distanceAB, POW);  // + contribucion por la distancia
 
-            Point3D EA = new Point3D(A.X - E.X, A.Y - E.Y, A.Z - E.Z);
-            Point3D EP = new Point3D(P.X - E.X, P.Y - E.Y, P.Z - E.Z);
-            Point3D EC = new Point3D(C.X - E.X, C.Y - E.Y, C.Z - E.Z);
-            Point3D ED = new Point3D(D.X - E.X, D.Y - E.Y, D.Z - E.Z);
-            Point3D PointAux;
+            DPoint3D EA = new DPoint3D(A.X - E.X, A.Y - E.Y, A.Z - E.Z);
+            DPoint3D EP = new DPoint3D(P.X - E.X, P.Y - E.Y, P.Z - E.Z);
+            DPoint3D EC = new DPoint3D(C.X - E.X, C.Y - E.Y, C.Z - E.Z);
+            DPoint3D ED = new DPoint3D(D.X - E.X, D.Y - E.Y, D.Z - E.Z);
+            DPoint3D PointAux;
             double SeedAux;
             double HeightAux;
             if ((EA.X * EC.Y * ED.Z + EA.Y * EC.Z * ED.X + EA.Z * EC.X * ED.Y - EA.Z * EC.Y * ED.X - EA.Y * EC.X * ED.Z - EA.X * EC.Z * ED.Y) *
